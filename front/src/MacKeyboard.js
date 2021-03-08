@@ -68,13 +68,13 @@ function MacKeyboard ( { pressedKey } ) {
                 <Key value="⇧" customStyle={{...KeyDefaultStyle, ...KeyShiftStyle}} />
             </div>
             <div className="keyboard-row" style={KeyboardRowStyle}>
-                <Key value="fn" customStyle={KeyDefaultStyle} />
-                <Key value="^" customStyle={KeyDefaultStyle} />
-                <Key value="⌥" customStyle={KeyDefaultStyle} />
-                <Key value="⌘" customStyle={KeyDefaultStyle} />
+                <Key value="fn" customStyle={{...KeyDefaultStyle, ...KeySmallStyle}} />
+                <Key value="^" customStyle={{...KeyDefaultStyle, ...KeySmallStyle}} />
+                <Key value="⌥" customStyle={{...KeyDefaultStyle, ...KeySmallStyle}} />
+                <Key value="⌘" customStyle={{...KeyDefaultStyle, ...KeyCommandStyle}} />
                 <Key value="   " customStyle={{...KeyDefaultStyle, ...KeySpaceBarStyle}} />
-                <Key value="⌘" customStyle={KeyDefaultStyle} />
-                <Key value="⌥" customStyle={KeyDefaultStyle} />
+                <Key value="⌘" customStyle={{...KeyDefaultStyle, ...KeyCommandStyle}} />
+                <Key value="⌥" customStyle={{...KeyDefaultStyle, ...KeySmallStyle}} />
                 <Key value="<" customStyle={KeyDefaultStyle} />
                 <Key value="|" customStyle={KeyDefaultStyle} />
                 <Key value=">" customStyle={KeyDefaultStyle} />
@@ -123,6 +123,10 @@ const KeyShiftStyle = {
 
 const KeySpaceBarStyle = {
     width: '300px',
+}
+
+const KeyCommandStyle = {
+    width: '45px',
 }
 
 const KeySmallStyle = {
