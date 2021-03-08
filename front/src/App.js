@@ -1,4 +1,5 @@
 import './App.css';
+import React from 'react'
 import { useCallback, useEffect, useState } from 'react';
 import MacKeyboard from './MacKeyboard';
 
@@ -7,12 +8,10 @@ function App() {
 
   const onKeyDown = useCallback((event) => {
     setCurrentKey(event.key);
-    event.stopPropagation();
   }, [currentKey])
 
   const onKeyUp = useCallback((event) => {
     setCurrentKey("");
-    event.stopPropagation();
   }, [currentKey]);
   
   useEffect(() => {
@@ -33,9 +32,18 @@ function App() {
 
   return (
     <div className="App">
-      <MacKeyboard pressedKey={currentKey}/>
+      <MacKeyboard pressedKey={currentKey} style={MacKeyboardStyle} />
     </div>
   );
 }
+
+const MacKeyboardStyle = {
+  position: 'absolute',
+  left: '8em',
+  top: '15em',
+  display: 'block',
+  width: '50em',
+  height: '18em',
+};
 
 export default App;
