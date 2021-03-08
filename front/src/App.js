@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import { useCallback, useEffect, useState } from 'react';
+import MacKeyboard from './MacKeyboard';
 
 function App() {
+  const [currentKey, setCurrentKey] = useState("");
+
+  const onKeyDown = useCallback((event) => {
+    setCurrentKey(event.key);
+    event.stopPropagation();
+  }, [currentKey])
+  
+  useEffect(() => {
+    document.body.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.removeEventListener("keydown", onKeyDown);
+    }
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MacKeyboard pressedKey={currentKey}/>
     </div>
   );
 }
