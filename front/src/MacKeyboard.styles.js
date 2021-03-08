@@ -44,8 +44,10 @@ const KeyboardRowStyle = {
   display: 'flex',
 };
 
-export default {
+const KeyStyles = {
   KeyDefaultStyle, KeyPressedStyle, KeyEscStyle, KeyCapsLockStyle,
   KeyReturnStyle, KeyShiftStyle, KeySpaceBarStyle, KeyCommandStyle, KeySmallStyle,
   KeyboardRowStyle,
 };
+
+export default KeyStyles;
