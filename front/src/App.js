@@ -14,7 +14,7 @@ function App() {
   )
 
   const onKeyDown = useCallback((event) => {
-    setCurrentKey(event.key);
+    setCurrentKey(event.code);
     playKeyPress();
   }, [currentKey])
 
