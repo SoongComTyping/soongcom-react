@@ -3,9 +3,7 @@
 
 name: Node.js CI
 
-on:
-  push:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -20,12 +18,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
+      working-directory: ./front
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run build --if-present
     - name: test eslint
+      working-directory: ./front
       run: |
         npm ci
         npm run lint
