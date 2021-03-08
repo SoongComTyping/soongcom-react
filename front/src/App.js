@@ -9,12 +9,25 @@ function App() {
     setCurrentKey(event.key);
     event.stopPropagation();
   }, [currentKey])
+
+  const onKeyUp = useCallback((event) => {
+    setCurrentKey("");
+    event.stopPropagation();
+  }, [currentKey]);
   
   useEffect(() => {
     document.body.addEventListener("keydown", onKeyDown);
 
     return () => {
       document.body.removeEventListener("keydown", onKeyDown);
+    }
+  })
+
+  useEffect(() => {
+    document.body.addEventListener("keyup", onKeyUp);
+
+    return () => {
+      document.body.addEventListener("keyup", onKeyUp);
     }
   })
 
