@@ -10,17 +10,17 @@ function App() {
 
   const [playKeyPress] = useSound(
     keySoundAsset,
-    { volume: 0.25 },
+    { volume: 0.25, interrupt: true, },
   )
 
   const onKeyDown = useCallback((event) => {
     setCurrentKey(event.code);
     playKeyPress();
-  }, [currentKey])
+  }, [playKeyPress])
 
   const onKeyUp = useCallback(() => {
     setCurrentKey("");
-  }, [currentKey])
+  }, [])
   
   useEffect(() => {
     document.body.addEventListener("keydown", onKeyDown);
@@ -28,7 +28,7 @@ function App() {
     return () => {
       document.body.removeEventListener("keydown", onKeyDown);
     }
-  })
+  }, [onKeyDown])
 
   useEffect(() => {
     document.body.addEventListener("keyup", onKeyUp);
@@ -36,7 +36,7 @@ function App() {
     return () => {
       document.body.addEventListener("keyup", onKeyUp);
     }
-  })
+  }, [onKeyUp])
 
   return (
     <div className="App">
