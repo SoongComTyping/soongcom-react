@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 function Key({ value, customStyle }) {
   return (
-    <div className="keyboard" style={{ ...KeyStyle, ...customStyle }}>
-      <div>{value}</div>
+    <div className="key noselect" style={{ ...KeyStyle, ...customStyle }}>
+      {value}
     </div>
   )
 }
