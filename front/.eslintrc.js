@@ -22,10 +22,5 @@ module.exports = {
       "error",
       2
     ]
-  },
-  "settings": {
-    "react": {
-      "version": "detect",
-    }
   }
 };
