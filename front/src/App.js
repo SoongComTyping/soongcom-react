@@ -18,9 +18,9 @@ function App() {
     playKeyPress();
   }, [currentKey])
 
-  const onKeyUp = useCallback((event) => {
+  const onKeyUp = useCallback(() => {
     setCurrentKey("");
-  }, [currentKey]);
+  }, [currentKey])
   
   useEffect(() => {
     document.body.addEventListener("keydown", onKeyDown);
