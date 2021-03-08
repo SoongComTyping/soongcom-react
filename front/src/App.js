@@ -1,13 +1,21 @@
 import './App.css';
 import React from 'react'
 import { useCallback, useEffect, useState } from 'react';
+import useSound from 'use-sound';
+import keySoundAsset from './mechanicalKeyboard.mp3';
 import MacKeyboard from './MacKeyboard';
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
 
+  const [playKeyPress] = useSound(
+    keySoundAsset,
+    { volume: 0.25 },
+  )
+
   const onKeyDown = useCallback((event) => {
     setCurrentKey(event.key);
+    playKeyPress();
   }, [currentKey])
 
   const onKeyUp = useCallback((event) => {

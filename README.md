@@ -10,3 +10,5 @@ localhost:3000
 npm run
 ```
 
+# 타이핑 사운드 출처
+https://www.fesliyanstudios.com/royalty-free-sound-effects-download/keyboard-typing-6
