@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Key from './Key';
 import MacKeyboardStyles from './MacKeyboard.styles';
 
@@ -105,6 +106,11 @@ function getStyle(value, pressedKey) {
   }
 
   return retStyle;
+}
+
+MacKeyboard.propTypes = {
+  pressedKey: PropTypes.string,
+  style: PropTypes.object,
 }
 
 export default React.memo(MacKeyboard);
