@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ScriptContext } from './Contexts';
+import inko from './KoreanHelper';
 
 function TypingScript({ style }) {
   const script = useContext(ScriptContext);
@@ -19,11 +20,16 @@ function TypingScript({ style }) {
                   className = isCorrect ? "correct" : "wrong";
                   if (isCorrect === false) {
                     char = script.userInput[bodyIndex];
-                    if (char === ' ') char = '   ';
+                    if (char === ' ' && script.language === 'korean') char = '   ';
                   }
                 }
-                else if (script.userInput.length === bodyIndex)
+                else if (script.userInput.length === bodyIndex) {
                   className = 'cursor';
+                  if (script.language === 'korean') {
+                    if (script.koreanBuffer.length !== 0)
+                      char = inko.en2ko(script.koreanBuffer);
+                  }
+                }
                 else if (script.userInput.length < bodyIndex)
                   className = 'next';
                 return (
