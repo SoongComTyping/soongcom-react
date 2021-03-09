@@ -4,10 +4,13 @@ import { useCallback, useEffect, useState } from 'react';
 import useSound from 'use-sound';
 import keySoundAsset from './mechanicalKeyboard.mp3';
 import MacKeyboard from './MacKeyboard';
-import { KeyboardContext } from './Contexts';
+import { KeyboardContext, ScriptContext } from './Contexts';
+import TypingScript from './TypingScript';
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
+  const [body] = useState("Natural Mineral Water");
+  const [userInput, setUserInput] = useState("");
 
   const [playKeyPress] = useSound(
     keySoundAsset,
@@ -16,8 +19,16 @@ function App() {
 
   const onKeyDown = useCallback((event) => {
     setCurrentKey(event.code);
+    setUserInput((body) => {
+      if (event.key === 'Backspace') {
+        return body.slice(0, -1);
+      } else if (event.key === 'Enter') {
+        return body.concat('\n');
+      }
+      return body.concat(event.key);
+    });
     playKeyPress();
-  }, [playKeyPress])
+  }, [playKeyPress, userInput])
 
   const onKeyUp = useCallback(() => {
     setCurrentKey("");
@@ -41,6 +52,9 @@ function App() {
 
   return (
     <div className="App">
+      <ScriptContext.Provider value={{ body, userInput }}>
+        <TypingScript style={TypingScriptStyle} />
+      </ScriptContext.Provider>
       <KeyboardContext.Provider value={{ currentKey, }} >
         <MacKeyboard style={MacKeyboardStyle} />
       </KeyboardContext.Provider>
@@ -48,10 +62,26 @@ function App() {
   );
 }
 
+const TypingScriptStyle = {
+  position: 'absolute',
+  left: '8em',
+  width: '50rem',
+  overflow: 'hidden scroll',
+  height: '20rem',
+  border: '2px solid #6FC2EF',
+  letterSpacing: '1.1px',
+  fontSize: '25px',
+  fontWeight: '400',
+  fontFamily: 'Noto Serif KR',
+  color: 'rgb(132, 135, 139)',
+  cursor: 'grab',
+  textAlign: 'left',
+}
+
 const MacKeyboardStyle = {
   position: 'absolute',
   left: '8em',
-  top: '15em',
+  top: '24em',
   display: 'block',
   width: '50em',
   height: '18em',
