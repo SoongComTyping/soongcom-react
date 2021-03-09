@@ -9,7 +9,7 @@ import TypingScript from './TypingScript';
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
-  const [body] = useState("Natural Mineral Water");
+  const [body] = useState("On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue");
   const [userInput, setUserInput] = useState("");
 
   const [playKeyPress] = useSound(
@@ -24,6 +24,9 @@ function App() {
         return body.slice(0, -1);
       } else if (event.key === 'Enter') {
         return body.concat('\n');
+      }
+      if (event.key.length > 1) {
+        return body;
       }
       return body.concat(event.key);
     });
@@ -64,11 +67,11 @@ function App() {
 
 const TypingScriptStyle = {
   position: 'absolute',
-  left: '8em',
-  width: '50rem',
+  left: '4em',
+  top: '8em',
+  width: '40em',
   overflow: 'hidden scroll',
   height: '20rem',
-  border: '2px solid #6FC2EF',
   letterSpacing: '1.1px',
   fontSize: '25px',
   fontWeight: '400',
@@ -80,7 +83,7 @@ const TypingScriptStyle = {
 
 const MacKeyboardStyle = {
   position: 'absolute',
-  left: '8em',
+  left: '13em',
   top: '24em',
   display: 'block',
   width: '50em',

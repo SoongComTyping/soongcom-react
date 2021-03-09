@@ -7,22 +7,25 @@ function TypingScript({ style }) {
 
 
   return (
-    <div className="typingTextArea" style={style}>
+    <div className="typingTextArea noselect" style={style}>
       <ul style={{ listStyleType: 'none', overflow: 'hidden', }}>
         {
-          script.userInput.split('\n').map((word, i) => {
-            return (
-              <li className="word" key={`${word}${i}`} >
-                {
-                  word.split('').map((char, j) => {
-                    return (
-                      <span className="correct" key={`${char} ${j}`}>{char}</span>
-                    )
-                  })
-                }
-              </li>
-            )
-          })
+          <li className="word">
+            {
+              script.body.split('').map((char, j) => {
+                const isCorrect = char === script.userInput[j];
+                let className = isCorrect ? "correct" : "wrong";
+                if (script.userInput.length === j)
+                  className = 'cursor';
+                else if (script.userInput.length < j)
+                  className = 'next';
+                else if (isCorrect === false) char = script.userInput[j];
+                return (
+                  <span className={className} key={`${char} ${j}`}>{char}</span>
+                )
+              })
+            }
+          </li>
         }
       </ul>
     </div>
