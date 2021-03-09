@@ -3,6 +3,8 @@
 
 ![짧은글](https://user-images.githubusercontent.com/13645032/110480500-e6c14480-8129-11eb-8056-447336bd2722.gif)
 
+![한글-짧은글](https://user-images.githubusercontent.com/13645032/110553262-1436de00-817c-11eb-9897-d50debb758b9.gif)
+
 ## 실행 (개발용)
 
 localhost:3000
