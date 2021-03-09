@@ -21,14 +21,24 @@ function App() {
   )
 
   const onKeyDown = useCallback((event) => {
+    console.log(event.code);
     setCurrentKey(event.code);
     if (language === 'korean') {
       setKoreanBuffer((buf) => {
-        if (event.code.includes('Digit')) {
+        if (event.code.includes('Key')) { // q w e r 같은 입력들 (사파리에서는 ㅂ ㅈ ㄷ ㄱ로 들어와서 한번 영어로 변환해줘야함)
+          if (inko.en2ko(buf.concat(event.key)).length > 1) {
+            // 버퍼가 꽉차서 다음글자로 넘어가면
+            const totalBuff = inko.en2ko(buf.concat(inko.ko2en(event.key)));
+            setUserInput(userInput.concat(totalBuff.slice(0, -1)));
+            return inko.ko2en(totalBuff.slice(-1));
+          }
+          return buf.concat(inko.ko2en(event.key));
+        }
+        if (event.code.includes('Digit')) { // 숫자 입력들
           setUserInput(userInput.concat(inko.en2ko(buf.concat(event.key))));
           return '';
         }
-        if (event.key.length > 1) {
+        if (event.key.length > 1) { // meta, enter, ctrl같은 특수 입력들
           if (event.key === 'Backspace') {
             if (buf === '') {
               setUserInput(userInput.slice(0, -1));
@@ -40,19 +50,14 @@ function App() {
             setUserInput(userInput.concat(inko.en2ko(buf.concat('\n'))));
             return '';
           }
+          
           return buf;
         }
-        if (event.key === ' ') {
-          setUserInput(userInput.concat(inko.en2ko(buf.concat(' '))));
+        if ([' ', '.'].includes(event.key)) {
+          setUserInput(userInput.concat(inko.en2ko(buf.concat(event.key))));
           return '';
         }
-        
-        if (inko.en2ko(buf.concat(event.key)).length > 1) {
-          // 버퍼가 꽉차서 다음글자로 넘어가면
-          const totalBuff = inko.en2ko(buf.concat(event.key));
-          setUserInput(userInput.concat(totalBuff.slice(0, -1)));
-          return inko.ko2en(totalBuff.slice(-1));
-        }
+
         return buf.concat(event.key);
       });
     }
