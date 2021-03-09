@@ -6,11 +6,13 @@ import keySoundAsset from './mechanicalKeyboard.mp3';
 import MacKeyboard from './MacKeyboard';
 import { KeyboardContext, ScriptContext } from './Contexts';
 import TypingScript from './TypingScript';
+import Inko from 'inko';
+let inko = new Inko();
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
   const [language] = useState("korean");
-  const [body] = useState("On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue");
+  const [body] = useState("모든 국민은 사생활의 비밀과 자유를 침해받지 아니한다. 제안된 헌법개정안은 대통령이 20일 이상의 기간 이를 공고하여야 한다. 대통령의 임기는 5년으로 하며, 중임할 수 없다. 선거와 국민투표의 공정한 관리 및 정당에 관한 사무를 처리하기 위하여 선거관리위원회를 둔다.");
   const [userInput, setUserInput] = useState("");
 
   const [playKeyPress] = useSound(
@@ -28,10 +30,23 @@ function App() {
       } else if (event.key.length > 1) {
         return body;
       }
+
+      if (language === 'korean') {
+        if (event.key === ' ') {
+          return inko.en2ko(body.concat(event.key));
+        } else {
+          const bodyArr = body.split(' ');
+          const lastWord = bodyArr.pop();
+
+          const koreanLastWord = inko.en2ko(inko.ko2en(lastWord.concat(event.key)));
+          bodyArr.push(koreanLastWord);
+          return bodyArr.join(' ');
+        }
+      }
       return body.concat(event.key);
     });
     playKeyPress();
-  }, [playKeyPress, userInput])
+  }, [playKeyPress, language, userInput])
 
   const onKeyUp = useCallback(() => {
     setCurrentKey("");
@@ -55,7 +70,7 @@ function App() {
 
   return (
     <div className="App">
-      <ScriptContext.Provider value={{ body, userInput }}>
+      <ScriptContext.Provider value={{ body, userInput, language }}>
         <TypingScript style={TypingScriptStyle} />
       </ScriptContext.Provider>
       <KeyboardContext.Provider value={{ currentKey, language }} >
