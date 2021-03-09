@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useSound from 'use-sound';
 import keySoundAsset from './mechanicalKeyboard.mp3';
 import MacKeyboard from './MacKeyboard';
+import { KeyboardContext } from './Contexts';
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
@@ -21,7 +22,7 @@ function App() {
   const onKeyUp = useCallback(() => {
     setCurrentKey("");
   }, [])
-  
+
   useEffect(() => {
     document.body.addEventListener("keydown", onKeyDown);
 
@@ -40,7 +41,9 @@ function App() {
 
   return (
     <div className="App">
-      <MacKeyboard pressedKey={currentKey} style={MacKeyboardStyle} />
+      <KeyboardContext.Provider value={{ currentKey, }} >
+        <MacKeyboard style={MacKeyboardStyle} />
+      </KeyboardContext.Provider>
     </div>
   );
 }
