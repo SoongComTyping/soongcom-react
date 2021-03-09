@@ -109,14 +109,13 @@ const TypingScriptStyle = {
   left: '4em',
   top: '8em',
   width: '40em',
-  overflow: 'hidden scroll',
+  overflow: 'hidden',
   height: '20rem',
   letterSpacing: '1.1px',
   fontSize: '25px',
   fontWeight: '400',
   fontFamily: 'Noto Serif KR',
   color: 'rgb(132, 135, 139)',
-  cursor: 'grab',
   textAlign: 'left',
 }
 
