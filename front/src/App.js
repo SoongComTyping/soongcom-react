@@ -9,6 +9,7 @@ import TypingScript from './TypingScript';
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
+  const [language] = useState("korean");
   const [body] = useState("On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue");
   const [userInput, setUserInput] = useState("");
 
@@ -24,8 +25,7 @@ function App() {
         return body.slice(0, -1);
       } else if (event.key === 'Enter') {
         return body.concat('\n');
-      }
-      if (event.key.length > 1) {
+      } else if (event.key.length > 1) {
         return body;
       }
       return body.concat(event.key);
@@ -58,7 +58,7 @@ function App() {
       <ScriptContext.Provider value={{ body, userInput }}>
         <TypingScript style={TypingScriptStyle} />
       </ScriptContext.Provider>
-      <KeyboardContext.Provider value={{ currentKey, }} >
+      <KeyboardContext.Provider value={{ currentKey, language }} >
         <MacKeyboard style={MacKeyboardStyle} />
       </KeyboardContext.Provider>
     </div>

@@ -12,7 +12,7 @@ function TypingScript({ style }) {
         {
           <li className="word">
             {
-              script.body.split('').map((char, j) => {
+              [...script.body].map((char, j) => {
                 const isCorrect = char === script.userInput[j];
                 let className = isCorrect ? "correct" : "wrong";
                 if (script.userInput.length === j)

@@ -2,18 +2,18 @@ import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {KeyboardContext} from './Contexts';
 import KeyStyles from './Key.styles';
+import KeySkin from './KeySkin';
 
 function Key({ displayChar, code }) {
   const keyboard = useContext(KeyboardContext);
   
   const hitCheck = useCallback((code) => {
-    // console.log(keyboard);
     return keyboard.currentKey === code ? KeyStyles.KeyPressedStyle : {};
   }, [keyboard]);
 
   return (
     <div className="key noselect" style={{ ...styleFactory(code), ...hitCheck(code) }}>
-      {displayChar}
+      {keyboard.language === 'english' ? displayChar : KeySkin[keyboard.language][displayChar]}
     </div>
   )
 }
