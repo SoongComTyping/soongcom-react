@@ -12,16 +12,22 @@ function TypingScript({ style }) {
         {
           <li className="word">
             {
-              [...script.body].map((char, j) => {
-                const isCorrect = char === script.userInput[j];
-                let className = isCorrect ? "correct" : "wrong";
-                if (script.userInput.length === j)
+              [...script.body].map((char, bodyIndex) => {
+                const isCorrect = char === script.userInput[bodyIndex];
+                let className;
+                if (bodyIndex < script.userInput.length) {
+                  className = isCorrect ? "correct" : "wrong";
+                  if (isCorrect === false) {
+                    char = script.userInput[bodyIndex];
+                    if (char === ' ') char = '   ';
+                  }
+                }
+                else if (script.userInput.length === bodyIndex)
                   className = 'cursor';
-                else if (script.userInput.length < j)
+                else if (script.userInput.length < bodyIndex)
                   className = 'next';
-                else if (isCorrect === false) char = script.userInput[j];
                 return (
-                  <span className={className} key={`${char} ${j}`}>{char}</span>
+                  <span className={`char ${className}`} key={`${char} ${bodyIndex}`}>{char}</span>
                 )
               })
             }
