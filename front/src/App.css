@@ -46,3 +46,31 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+span.correct {
+  color: rgb(51, 51, 51);
+}
+
+span.wrong {
+  color: #FB9FB1;
+}
+
+span.cursor {
+  color: rgb(209, 196, 179);
+  background-color: #505050;
+}
+
+span.next {
+  color: #D0D0D0;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+li.word {
+  padding: 0 0 0 10px;
+  float: left;
+  text-align: -webkit-match-parent;
+}
