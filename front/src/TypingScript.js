@@ -35,7 +35,7 @@ function TypingScript({ style }) {
                 else if (script.userInput.length < bodyIndex)
                   className = 'next';
                 return (
-                  <span className={`char ${className}`} key={`${char} ${bodyIndex}`}>{char}</span>
+                  <span className={`dark ${className}`} key={`${char} ${bodyIndex}`}>{char}</span>
                 )
               })
             }
