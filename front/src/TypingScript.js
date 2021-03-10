@@ -19,8 +19,10 @@ function TypingScript({ style }) {
                 if (bodyIndex < script.userInput.length) {
                   className = isCorrect ? "correct" : "wrong";
                   if (isCorrect === false) {
-                    char = script.userInput[bodyIndex];
-                    if (char === ' ' && script.language === 'korean') char = '   ';
+                    if (bodyIndex > script.userInput.length - 5) {
+                      char = script.userInput[bodyIndex];
+                      if (char === ' ' && script.language === 'korean') char = '   ';
+                    }
                   }
                 }
                 else if (script.userInput.length === bodyIndex) {
