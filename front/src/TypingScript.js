@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ScriptContext } from './Contexts';
-import inko from './KoreanHelper';
+import { inko } from './KoreanHelper';
 
 function TypingScript({ style }) {
   const script = useContext(ScriptContext);

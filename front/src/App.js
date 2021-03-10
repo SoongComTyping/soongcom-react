@@ -6,7 +6,7 @@ import keySoundAsset from './mechanicalKeyboard.mp3';
 import MacKeyboard from './MacKeyboard';
 import { KeyboardContext, ScriptContext } from './Contexts';
 import TypingScript from './TypingScript';
-import inko from './KoreanHelper';
+import { KoreanInputMethod } from './KoreanHelper';
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
@@ -21,60 +21,31 @@ function App() {
   )
 
   const onKeyDown = useCallback((event) => {
-    console.log(event.code);
     setCurrentKey(event.code);
+    playKeyPress();
     if (language === 'korean') {
       setKoreanBuffer((buf) => {
-        if (event.code.includes('Key')) { // q w e r 같은 입력들 (사파리에서는 ㅂ ㅈ ㄷ ㄱ로 들어와서 한번 영어로 변환해줘야함)
-          if (inko.en2ko(buf.concat(event.key)).length > 1) {
-            // 버퍼가 꽉차서 다음글자로 넘어가면
-            const totalBuff = inko.en2ko(buf.concat(inko.ko2en(event.key)));
-            setUserInput(userInput.concat(totalBuff.slice(0, -1)));
-            return inko.ko2en(totalBuff.slice(-1));
-          }
-          return buf.concat(inko.ko2en(event.key));
+        const { nextUserInput, nextBuf } = KoreanInputMethod(buf, event, userInput);
+        if (nextUserInput !== userInput) {
+          setUserInput(nextUserInput);
         }
-        if (event.code.includes('Digit')) { // 숫자 입력들
-          setUserInput(userInput.concat(inko.en2ko(buf.concat(event.key))));
-          return '';
-        }
-        if (event.key.length > 1) { // meta, enter, ctrl같은 특수 입력들
-          if (event.key === 'Backspace') {
-            if (buf === '') {
-              setUserInput(userInput.slice(0, -1));
-              return '';
-            }
-            return buf.slice(0, -1);
-          }
-          if (event.key === 'Enter') {
-            setUserInput(userInput.concat(inko.en2ko(buf.concat('\n'))));
-            return '';
-          }
-          
-          return buf;
-        }
-        if ([' ', '.', ',', '`', '+', '=', '[', ']', '/', ';', ':', '"', "'", '{', '}', '_', '+', '\\', '|', '~', '<', '>', '?'].includes(event.key)) {
-          setUserInput(userInput.concat(inko.en2ko(buf.concat(event.key))));
-          return '';
-        }
+        return nextBuf;
+      });
+      return;
+    }
 
-        return buf.concat(event.key);
-      });
-    }
-    else { // not korean language
-      setUserInput((body) => {
-        if (event.key === 'Backspace') {
-          return body.slice(0, -1);
-        } else if (event.key === 'Enter') {
-          return body.concat('\n');
-        }
-        if (event.key.length > 1) {
-          return body;
-        }
-        return body.concat(event.key);
-      });
-    }
-    playKeyPress();
+    setUserInput((body) => {
+      if (event.key === 'Backspace')
+        return body.slice(0, -1);
+
+      if (event.key === 'Enter')
+        return body.concat('\n');
+
+      if (event.key.length > 1)
+        return body;
+
+      return body.concat(event.key);
+    });
   }, [playKeyPress, language, userInput])
 
   const onKeyUp = useCallback(() => {
@@ -120,7 +91,6 @@ const TypingScriptStyle = {
   fontSize: '25px',
   fontWeight: '400',
   fontFamily: 'Noto Serif KR',
-  color: 'rgb(132, 135, 139)',
   textAlign: 'left',
 }
 
