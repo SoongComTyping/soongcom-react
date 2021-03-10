@@ -53,7 +53,7 @@ function App() {
           
           return buf;
         }
-        if ([' ', '.', ',', '`', '+', '=', '[', ']', '/', ';', ':', '"', "'", '{', '}', '_', '+', '|', '~', '<', '>', '?'].includes(event.key)) {
+        if ([' ', '.', ',', '`', '+', '=', '[', ']', '/', ';', ':', '"', "'", '{', '}', '_', '+', '\\', '|', '~', '<', '>', '?'].includes(event.key)) {
           setUserInput(userInput.concat(inko.en2ko(buf.concat(event.key))));
           return '';
         }
