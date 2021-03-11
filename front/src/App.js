@@ -11,6 +11,7 @@ import { KoreanInputMethod } from './KoreanHelper';
 function App() {
   const [currentKey, setCurrentKey] = useState("");
   const [language] = useState("korean");
+  const [displayMode] = useState("dark");
   const [body] = useState("모든 국민은 사생활의 비밀과 자유를 침해받지 아니한다. 제안된 헌법개정안은 대통령이 20일 이상의 기간 이를 공고하여야 한다. 대통령의 임기는 5년으로 하며, 중임할 수 없다. 선거와 국민투표의 공정한 관리 및 정당에 관한 사무를 처리하기 위하여 선거관리위원회를 둔다.");
   const [userInput, setUserInput] = useState("");
   const [koreanBuffer, setKoreanBuffer] = useState("");
@@ -70,7 +71,7 @@ function App() {
 
   return (
     <div className="App">
-      <ScriptContext.Provider value={{ body, userInput, language, koreanBuffer }}>
+      <ScriptContext.Provider value={{ body, userInput, language, koreanBuffer, displayMode }}>
         <TypingScript style={TypingScriptStyle} />
       </ScriptContext.Provider>
       <KeyboardContext.Provider value={{ currentKey, language }} >
