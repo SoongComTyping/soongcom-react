@@ -7,6 +7,7 @@ import MacKeyboard from './MacKeyboard';
 import { KeyboardContext, ScriptContext } from './Contexts';
 import TypingScript from './TypingScript';
 import { KoreanInputMethod } from './KoreanHelper';
+import { PepeAnime } from './Animation'
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
@@ -15,6 +16,7 @@ function App() {
   const [body] = useState("모든 국민은 사생활의 비밀과 자유를 침해받지 아니한다. 제안된 헌법개정안은 대통령이 20일 이상의 기간 이를 공고하여야 한다. 대통령의 임기는 5년으로 하며, 중임할 수 없다. 선거와 국민투표의 공정한 관리 및 정당에 관한 사무를 처리하기 위하여 선거관리위원회를 둔다.");
   const [userInput, setUserInput] = useState("");
   const [koreanBuffer, setKoreanBuffer] = useState("");
+  const [typeCount, setTypeCount] = useState(0);
 
   const [playKeyPress] = useSound(
     keySoundAsset,
@@ -23,6 +25,7 @@ function App() {
 
   const onKeyDown = useCallback((event) => {
     setCurrentKey(event.code);
+    setTypeCount((typeCount) => typeCount + 1);
     playKeyPress();
     if (language === 'korean') {
       setKoreanBuffer((buf) => {
@@ -78,6 +81,11 @@ function App() {
       </ScriptContext.Provider>
       <KeyboardContext.Provider value={{ currentKey, language }} >
         <MacKeyboard style={MacKeyboardStyle} />
+      </KeyboardContext.Provider>
+      <KeyboardContext.Provider value= {{ typeCount }} >
+        {/* <KyaruAnime />
+        <JapanAnime /> */}
+        <PepeAnime />
       </KeyboardContext.Provider>
     </div>
   );
