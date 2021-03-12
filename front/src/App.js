@@ -83,8 +83,6 @@ function App() {
         <MacKeyboard style={MacKeyboardStyle} />
       </KeyboardContext.Provider>
       <KeyboardContext.Provider value= {{ typeCount }} >
-        {/* <KyaruAnime />
-        <JapanAnime /> */}
         <PepeAnime />
       </KeyboardContext.Provider>
     </div>
