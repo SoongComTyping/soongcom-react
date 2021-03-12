@@ -36,8 +36,10 @@ function App() {
     }
 
     setUserInput((body) => {
-      if (event.key === 'Backspace')
+      if (event.key === 'Backspace') {
+        event.preventDefault(); // for firefox browser
         return body.slice(0, -1);
+      }
 
       if (event.key === 'Enter')
         return body.concat('\n');
