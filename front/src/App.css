@@ -88,3 +88,9 @@ li.word {
 body.dark {
   background-color: #282c34;
 }
+
+img.animation {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
