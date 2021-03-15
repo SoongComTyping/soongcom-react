@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react'
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import useSound from 'use-sound';
 import keySoundAsset from './mechanicalKeyboard.mp3';
 import MacKeyboard from './MacKeyboard';
@@ -8,6 +8,7 @@ import { KeyboardContext, ScriptContext } from './Contexts';
 import TypingScript from './TypingScript';
 import { KoreanInputMethod } from './KoreanHelper';
 import { PepeAnime } from './Animation'
+import TypingSpeedGraph from './TypingSpeedGraph';
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
@@ -17,6 +18,8 @@ function App() {
   const [userInput, setUserInput] = useState("");
   const [koreanBuffer, setKoreanBuffer] = useState("");
   const [typeCount, setTypeCount] = useState(0);
+  const [typeSpeed, setTypeSpeed] = useState(0);
+  const [tick, setTick] = useState(0);
 
   const [playKeyPress] = useSound(
     keySoundAsset,
@@ -26,6 +29,7 @@ function App() {
   const onKeyDown = useCallback((event) => {
     setCurrentKey(event.code);
     setTypeCount((typeCount) => typeCount + 1);
+    console.log(typeCount);
     playKeyPress();
     if (language === 'korean') {
       setKoreanBuffer((buf) => {
@@ -74,15 +78,42 @@ function App() {
     }
   }, [onKeyUp])
 
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
+  useInterval(() => {
+    setTypeSpeed(parseInt(typeCount / tick * 60));
+    setTick(tick+0.01);
+    console.log(tick);
+  }, 10);
+
   return (
     <div className="App">
+      <TypingSpeedGraph num={typeSpeed} />
       <ScriptContext.Provider value={{ body, userInput, language, koreanBuffer, displayMode }}>
         <TypingScript style={TypingScriptStyle} />
       </ScriptContext.Provider>
       <KeyboardContext.Provider value={{ currentKey, language }} >
         <MacKeyboard style={MacKeyboardStyle} />
       </KeyboardContext.Provider>
-      <KeyboardContext.Provider value= {{ typeCount }} >
+      <KeyboardContext.Provider value={{ typeCount }} >
         <PepeAnime />
       </KeyboardContext.Provider>
     </div>
