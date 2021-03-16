@@ -20,6 +20,11 @@ function App() {
   const [typeCount, setTypeCount] = useState(0); // 총 타이핑 수
   const [typeSpeed, setTypeSpeed] = useState(0); // 타수
   const [tick, setTick] = useState(0); // 시작 후 흐른 시간
+  const [typeCountList, setTypeCountList] = useState({ // 타이핑 카운트 리스트
+    list: [
+      { name: "x", count: 0 }
+    ]
+  });
   const [typeSpeedList, setTypeSpeedList] = useState({ // 타수 그래프 리스트
     list: [
       { name: "x", speed: 0 }
@@ -102,19 +107,33 @@ function App() {
   }
 
   useInterval(() => {
-    setTypeSpeed(parseInt(typeCount / tick * 60));
-    setTick(tick + 0.1);
-    const list = {list : typeSpeedList.list.concat({name:"x", speed:typeSpeed})};
-    if(list.list.length > 25) {
-      list.list = list.list.slice(-25,-1);
+    const countList = { list: typeCountList.list.concat({ name: "x", count: typeCount }) };
+    var dataNumber, speedList, gap, idx;
+
+    if (countList.list.length > 9) {
+      dataNumber = 10;
+      idx = countList.list.length - dataNumber + 1;
+      gap = countList.list[idx].count - countList.list[idx - 1].count;
+      speedList = { list: [{ name: "x", speed: gap }] };
+    } else {
+      dataNumber = countList.list.length;
+      speedList = { list: [{ name: "x", speed: 0 }] };
     }
-    setTypeSpeedList(list);
-  }, 100);
-  /*
+
+    for (let i = dataNumber - 1; 1 <= i; i--) {
+      idx = countList.list.length - i;
+      gap = countList.list[idx].count - countList.list[idx - 1].count;
+      speedList = { list: speedList.list.concat({ name: "x", speed: gap }) }
+    }
+
+    setTypeSpeedList(speedList);
+    setTypeCountList(countList);
+  }, 1000);
+
   useInterval(() => {
     setTypeSpeed(parseInt(typeCount / tick * 60));
     setTick(tick + 0.1);
-  }, 100); */
+  }, 100);
 
   return (
     <div className="App">
