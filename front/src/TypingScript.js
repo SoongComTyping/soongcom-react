@@ -50,4 +50,4 @@ TypingScript.propTypes = {
   style: PropTypes.object,
 };
 
-export default TypingScript;
+export default React.memo(TypingScript);
