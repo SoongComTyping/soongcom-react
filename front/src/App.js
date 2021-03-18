@@ -20,16 +20,16 @@ function App() {
   const [typeCount, setTypeCount] = useState(0); // 총 타이핑 수
   const [typeSpeed, setTypeSpeed] = useState(0); // 타수
   const [tick, setTick] = useState(0); // 시작 후 흐른 시간
-  const [typeCountList, setTypeCountList] = useState({ // 타이핑 카운트 리스트
-    list: [
+  const [typeCountList, setTypeCountList] = useState( // 타이핑 카운트 리스트
+    [
       { name: "x", count: 0 }
     ]
-  });
-  const [typeSpeedList, setTypeSpeedList] = useState({ // 타수 그래프 리스트
-    list: [
+  );
+  const [typeSpeedList, setTypeSpeedList] = useState( // 타수 그래프 리스트
+    [
       { name: "x", speed: 0 }
     ]
-  });
+  );
 
   const [playKeyPress] = useSound(
     keySoundAsset,
@@ -39,7 +39,6 @@ function App() {
   const onKeyDown = useCallback((event) => {
     setCurrentKey(event.code);
     setTypeCount((typeCount) => typeCount + 1);
-    console.log(typeCount);
     playKeyPress();
     if (language === 'korean') {
       setKoreanBuffer((buf) => {
@@ -107,23 +106,23 @@ function App() {
   }
 
   useInterval(() => {
-    const countList = { list: typeCountList.list.concat({ name: "x", count: typeCount }) };
+    const countList = typeCountList.concat({ name: "x", count: typeCount });
     var dataNumber, speedList, gap, idx;
 
-    if (countList.list.length > 9) {
+    if (countList.length > 9) {
       dataNumber = 10;
-      idx = countList.list.length - dataNumber + 1;
-      gap = countList.list[idx].count - countList.list[idx - 1].count;
-      speedList = { list: [{ name: "x", speed: gap }] };
+      idx = countList.length - dataNumber + 1;
+      gap = countList[idx].count - countList[idx - 1].count;
+      speedList = [{ name: "x", speed: gap }];
     } else {
-      dataNumber = countList.list.length;
-      speedList = { list: [{ name: "x", speed: 0 }] };
+      dataNumber = countList.length;
+      speedList = [{ name: "x", speed: 0 }];
     }
 
     for (let i = dataNumber - 1; 1 <= i; i--) {
-      idx = countList.list.length - i;
-      gap = countList.list[idx].count - countList.list[idx - 1].count;
-      speedList = { list: speedList.list.concat({ name: "x", speed: gap }) }
+      idx = countList.length - i;
+      gap = countList[idx].count - countList[idx - 1].count;
+      speedList = speedList.concat({ name: "x", speed: gap });
     }
 
     setTypeSpeedList(speedList);
@@ -137,7 +136,7 @@ function App() {
 
   return (
     <div className="App">
-      <TypingSpeedGraph num={typeSpeed} list={typeSpeedList.list} />
+      <TypingSpeedGraph num={typeSpeed} list={typeSpeedList} />
       <ScriptContext.Provider value={{ body, userInput, language, koreanBuffer, displayMode }}>
         <TypingScript style={TypingScriptStyle} />
       </ScriptContext.Provider>
