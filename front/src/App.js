@@ -9,6 +9,7 @@ import TypingScript from './TypingScript';
 import { KoreanInputMethod } from './KoreanHelper';
 import { JapanAnime } from './Animation'
 import TypingSpeedGraph from './TypingSpeedGraph';
+import Header from './components/Header';
 
 function App() {
   const [currentKey, setCurrentKey] = useState("");
@@ -136,6 +137,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header/>
       <TypingSpeedGraph num={typeSpeed} list={typeSpeedList} />
       <ScriptContext.Provider value={{ body, userInput, language, koreanBuffer, displayMode }}>
         <TypingScript style={TypingScriptStyle} />
