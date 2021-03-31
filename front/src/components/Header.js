@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useCallback } from 'react';
 import Img from '../assets/codong.png';
+import DetailMenu from './DetailMenu';
 
 
 function Header() {
@@ -28,8 +29,8 @@ function Header() {
           <img width='40px' height='40px' src={Img} />
         </div>
       </div>
-      {isHovering && <div id="detail" style={DetailMenuStyle}>
-      </div> }
+      {!isHovering && 
+      <DetailMenu/>}
     </div>
   )
 }
@@ -67,13 +68,4 @@ const MenuItemStyle = {
   fontSize: '20px',
 }
 
-const DetailMenuStyle = {
-  width: '100%',
-  background: '#FFFFFF',
-  height: '175px',
-  fontSize: '25px',
-  fontWeight: '400',
-  fontFamily: 'Noto Serif KR',
-  textAlign: 'left',
-}
 export default Header;
