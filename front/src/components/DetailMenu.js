@@ -1,17 +1,60 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
 
-function DetailMenu() {
-  const CompeteModes = ['방 생성', '방 참여'];
-  const CompeteList = CompeteModes.map((mode,index) => <li style={{marginBottom: '12px'}} key = {index}>{mode}</li>);
-  const PracticeModes = ['자리연습', '단어연습', '문장연습', '스크립트 연습'];
-  const PracticeList = PracticeModes.map((mode,index) => <li style={{marginBottom: '12px'}} key = {index}>{mode}</li>);
-  const ScriptAttach = ['스크립트 보기', '스크립트 등록'];
-  const ScriptList = ScriptAttach.map((mode,index) => <li style={{marginBottom: '12px'}} key = {index}>{mode}</li>);
-  const InformationMenus = ['내 정보', '통계'];
-  const InformationList = InformationMenus.map((mode,index) => <li style={{marginBottom: '12px'}} key = {index}>{mode}</li>);
+DetailMenu.propTypes = {
+  onChoose: PropTypes.func
+};
+
+function DetailMenu({onChoose}) {
+  const CompeteModes = 
+    [{ title: '방 생성',
+      href: '/room-create' }, 
+    { title: '방 참여',
+      href: '/room-join' }];                    
+  const CompeteList = CompeteModes.map((menu,index) => 
+    <Link to = {menu.href} key = {index} style ={{color: '#828282', textDecoration: 'none'}}>
+      <li style={{marginBottom: '12px'}}>{menu.title}</li>
+    </Link>);
+
+  const PracticeModes = 
+    [{ title: '자리연습',
+      href: '/practice-key' }, 
+    { title: '단어연습',
+      href: '/practice-word' },
+    { title: '문장연습',
+      href: '/practice-sentence' }, 
+    { title: '스크팁트 연습',
+      href: '/practice-script' }];    
+  const PracticeList = PracticeModes.map((menu,index) => 
+    <Link to = {menu.href} key = {index} style ={{color: '#828282', textDecoration: 'none'}}>
+      <li style={{marginBottom: '12px'}}>{menu.title}</li>
+    </Link>);
+
+  const ScriptAttach = 
+    [{ title: '스크립트 보기',
+      href: '/show-script' }, 
+    { title: '스크립트 등록',
+      href: '/add-script' }]; 
+  const ScriptList = ScriptAttach.map((menu,index) => 
+    <Link to = {menu.href} key = {index} style ={{color: '#828282', textDecoration: 'none'}}>
+      <li style={{marginBottom: '12px'}}>{menu.title}</li>
+    </Link>);
+
+  const InformationMenus = 
+    [{ title: '내 정보',
+      href: '/profile' }, 
+    { title: '통계',
+      href: 'stastics' }]; 
+  const InformationList = InformationMenus.map((menu,index) => 
+    <Link to = {menu.href} key = {index} style ={{color: '#828282', textDecoration: 'none'}}>
+      <li style={{marginBottom: '12px'}}>{menu.title}</li>
+    </Link>);
 
   return (
-    <div style={DetailMenuStyle}>
+    <div style={DetailMenuStyle}
+      onMouseEnter={onChoose}
+      onMouseLeave={onChoose}>
       <div style={MenuWrapperStyle}>
         <ul style = {EachMenuStyle}>{CompeteList}</ul>
         <ul style = {EachMenuStyle}>{PracticeList}</ul>
@@ -50,5 +93,6 @@ const EachMenuStyle = {
   textAlign: 'top',
   marginBottom: '10px',
 }
+
 
 export default DetailMenu;

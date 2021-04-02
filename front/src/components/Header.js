@@ -1,22 +1,28 @@
 import React from 'react';
 import { useState, useCallback } from 'react';
+import { Link } from "react-router-dom";
 import Img from '../assets/codong.png';
 import DetailMenu from './DetailMenu';
 
 
 function Header() {
   const [isHovering, setIsHovering] = useState("");
+  const [isChoosing, setIsChoosing] = useState("");
 
   const handleMouseHover = useCallback(() => {
     setIsHovering((isHovering) => !isHovering);
   }, [])
 
+  const handleMouseChoose = useCallback(() => {
+    setIsChoosing((isChoosing) => !isChoosing);
+  }, [])
+
   return (
     <div>
       <div style={HeaderStyle}>
-        <div style={TitleStyle}>
+        <Link to ='/' style={TitleStyle}>
           <b>숭컴타</b>
-        </div>
+        </Link>
         <div style={MenuStyle}
           onMouseEnter={handleMouseHover}
           onMouseLeave={handleMouseHover} >
@@ -25,12 +31,12 @@ function Header() {
           <div style={MenuItemStyle}>스크립트</div>
           <div style={MenuItemStyle}>내 정보</div>
         </div>
-        <div>
+        <div style={{marginRight: '60px',}}>
           <img width='40px' height='40px' src={Img} />
         </div>
       </div>
-      {!isHovering && 
-      <DetailMenu/>}
+      {(isHovering || isChoosing) && 
+      <DetailMenu onChoose = {handleMouseChoose}/>}
     </div>
   )
 }
@@ -45,27 +51,31 @@ const HeaderStyle = {
   fontFamily: 'Noto Serif KR',
   textAlign: 'left',
   alignItems: 'center',
+  justifyContent: 'space-between',
   display: 'flex',
 }
 
 const TitleStyle = {
-  marginLeft: '5%',
-  marginRight: '20%',
   color: 'white',
-  fontSize: '40px'
+  fontSize: '40px',
+  marginLeft: '80px',
+  textDecoration: 'none',
 }
 
 const MenuStyle = {
-  width: '40%',
+  width: '42%',
+  height: '100%',
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-around',
+  marginRight: '90px',
 }
 
 const MenuItemStyle = {
   color: 'white',
-  marginRight: '8%',
   fontWeight: '700',
   fontSize: '20px',
+  margin: '30px',
 }
 
 export default Header;
