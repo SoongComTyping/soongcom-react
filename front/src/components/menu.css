@@ -1,0 +1,27 @@
+#detail-list {
+  width: 100px;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  align-items: top;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#list {
+    height: 20px;
+    padding: 2px;
+    margin-bottom: 6px;
+}
+
+#list:hover {
+    color: white;
+    border: 0px solid #7bc5c5;
+    border-radius: 24px;
+    background-color: #7bc5c5;
+}
+
+#detail {
+    color: #828282;
+    text-decoration: none;
+}

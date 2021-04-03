@@ -6,8 +6,8 @@ import DetailMenu from './DetailMenu';
 
 
 function Header() {
-  const [isHovering, setIsHovering] = useState("");
-  const [isChoosing, setIsChoosing] = useState("");
+  const [isHovering, setIsHovering] = useState(false);
+  const [isChoosing, setIsChoosing] = useState(false);
 
   const handleMouseHover = useCallback(() => {
     setIsHovering((isHovering) => !isHovering);
@@ -51,7 +51,7 @@ const HeaderStyle = {
   fontFamily: 'Noto Serif KR',
   textAlign: 'left',
   alignItems: 'center',
-  justifyContent: 'space-between',
+  justifyContent: 'space-around',
   display: 'flex',
 }
 
@@ -63,15 +63,16 @@ const TitleStyle = {
 }
 
 const MenuStyle = {
-  width: '42%',
+  width: '40%',
   height: '100%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
-  marginRight: '90px',
+  marginRight: '65px',
 }
 
 const MenuItemStyle = {
+  width: '100px',
   color: 'white',
   fontWeight: '700',
   fontSize: '20px',

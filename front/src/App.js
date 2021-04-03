@@ -11,7 +11,7 @@ function App() {
         <main>
           <Header />
           <Switch>
-            <Route path="/type" component={type} />
+            <Route path="/practice-key" component={type} />
           </Switch>
         </main>
       </Router>

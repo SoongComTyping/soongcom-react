@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
+import './menu.css';
 
 DetailMenu.propTypes = {
   onChoose: PropTypes.func
@@ -9,12 +10,12 @@ DetailMenu.propTypes = {
 function DetailMenu({onChoose}) {
   const CompeteModes = 
     [{ title: '방 생성',
-      href: '/room-create' }, 
+      href: '/room-create',}, 
     { title: '방 참여',
-      href: '/room-join' }];                    
+      href: '/room-join',}];                    
   const CompeteList = CompeteModes.map((menu,index) => 
-    <Link to = {menu.href} key = {index} style ={{color: '#828282', textDecoration: 'none'}}>
-      <li style={{marginBottom: '12px'}}>{menu.title}</li>
+    <Link id = 'detail' to = {menu.href} key = {index}>
+      <li id='list'> {menu.title} </li>
     </Link>);
 
   const PracticeModes = 
@@ -27,8 +28,8 @@ function DetailMenu({onChoose}) {
     { title: '스크팁트 연습',
       href: '/practice-script' }];    
   const PracticeList = PracticeModes.map((menu,index) => 
-    <Link to = {menu.href} key = {index} style ={{color: '#828282', textDecoration: 'none'}}>
-      <li style={{marginBottom: '12px'}}>{menu.title}</li>
+    <Link id = 'detail' to = {menu.href} key = {index}>
+      <li id='list'>{menu.title}</li>
     </Link>);
 
   const ScriptAttach = 
@@ -37,18 +38,18 @@ function DetailMenu({onChoose}) {
     { title: '스크립트 등록',
       href: '/add-script' }]; 
   const ScriptList = ScriptAttach.map((menu,index) => 
-    <Link to = {menu.href} key = {index} style ={{color: '#828282', textDecoration: 'none'}}>
-      <li style={{marginBottom: '12px'}}>{menu.title}</li>
+    <Link id = 'detail' to = {menu.href} key = {index}>
+      <li id='list'>{menu.title}</li>
     </Link>);
 
   const InformationMenus = 
     [{ title: '내 정보',
       href: '/profile' }, 
     { title: '통계',
-      href: 'stastics' }]; 
+      href: '/stastics' }]; 
   const InformationList = InformationMenus.map((menu,index) => 
-    <Link to = {menu.href} key = {index} style ={{color: '#828282', textDecoration: 'none'}}>
-      <li style={{marginBottom: '12px'}}>{menu.title}</li>
+    <Link id = 'detail' to = {menu.href} key = {index}>
+      <li id='list'>{menu.title}</li>
     </Link>);
 
   return (
@@ -56,10 +57,10 @@ function DetailMenu({onChoose}) {
       onMouseEnter={onChoose}
       onMouseLeave={onChoose}>
       <div style={MenuWrapperStyle}>
-        <ul style = {EachMenuStyle}>{CompeteList}</ul>
-        <ul style = {EachMenuStyle}>{PracticeList}</ul>
-        <ul style = {EachMenuStyle}>{ScriptList}</ul>
-        <ul style = {EachMenuStyle}>{InformationList}</ul>
+        <ul id='detail-list' >{CompeteList}</ul>
+        <ul id='detail-list'>{PracticeList}</ul>
+        <ul id='detail-list'>{ScriptList}</ul>
+        <ul id='detail-list'>{InformationList}</ul>
       </div>
     </div>
   )
@@ -69,7 +70,7 @@ const DetailMenuStyle = {
   width: '100%',
   background: '#FFFFFF',
   height: '175px',
-  fontSize: '17px',
+  fontSize: '16px',
   fontWeight: '350',
   fontFamily: 'Noto Serif KR',
   borderBottom: '2px solid #eeeeee',
@@ -85,14 +86,4 @@ const MenuWrapperStyle = {
   marginTop : '16px',
 }
 
-const EachMenuStyle = {
-  listStyleType: 'none',
-  padding: '0px',
-  margin: '0px',
-  alignItems: 'top',
-  textAlign: 'top',
-  marginBottom: '10px',
-}
-
-
-export default DetailMenu;
+export default React.memo(DetailMenu);
