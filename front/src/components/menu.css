@@ -1,8 +1,8 @@
 #detail-list {
-  width: 100px;
   list-style-type: none;
   padding: 0px;
   margin: 0px;
+  flex: 1;
   align-items: top;
   text-align: center;
   margin-bottom: 10px;
