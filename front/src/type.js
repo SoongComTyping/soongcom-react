@@ -8,7 +8,6 @@ import MacKeyboard from './MacKeyboard';
 import { KeyboardContext, ScriptContext } from './Contexts';
 import TypingScript from './TypingScript';
 import { KoreanInputMethod } from './KoreanHelper';
-import { JapanAnime } from './Animation'
 import TypingSpeedGraph from './TypingSpeedGraph';
 
 function type() {
@@ -121,9 +120,6 @@ function type() {
       </ScriptContext.Provider>
       <KeyboardContext.Provider value={{ currentKey, language }} >
         <MacKeyboard style={MacKeyboardStyle} />
-      </KeyboardContext.Provider>
-      <KeyboardContext.Provider value={{ typeCount }} >
-        <JapanAnime />
       </KeyboardContext.Provider>
     </div>
   );
