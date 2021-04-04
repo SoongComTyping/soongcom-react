@@ -75,6 +75,7 @@ const DetailMenuStyle = {
   fontFamily: 'Noto Serif KR',
   borderBottom: '2px solid #eeeeee',
   display: 'flex',
+  alignItems: 'center',
   justifyContent: 'center',
   color: '#828282',
 }
@@ -83,7 +84,6 @@ const MenuWrapperStyle = {
   width : '40%', 
   justifyContent: 'space-around',
   display: 'flex',
-  marginTop : '16px',
 }
 
 export default React.memo(DetailMenu);
