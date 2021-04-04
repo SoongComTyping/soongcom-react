@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Key from './Key';
-import MacKeyboardStyles from './MacKeyboard.styles';
-
 function MacKeyboard({ style }) {
   
   return (
     <div className="keyboard" style={style}>
-      <div className="keyboard-row" style={MacKeyboardStyles.KeyboardRowStyle}>
+      <div className="keyboard-row" style={KeyboardRowStyle}>
         <Key displayChar="~" code='Backquote' />
         <Key displayChar="1" code='Digit1' />
         <Key displayChar="2" code='Digit2' />
@@ -23,7 +21,7 @@ function MacKeyboard({ style }) {
         <Key displayChar="=" code='Equal' />
         <Key displayChar="Delete" code="Backspace" />
       </div>
-      <div className="keyboard-row" style={MacKeyboardStyles.KeyboardRowStyle}>
+      <div className="keyboard-row" style={KeyboardRowStyle}>
         <Key displayChar="Tab" code='Tab' />
         <Key displayChar="q" code='KeyQ' />
         <Key displayChar="w" code='KeyW' />
@@ -39,7 +37,7 @@ function MacKeyboard({ style }) {
         <Key displayChar="]" code='BracketRight' />
         <Key displayChar="\" code='Backslash' />
       </div>
-      <div className="keyboard-row" style={MacKeyboardStyles.KeyboardRowStyle}>
+      <div className="keyboard-row" style={KeyboardRowStyle}>
         <Key displayChar="CAPS" code='Capslock' />
         <Key displayChar="a" code='KeyA' />
         <Key displayChar="s" code='KeyS' />
@@ -54,7 +52,7 @@ function MacKeyboard({ style }) {
         <Key displayChar="'" code='Quote' />
         <Key displayChar="return" code='Enter' />
       </div>
-      <div className="keyboard-row" style={MacKeyboardStyles.KeyboardRowStyle}>
+      <div className="keyboard-row" style={KeyboardRowStyle}>
         <Key displayChar="⇧" code='ShiftLeft' />
         <Key displayChar="z" code='KeyZ' />
         <Key displayChar="x" code='KeyX' />
@@ -68,7 +66,7 @@ function MacKeyboard({ style }) {
         <Key displayChar="/" code='Slash' />
         <Key displayChar="⇧" code='ShiftRight' />
       </div>
-      <div className="keyboard-row" style={MacKeyboardStyles.KeyboardRowStyle}>
+      <div className="keyboard-row" style={KeyboardRowStyle}>
         <Key displayChar="fn" code ='fn' />
         <Key displayChar="^" code='ControlLeft' />
         <Key displayChar="⌥" code='AltLeft' />
@@ -83,6 +81,10 @@ function MacKeyboard({ style }) {
     </div>
   )
 }
+
+const KeyboardRowStyle = {
+  display: 'flex',
+};
 
 MacKeyboard.propTypes = {
   pressedKey: PropTypes.string,

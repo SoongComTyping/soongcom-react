@@ -1,31 +1,27 @@
 import './App.css';
 import React from 'react'
-import { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import useInterval from '@use-it/interval'
 import useSound from 'use-sound';
 import keySoundAsset from './mechanicalKeyboard.mp3';
 import MacKeyboard from './MacKeyboard';
 import { KeyboardContext, ScriptContext } from './Contexts';
 import TypingScript from './TypingScript';
 import { KoreanInputMethod } from './KoreanHelper';
-import { JapanAnime } from './Animation'
 import TypingSpeedGraph from './TypingSpeedGraph';
 
 function type() {
   const [currentKey, setCurrentKey] = useState("");
   const [language] = useState("korean");
-  const [displayMode] = useState("dark");
+  const [displayMode] = useState("");
   const [body] = useState("모든 국민은 사생활의 비밀과 자유를 침해받지 아니한다. 제안된 헌법개정안은 대통령이 20일 이상의 기간 이를 공고하여야 한다. 대통령의 임기는 5년으로 하며, 중임할 수 없다. 선거와 국민투표의 공정한 관리 및 정당에 관한 사무를 처리하기 위하여 선거관리위원회를 둔다.");
   const [userInput, setUserInput] = useState("");
   const [koreanBuffer, setKoreanBuffer] = useState("");
   const [typeCount, setTypeCount] = useState(0); // 총 타이핑 수
   const [typeSpeed, setTypeSpeed] = useState(0); // 타수
   const [tick, setTick] = useState(0); // 시작 후 흐른 시간
-  const [typeCountList, setTypeCountList] = useState( // 타이핑 카운트 리스트
-    [
-      { name: "x", count: 0 }
-    ]
-  );
-  const [typeSpeedList, setTypeSpeedList] = useState( // 타수 그래프 리스트
+  const [typeCounts, setTypeCountList] = useState([0]); // 타이핑 카운트 리스트
+  const [typeSpeeds, setTypeSpeedList] = useState( // 타수 그래프 리스트
     [
       { name: "x", speed: 0 }
     ]
@@ -87,32 +83,14 @@ function type() {
     }
   }, [onKeyUp])
 
-  function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    useEffect(() => {
-      savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-      function tick() {
-        savedCallback.current();
-      }
-      if (delay !== null) {
-        let id = setInterval(tick, delay);
-        return () => clearInterval(id);
-      }
-    }, [delay]);
-  }
-
   useInterval(() => {
-    const countList = typeCountList.concat({ name: "x", count: typeCount });
+    const countList = typeCounts.concat(typeCount);
     var dataNumber, speedList, gap, idx;
 
     if (countList.length > 9) {
       dataNumber = 10;
       idx = countList.length - dataNumber + 1;
-      gap = countList[idx].count - countList[idx - 1].count;
+      gap = countList[idx] - countList[idx - 1];
       speedList = [{ name: "x", speed: gap }];
     } else {
       dataNumber = countList.length;
@@ -121,7 +99,7 @@ function type() {
 
     for (let i = dataNumber - 1; 1 <= i; i--) {
       idx = countList.length - i;
-      gap = countList[idx].count - countList[idx - 1].count;
+      gap = countList[idx] - countList[idx - 1];
       speedList = speedList.concat({ name: "x", speed: gap });
     }
 
@@ -136,15 +114,12 @@ function type() {
 
   return (
     <div className="App">
-      <TypingSpeedGraph num={typeSpeed} list={typeSpeedList} />
+      <TypingSpeedGraph num={typeSpeed} list={typeSpeeds} />
       <ScriptContext.Provider value={{ body, userInput, language, koreanBuffer, displayMode }}>
         <TypingScript style={TypingScriptStyle} />
       </ScriptContext.Provider>
       <KeyboardContext.Provider value={{ currentKey, language }} >
         <MacKeyboard style={MacKeyboardStyle} />
-      </KeyboardContext.Provider>
-      <KeyboardContext.Provider value={{ typeCount }} >
-        <JapanAnime />
       </KeyboardContext.Provider>
     </div>
   );
