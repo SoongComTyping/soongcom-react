@@ -1,5 +1,5 @@
 /**
- * 
+ * 영문 입력기
  * @param {Event} event 
  * @param {String} userInput 
  * @returns {String} computedNextInput

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { KoreanInputMethod, inko } from '../../helpers/KoreanHelper';
-import { EnglishInputMethod } from '../../helpers/EnglishHelper';
+import { KoreanInputMethod, inko } from '../../../helpers/KoreanInputMethod';
+import { EnglishInputMethod } from '../../../helpers/EnglishInputMethod';
 
 const initialState = {
   stage: 0,

@@ -1,10 +1,15 @@
 import Inko from 'inko';
 let inko = new Inko();
 
+/**
+ * 한글 입력기 시뮬레이터, 이전까지의 입력 스트링과 버퍼, 새 입력 이벤트를 인자로 받음
+ * 다음 스트링과 버퍼를 반환함.
+ * @param {String} buf 
+ * @param {Event} event 
+ * @param {String} userInput 
+ * @returns {Object} {nextUserInput, nextBuf}
+ */
 function KoreanInputMethod(buf, event, userInput) {
-  /**
-   * return {nextUserInput, nextBuf}
-   */
   if (event.code.includes('Key')) { // q w e r 같은 입력들 (사파리에서는 ㅂ ㅈ ㄷ ㄱ로 들어와서 한번 영어로 변환해줘야함)
     if (inko.en2ko(buf.concat(event.key)).length > 1) {
       // 버퍼가 꽉차서 다음글자로 넘어가면

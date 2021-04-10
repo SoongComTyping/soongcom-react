@@ -6,7 +6,7 @@ import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 import MacKeyboard from '../../keyboards/MacKeyboard';
 import { KeyboardContext, ScriptContext } from '../../../Contexts';
 import TypingScript from '../../SpeedGraphs/TypingScript';
-import { KoreanInputMethod } from '../../helpers/KoreanHelper';
+import { KoreanInputMethod } from '../../../helpers/KoreanInputMethod';
 import TypingSpeedGraph from '../../SpeedGraphs/TypingSpeedGraph';
 
 function ParagraphPractice() {
