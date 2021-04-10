@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import MacKeyboard from '../../keyboards/MacKeyboard';
 import { useDispatch, useSelector } from 'react-redux';
 import { switchLanguage, keyPressed, selectKeyboards, keyClear } from '../../keyboards/KeyboardsSlice';
+import { keyPressed as wordsSliceKeyPressed, selectUserInput } from './wordsSlice';
 
 function Header() {
   const dispatch = useDispatch();
@@ -32,45 +33,13 @@ function Header() {
   )
 }
 
-const HeaderStyle = {
-  width: '100%',
-  background: '#FFFFFF',
-  height: '80px',
-  fontSize: '16px',
-  fontFamily: 'Noto Serif KR',
-  borderBottom: '2px solid #eeeeee',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  color: '#828282',
-};
-
-const HeaderTitle = { flex: 20 };
-const Progress = { flex: 40, display: 'flex', justifyContent: 'space-around', alignItems: 'center' }
-const LanguageSelect = { flex: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-
-const Circle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '50px',
-  width: '50px',
-  borderRadius: '50%',
-  background: 'gray',
-  color: 'white',
-  fontSize: '30px',
-}
-
-const CircleFocussed = {
-  background: 'pink',
-}
-
 function WordsPractice() {
   const dispatch = useDispatch();
   const kb = useSelector(selectKeyboards);
+  const userInput = useSelector(selectUserInput);
 
   const onKeyDown = useCallback((event) => {
-    if (kb.language === 'mandarin') return;
+    dispatch(wordsSliceKeyPressed({language: kb.language, event: event}));
     dispatch(keyPressed(event));
   }, []);
 
@@ -115,7 +84,7 @@ function WordsPractice() {
             </div>
             <div style={WordCellFocused}>
               <div style={Word}>미리</div>
-              <div style={Word}>미리</div>
+              <div style={Word}>{userInput}</div>
             </div>
             <div style={WordCell}>
               <div style={Word}>나이</div>
@@ -134,6 +103,40 @@ function WordsPractice() {
     </div>
   )
 }
+
+const HeaderStyle = {
+  width: '100%',
+  background: '#FFFFFF',
+  height: '80px',
+  fontSize: '16px',
+  fontFamily: 'Noto Serif KR',
+  borderBottom: '2px solid #eeeeee',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  color: '#828282',
+};
+
+const HeaderTitle = { flex: 20 };
+const Progress = { flex: 40, display: 'flex', justifyContent: 'space-around', alignItems: 'center' }
+const LanguageSelect = { flex: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+
+const Circle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '50px',
+  width: '50px',
+  borderRadius: '50%',
+  background: 'gray',
+  color: 'white',
+  fontSize: '30px',
+}
+
+const CircleFocussed = {
+  background: 'pink',
+}
+
 
 const BodyContainer = {
   display: 'flex',
