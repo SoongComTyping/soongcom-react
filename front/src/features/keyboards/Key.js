@@ -1,6 +1,6 @@
 import React, { useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import {KeyboardContext} from './Contexts';
+import {KeyboardContext} from '../../Contexts';
 import KeyStyles from './Key.styles';
 import KeySkin from './KeySkin';
 

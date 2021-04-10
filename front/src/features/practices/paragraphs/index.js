@@ -1,16 +1,15 @@
-import './App.css';
 import React from 'react'
 import { useCallback, useEffect, useState } from 'react';
 import useInterval from '@use-it/interval'
 import useSound from 'use-sound';
-import keySoundAsset from './mechanicalKeyboard.mp3';
-import MacKeyboard from './MacKeyboard';
-import { KeyboardContext, ScriptContext } from './Contexts';
-import TypingScript from './TypingScript';
-import { KoreanInputMethod } from './KoreanHelper';
-import TypingSpeedGraph from './TypingSpeedGraph';
+import keySoundAsset from '../../../mechanicalKeyboard.mp3';
+import MacKeyboard from '../../keyboards/MacKeyboard';
+import { KeyboardContext, ScriptContext } from '../../../Contexts';
+import TypingScript from '../../SpeedGraphs/TypingScript';
+import { KoreanInputMethod } from '../../helpers/KoreanHelper';
+import TypingSpeedGraph from '../../SpeedGraphs/TypingSpeedGraph';
 
-function type() {
+function ParagraphPractice() {
   const [currentKey, setCurrentKey] = useState("");
   const [language] = useState("korean");
   const [displayMode] = useState("");
@@ -148,4 +147,4 @@ const MacKeyboardStyle = {
   height: '18em',
 };
 
-export default type;
+export default ParagraphPractice;
