@@ -1,3 +1,6 @@
+import Inko from 'inko';
+const inko = new Inko();
+
 /**
  * 영문 입력기
  * @param {Event} event 
@@ -15,7 +18,7 @@ function EnglishInputMethod(event, userInput) {
   if (event.key.length > 1)
     return userInput;
   
-  return userInput.concat(event.key);
+  return userInput.concat(inko.ko2en(event.key));
 }
 
 export { EnglishInputMethod };

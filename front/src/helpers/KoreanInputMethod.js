@@ -1,5 +1,5 @@
 import Inko from 'inko';
-let inko = new Inko();
+const inko = new Inko();
 
 /**
  * 한글 입력기 시뮬레이터, 이전까지의 입력 스트링과 버퍼, 새 입력 이벤트를 인자로 받음
