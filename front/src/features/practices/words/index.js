@@ -5,19 +5,19 @@ import { KeyboardContext } from '../../../Contexts';
 function Header() {
   return (
     <section style={HeaderStyle}>
-      <h2 style={{ flex: 20 }}>
+      <h2 style={HeaderTitle}>
         낱말 연습
       </h2>
-      <div style={{ flex: 50, display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
-        <div style={{ flex: 1 }}>1</div>
-        <div style={{ flex: 1 }}>2</div>
-        <div style={{ flex: 1 }}>3</div>
-        <div style={{ flex: 1 }}>4</div>
-        <div style={{ flex: 1 }}>5</div>
-        <div style={{ flex: 1 }}>6</div>
-        <div style={{ flex: 1 }}>7</div>
+      <div style={Progress}>
+        <div style={{ ...Circle, ...CircleFocussed }}>1</div>
+        <div style={Circle}>2</div>
+        <div style={Circle}>3</div>
+        <div style={Circle}>4</div>
+        <div style={Circle}>5</div>
+        <div style={Circle}>6</div>
+        <div style={Circle}>7</div>
       </div>
-      <div style={{ flex: 20, display: 'flex', alignItems: 'center' }}>
+      <div style={LanguageSelect}>
         <button className="button">한</button>
         <button className="button">영</button>
       </div>
@@ -30,7 +30,6 @@ const HeaderStyle = {
   background: '#FFFFFF',
   height: '80px',
   fontSize: '16px',
-  fontWeight: '350',
   fontFamily: 'Noto Serif KR',
   borderBottom: '2px solid #eeeeee',
   display: 'flex',
@@ -39,12 +38,32 @@ const HeaderStyle = {
   color: '#828282',
 };
 
+const HeaderTitle = { flex: 20 };
+const Progress = { flex: 40, display: 'flex', justifyContent: 'space-around', alignItems: 'center' }
+const LanguageSelect = { flex: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }
+
+const Circle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '50px',
+  width: '50px',
+  borderRadius: '50%',
+  background: 'gray',
+  color: 'white',
+  fontSize: '30px',
+}
+
+const CircleFocussed = {
+  background: 'pink',
+}
+
 function WordsPractice() {
   const [currentKey] = useState("");
   const [language] = useState("korean");
-  
+
   return (
-    <>
+    <div className="noselect">
       <Header />
       <div style={BodyContainer}>
         <div style={Body}>
@@ -82,7 +101,7 @@ function WordsPractice() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -160,8 +179,6 @@ const KeyboardZone = {
 
 const KeyboardStyle = {
   margin: 'auto',
-  left: '13em',
-  top: '24em',
   display: 'block',
   width: '50em',
   height: '18em',
