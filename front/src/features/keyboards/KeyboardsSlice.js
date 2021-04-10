@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   language: 'korean',
@@ -27,7 +27,4 @@ export default keyboardsSlice.reducer;
 
 export const { keyPressed, keyClear, switchLanguage } = keyboardsSlice.actions;
 
-export const selectKeyboards = createSelector(
-  [(state) => state.keyboards],
-  (keyboards) => keyboards
-);
+export const selectKeyboards = (state) => state.keyboards;

@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
 import MacKeyboard from '../../keyboards/MacKeyboard';
 import { useDispatch, useSelector } from 'react-redux';
-import { switchLanguage, keyPressed, selectKeyboards, keyClear } from '../../keyboards/KeyboardsSlice';
-import { keyPressed as wordsSliceKeyPressed, selectUserInput } from './wordsSlice';
+import { switchLanguage, keyPressed, keyClear } from '../../keyboards/KeyboardsSlice';
+import { keyPressed as wordsSliceKeyPressed, switchLanguage as wordsSliceSwitchLanguage, selectUserInput } from './wordsSlice';
 
 function Header() {
   const dispatch = useDispatch();
@@ -22,12 +22,14 @@ function Header() {
         <div style={Circle}>7</div>
       </div>
       <div style={LanguageSelect}>
-        <button className="button" onClick={() => 
-          dispatch(switchLanguage({language: "korean"}))
-        }>한</button>
-        <button className="button" onClick={() => 
+        <button className="button" onClick={() => {
+          dispatch(wordsSliceSwitchLanguage({language: "korean"}));
+          dispatch(switchLanguage({language: "korean"}));
+        }}>한</button>
+        <button className="button" onClick={() => {
+          dispatch(wordsSliceSwitchLanguage({language: "english"}));
           dispatch(switchLanguage({language: "english"}))
-        }>영</button>
+        }}>영</button>
       </div>
     </section>
   )
@@ -35,11 +37,10 @@ function Header() {
 
 function WordsPractice() {
   const dispatch = useDispatch();
-  const kb = useSelector(selectKeyboards);
   const userInput = useSelector(selectUserInput);
 
   const onKeyDown = useCallback((event) => {
-    dispatch(wordsSliceKeyPressed({language: kb.language, event: event}));
+    dispatch(wordsSliceKeyPressed({event: event}));
     dispatch(keyPressed(event));
   }, []);
 

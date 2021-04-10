@@ -9,6 +9,7 @@ const initialState = {
   data: ['나라', '말', '미리', '나이', '이랑'],
   userInput: '',
   koreanBuffer: '',
+  language: 'korean',
 }
 
 const wordsSlice = createSlice({
@@ -16,8 +17,8 @@ const wordsSlice = createSlice({
   initialState,
   reducers: {
     keyPressed(state, action) {
-      const { userInput, koreanBuffer } = state;
-      const { event, language } = action.payload;
+      const { userInput, koreanBuffer, language } = state;
+      const { event } = action.payload;
 
       if (language === 'korean') {
         const { nextUserInput, nextBuf } = KoreanInputMethod(koreanBuffer, event, userInput);
@@ -31,12 +32,15 @@ const wordsSlice = createSlice({
         state.userInput = nextUserInput;
       }
     },
+    switchLanguage(state, action) {
+      state.language = action.payload.language;
+    },
   }
 });
 
 export default wordsSlice.reducer;
 
-export const { keyPressed } = wordsSlice.actions;
+export const { keyPressed, switchLanguage } = wordsSlice.actions;
 
 export const selectWords = (state) => state.words;
 
