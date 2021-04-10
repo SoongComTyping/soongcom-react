@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import MacKeyboard from '../../keyboards/MacKeyboard';
-import { KeyboardContext } from '../../../Contexts';
+import { useDispatch, useSelector } from 'react-redux';
+import { switchLanguage, keyPressed, selectKeyboards, keyClear } from '../../keyboards/KeyboardsSlice';
 
 function Header() {
+  const dispatch = useDispatch();
+
   return (
     <section style={HeaderStyle}>
       <h2 style={HeaderTitle}>
@@ -18,8 +21,12 @@ function Header() {
         <div style={Circle}>7</div>
       </div>
       <div style={LanguageSelect}>
-        <button className="button">한</button>
-        <button className="button">영</button>
+        <button className="button" onClick={() => 
+          dispatch(switchLanguage({language: "korean"}))
+        }>한</button>
+        <button className="button" onClick={() => 
+          dispatch(switchLanguage({language: "english"}))
+        }>영</button>
       </div>
     </section>
   )
@@ -59,8 +66,33 @@ const CircleFocussed = {
 }
 
 function WordsPractice() {
-  const [currentKey] = useState("");
-  const [language] = useState("korean");
+  const dispatch = useDispatch();
+  const kb = useSelector(selectKeyboards);
+
+  const onKeyDown = useCallback((event) => {
+    if (kb.language === 'mandarin') return;
+    dispatch(keyPressed(event));
+  }, []);
+
+  const onKeyUp = useCallback(() => {
+    dispatch(keyClear());
+  }, []);
+
+  useEffect(() => {
+    document.body.addEventListener("keyup", onKeyUp);
+
+    return () => {
+      document.body.addEventListener("keyup", onKeyUp);
+    }
+  }, [onKeyUp])
+
+  useEffect(() => {
+    document.body.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.addEventListener("keydown", onKeyDown);
+    }
+  }, [onKeyDown])
 
   return (
     <div className="noselect">
@@ -95,9 +127,7 @@ function WordsPractice() {
             </div>
           </div>
           <div style={KeyboardZone}>
-            <KeyboardContext.Provider value={{ currentKey, language }} >
-              <MacKeyboard style={KeyboardStyle} />
-            </KeyboardContext.Provider>
+            <MacKeyboard style={KeyboardStyle} />
           </div>
         </div>
       </div>
