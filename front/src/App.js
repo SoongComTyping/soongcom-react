@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react'
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Header from './components/Header';
-import type from "./type";
+import ParagraphPractice from "./features/practices/paragraphs";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <main>
           <Header />
           <Switch>
-            <Route path="/practice-key" component={type} />
+            <Route exact path="/practice-key" component={ParagraphPractice} />
           </Switch>
         </main>
       </Router>
