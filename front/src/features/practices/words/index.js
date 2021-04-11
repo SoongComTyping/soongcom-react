@@ -62,7 +62,7 @@ function WordsPractice() {
   const cursorWord = useSelector(selectCursorWord);
   const nextWords = useSelector(selectNextWords);
   const status = useSelector((state) => state.words.status);
-  const [playTypingSound] = useSound(keySoundAsset, { volume: 0.25, interrupt: true, });
+  const [playTypingSound] = useSound(keySoundAsset, { volume: 0.25, interrupt: false, });
 
   const onKeyDown = useCallback((event) => {
     dispatch(wordsSliceKeyPressed({ code: event.code, key: event.key }));
