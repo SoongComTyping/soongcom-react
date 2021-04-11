@@ -13,7 +13,7 @@ function ProgressBox ({title, figure, id}) {
             completed={60}
             bgColor='#7BC5C5'
             baseBgColor='#FFFFFF'
-            borderRadius={2}
+            borderRadius='2px'
             isLabelVisible={false}/>
         </div>
       </div>

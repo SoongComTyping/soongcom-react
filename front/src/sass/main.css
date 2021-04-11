@@ -67,6 +67,7 @@
 }
 
 .sentence, .current-input, .current-result, .finished-input, .finished-result {
+  height: 38px;
   margin-bottom: 5px;
   padding: 4px;
   padding-left: 20px;
