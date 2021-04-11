@@ -10,6 +10,7 @@ import {
   selectPreviousTypedWords,
   selectCursorWord,
   selectNextWords,
+  fetchWords,
 } from './wordsSlice';
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
@@ -17,6 +18,16 @@ import style from './index.module.scss';
 
 function Header() {
   const dispatch = useDispatch();
+  const level = useSelector((state) => state.words.level);
+
+  const renderedLevel = [1, 2, 3, 4, 5, 6, 7].map(n => {
+    const foccussed = level === n;
+    let cName = foccussed ? style.CircleFocussed : style.Circle;
+
+    return (
+      <div key={`${n} ${foccussed}`} className={cName}>{n}</div>
+    )
+  });
 
   return (
     <section className={style.HeaderStyle}>
@@ -24,13 +35,7 @@ function Header() {
         낱말 연습
       </h2>
       <div className={style.Progress}>
-        <div className={style.CircleFocussed}>1</div>
-        <div className={style.Circle}>2</div>
-        <div className={style.Circle}>3</div>
-        <div className={style.Circle}>4</div>
-        <div className={style.Circle}>5</div>
-        <div className={style.Circle}>6</div>
-        <div className={style.Circle}>7</div>
+        {renderedLevel}
       </div>
       <div className={style.LanguageSelect}>
         <button className="button" onClick={() => {
@@ -53,6 +58,7 @@ function WordsPractice() {
   const typedWords = useSelector(selectPreviousTypedWords);
   const cursorWord = useSelector(selectCursorWord);
   const nextWords = useSelector(selectNextWords);
+  const status = useSelector((state) => state.words.status);
   const [playTypingSound] = useSound(keySoundAsset, { volume: 0.25, interrupt: true, });
 
   const onKeyDown = useCallback((event) => {
@@ -67,6 +73,12 @@ function WordsPractice() {
   const onKeyUp = useCallback(() => {
     dispatch(keyClear());
   }, []);
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchWords());
+    }
+  }, [status]);
 
   useEffect(() => {
     document.body.addEventListener("keydown", onPlayTypingSound);

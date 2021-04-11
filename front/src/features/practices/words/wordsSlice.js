@@ -1,16 +1,24 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { KoreanInputMethod, inko } from '../../../helpers/KoreanInputMethod';
 import { EnglishInputMethod } from '../../../helpers/EnglishInputMethod';
+import { client } from '../../../api/client';
 
 const initialState = {
-  stage: 0,
+  level: 1,
   cursor: 0,
-  datas: ['나라', '말', '미리', '나이', '이랑'],
+  datas: [],
   typedDatas: [],
   userInput: '',
   koreanBuffer: '',
   language: 'korean',
-}
+  status: 'idle',
+};
+
+export const fetchWords = createAsyncThunk('words/fetch', async (_, { getState, }) => {
+  const { language, level } = getState().words;
+  const response = await client.get(`/api/words?` + new URLSearchParams({ language, level }));
+  return response.data;
+});
 
 const wordsSlice = createSlice({
   name: 'words',
@@ -39,10 +47,29 @@ const wordsSlice = createSlice({
         state.koreanBuffer = '';
         if (state.cursor < state.datas.length)
           state.cursor ++;
+        if (state.cursor === state.datas.length) {
+          state.level ++;
+          state.status = 'idle';
+        }
       }
     },
     switchLanguage(state, action) {
       state.language = action.payload.language;
+      state.status = 'idle';
+      state.level = 1;
+      state.cursor = 0;
+      state.userInput = '';
+      state.datas = [];
+      state.typedDatas = [];
+      state.koreanBuffer = '';
+    },
+  },
+  extraReducers: {
+    [fetchWords.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      state.datas = action.payload;
+      state.typedDatas = [];
+      state.cursor = 0;
     },
   }
 });
