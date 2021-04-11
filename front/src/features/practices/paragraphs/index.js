@@ -78,7 +78,7 @@ function ParagraphPractice() {
     document.body.addEventListener("keyup", onKeyUp);
 
     return () => {
-      document.body.addEventListener("keyup", onKeyUp);
+      document.body.removeEventListener("keyup", onKeyUp);
     }
   }, [onKeyUp])
 

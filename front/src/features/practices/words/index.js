@@ -2,7 +2,17 @@ import React, { useCallback, useEffect } from 'react';
 import MacKeyboard from '../../keyboards/MacKeyboard';
 import { useDispatch, useSelector } from 'react-redux';
 import { switchLanguage, keyPressed, keyClear } from '../../keyboards/KeyboardsSlice';
-import { keyPressed as wordsSliceKeyPressed, switchLanguage as wordsSliceSwitchLanguage, selectUserInput } from './wordsSlice';
+import {
+  keyPressed as wordsSliceKeyPressed,
+  switchLanguage as wordsSliceSwitchLanguage,
+  selectUserInput,
+  selectPreviousWords,
+  selectPreviousTypedWords,
+  selectCursorWord,
+  selectNextWords,
+} from './wordsSlice';
+import useSound from 'use-sound';
+import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 
 function Header() {
   const dispatch = useDispatch();
@@ -23,12 +33,12 @@ function Header() {
       </div>
       <div style={LanguageSelect}>
         <button className="button" onClick={() => {
-          dispatch(wordsSliceSwitchLanguage({language: "korean"}));
-          dispatch(switchLanguage({language: "korean"}));
+          dispatch(wordsSliceSwitchLanguage({ language: "korean" }));
+          dispatch(switchLanguage({ language: "korean" }));
         }}>한</button>
         <button className="button" onClick={() => {
-          dispatch(wordsSliceSwitchLanguage({language: "english"}));
-          dispatch(switchLanguage({language: "english"}))
+          dispatch(wordsSliceSwitchLanguage({ language: "english" }));
+          dispatch(switchLanguage({ language: "english" }))
         }}>영</button>
       </div>
     </section>
@@ -38,27 +48,63 @@ function Header() {
 function WordsPractice() {
   const dispatch = useDispatch();
   const userInput = useSelector(selectUserInput);
+  const previousWords = useSelector(selectPreviousWords);
+  const typedWords = useSelector(selectPreviousTypedWords);
+  const cursorWord = useSelector(selectCursorWord);
+  const nextWords = useSelector(selectNextWords);
+  const [playTypingSound] = useSound(keySoundAsset, { volume: 0.25, interrupt: true, });
 
   const onKeyDown = useCallback((event) => {
-    dispatch(wordsSliceKeyPressed({event: event}));
-    dispatch(keyPressed(event));
+    dispatch(wordsSliceKeyPressed({ code: event.code, key: event.key }));
+    dispatch(keyPressed({ code: event.code }));
   }, []);
+
+  const onPlayTypingSound = useCallback(() => {
+    playTypingSound();
+  }, [playTypingSound])
 
   const onKeyUp = useCallback(() => {
     dispatch(keyClear());
   }, []);
 
   useEffect(() => {
+    document.body.addEventListener("keydown", onPlayTypingSound);
+
+    return () => document.body.removeEventListener("keydown", onPlayTypingSound);
+  }, [onPlayTypingSound]);
+
+  useEffect(() => {
     document.body.addEventListener("keyup", onKeyUp);
 
-    return () => document.body.addEventListener("keyup", onKeyUp);
-  }, [onKeyUp])
+    return () => document.body.removeEventListener("keyup", onKeyUp);
+  }, [onKeyUp]);
 
   useEffect(() => {
     document.body.addEventListener("keydown", onKeyDown);
 
-    return () => document.body.addEventListener("keydown", onKeyDown);
-  }, [onKeyDown])
+    return () => document.body.removeEventListener("keydown", onKeyDown);
+  }, [onKeyDown]);
+
+  const renderedPreviousWords = ['', ' ', ...previousWords].slice(-2).map((word, i) => (
+    <div key={word} style={WordCell}>
+      <div style={Word}>{word}</div>
+      <div style={Word}>{['', '', ...typedWords].slice(-2)[i]}</div>
+    </div>
+  ));
+
+  const renderedCursorWord = (
+    <div key={cursorWord} style={WordCellFocused}>
+      <div style={Word}>{cursorWord}</div>
+      <div style={Word}>{userInput}</div>
+    </div>
+  );
+
+  const renderedNextWords = [...nextWords, '  ', '   '].slice(0, 2).map(word => (
+    <div key={word} style={WordCell}>
+      <div style={Word}>{word}</div>
+      <div style={Word}></div>
+    </div>
+  ));
 
   return (
     <div className="noselect">
@@ -71,26 +117,9 @@ function WordsPractice() {
             <div style={{ flex: 1 }}>정확도</div>
           </div>
           <div style={WordsList}>
-            <div style={WordCell}>
-              <div style={Word}>나라</div>
-              <div style={Word}>나이</div>
-            </div>
-            <div style={WordCell}>
-              <div style={Word}>말</div>
-              <div style={Word}>말</div>
-            </div>
-            <div style={WordCellFocused}>
-              <div style={Word}>미리</div>
-              <div style={Word}>{userInput}</div>
-            </div>
-            <div style={WordCell}>
-              <div style={Word}>나이</div>
-              <div style={Word} />
-            </div>
-            <div style={WordCell}>
-              <div style={Word}>이랑</div>
-              <div style={Word} />
-            </div>
+            {renderedPreviousWords}
+            {renderedCursorWord}
+            {renderedNextWords}
           </div>
           <div style={KeyboardZone}>
             <MacKeyboard style={KeyboardStyle} />

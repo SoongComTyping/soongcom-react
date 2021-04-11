@@ -1,12 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 import { KoreanInputMethod, inko } from '../../../helpers/KoreanInputMethod';
 import { EnglishInputMethod } from '../../../helpers/EnglishInputMethod';
 
 const initialState = {
   stage: 0,
-  precede: 0,
   cursor: 0,
-  data: ['나라', '말', '미리', '나이', '이랑'],
+  datas: ['나라', '말', '미리', '나이', '이랑'],
+  typedDatas: [],
   userInput: '',
   koreanBuffer: '',
   language: 'korean',
@@ -18,7 +18,8 @@ const wordsSlice = createSlice({
   reducers: {
     keyPressed(state, action) {
       const { userInput, koreanBuffer, language } = state;
-      const { event } = action.payload;
+      const { code, key } = action.payload;
+      const event = { code, key };
 
       if (language === 'korean') {
         const { nextUserInput, nextBuf } = KoreanInputMethod(koreanBuffer, event, userInput);
@@ -26,10 +27,18 @@ const wordsSlice = createSlice({
           state.userInput = nextUserInput;
         }
         state.koreanBuffer = nextBuf;
-      }      
+      }
       if (language === 'english') {
         const nextUserInput = EnglishInputMethod(event, userInput);
         state.userInput = nextUserInput;
+      }
+
+      if (event.key === 'Enter') {
+        state.typedDatas.push(state.userInput);
+        state.userInput = '';
+        state.koreanBuffer = '';
+        if (state.cursor < state.datas.length)
+          state.cursor ++;
       }
     },
     switchLanguage(state, action) {
@@ -44,6 +53,39 @@ export const { keyPressed, switchLanguage } = wordsSlice.actions;
 
 export const selectWords = (state) => state.words;
 
-export const selectUserInput = (state) => {
-  return state.words.userInput + inko.en2ko(state.words.koreanBuffer);
-}
+export const selectUserInput = createSelector(
+  [selectWords],
+  (words) => words.userInput + inko.en2ko(words.koreanBuffer)
+);
+
+export const selectCursorWord = createSelector(
+  [selectWords],
+  (words) => {
+    return words.datas[words.cursor];
+  }
+);
+
+export const selectPreviousWords = createSelector(
+  [selectWords],
+  (words) => {
+    const l = Math.max(0, words.cursor - 2);
+    return words.datas.slice(l, words.cursor);
+  }
+);
+
+export const selectPreviousTypedWords = createSelector(
+  [selectWords],
+  (words) => {
+    const l = Math.max(0, words.cursor - 2);
+    return words.typedDatas.slice(l, words.cursor);
+  }
+);
+
+export const selectNextWords = createSelector(
+  [selectWords],
+  (words) => {
+    const l = Math.min(words.cursor + 1, words.datas.length);
+    const r = Math.min(words.datas.length, words.cursor + 3)
+    return words.datas.slice(l, r);
+  }
+);

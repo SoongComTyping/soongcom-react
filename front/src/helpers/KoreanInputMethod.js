@@ -33,7 +33,6 @@ function KoreanInputMethod(buf, event, userInput) {
   }
   if (event.key.length > 1) { // meta, enter, ctrl같은 특수 입력들
     if (event.key === 'Backspace') {
-      event.preventDefault();
       if (buf === '') {
         return {
           nextUserInput: userInput.slice(0, -1),
