@@ -18,6 +18,7 @@ import style from './index.module.scss';
 
 function Header() {
   const dispatch = useDispatch();
+  const language = useSelector((state) => state.words.language);
   const level = useSelector((state) => state.words.level);
 
   const renderedLevel = [1, 2, 3, 4, 5, 6, 7].map(n => {
@@ -37,16 +38,18 @@ function Header() {
       <div className={style.Progress}>
         {renderedLevel}
       </div>
-      <div className={style.LanguageSelect}>
-        <button className="button" onClick={() => {
+      <form className={style.LanguageSelect}>
+        <label htmlFor="korean">한</label>
+        <input type="checkbox" checked={language==='korean'} id="korean" onClick={() => {
           dispatch(wordsSliceSwitchLanguage({ language: "korean" }));
           dispatch(switchLanguage({ language: "korean" }));
-        }}>한</button>
-        <button className="button" onClick={() => {
+        }}/>
+        <label htmlFor="english">영</label>
+        <input type="checkbox" checked={language==='english'} id="english" onClick={() => {
           dispatch(wordsSliceSwitchLanguage({ language: "english" }));
           dispatch(switchLanguage({ language: "english" }))
-        }}>영</button>
-      </div>
+        }}/>
+      </form>
     </section>
   )
 }
