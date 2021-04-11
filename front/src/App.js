@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Header from './components/Header';
 import ParagraphPractice from "./features/practices/paragraphs";
-import PracticeSentence from "./practice/PracticeSentence"
+import PracticeSentence from "./features/practices/sentences/PracticeSentence"
 
 function App() {
   return (

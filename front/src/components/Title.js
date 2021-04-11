@@ -15,13 +15,14 @@ function Title({title}) {
 
 const TitleStyle = {
   width: '100%',
+  height: '40px',
   color: '#828282',
   fontWeight: '400',
   fontSize: '27.5px',
   padding: '20px',
   paddingLeft: '100px',
   borderBottom: '1px solid #e0e0e0',
-  display: 'flex',
+  textAlign: 'left',
 }
 
 export default Title;
