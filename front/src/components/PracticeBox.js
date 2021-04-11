@@ -2,6 +2,7 @@ import React from 'react';
 import '../sass/main.css'
 import PropTypes from 'prop-types';
 import ProgressBox from '../components/ProgressBox';
+import PracticeSentenceTask from '../features/practices/sentences/PracticeSentenceTask';
 
 
 function PracticeBox () {
@@ -13,6 +14,7 @@ function PracticeBox () {
         <ProgressBox title = '최고 타수' figure = {0}/>
         <ProgressBox title = '정확도' figure = {0}/>
       </div>
+      <PracticeSentenceTask/>
     </div>  
   );
 }

@@ -1,6 +1,8 @@
 $Grey3: #828282;
 $Grey4: #BDBDBD;
 $Grey5: #E0E0E0;
+$Primary: #47A5C7;
+$PrimaryDark: #2B6D90;
 
 .content {
     position:absolute;
@@ -60,4 +62,48 @@ $Grey5: #E0E0E0;
         font-weight: 300;
         padding: 10px;
     }
+}
+
+.sentence-task {
+    font-size: 30px;
+    margin: 10px;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: left;
+}
+
+.sentence {
+    margin-bottom: 5px;
+    padding: 4px;
+    padding-left: 20px;
+    color: $Primary;
+}
+
+.finished-result {
+    @extend .sentence;
+    border-radius: 30px;
+    color: black;
+}
+
+.finished-input {
+    @extend .sentence;
+    background-color: $Grey3;
+    color: #fff;
+    border-radius: 30px;
+    margin-bottom: 12px;
+}
+
+.current-result {
+    @extend .sentence;
+    background-color: $Primary;
+    color: #fff;
+    border-radius: 30px;
+}
+
+.current-input {
+    @extend .sentence;
+    background-color: $PrimaryDark;
+    color: #fff;
+    border-radius: 30px;
+    margin-bottom: 12px;
 }
