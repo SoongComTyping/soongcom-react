@@ -13,25 +13,26 @@ import {
 } from './wordsSlice';
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
+import style from './index.module.scss';
 
 function Header() {
   const dispatch = useDispatch();
 
   return (
-    <section style={HeaderStyle}>
-      <h2 style={HeaderTitle}>
+    <section className={style.HeaderStyle}>
+      <h2 className={style.HeaderTitle}>
         낱말 연습
       </h2>
-      <div style={Progress}>
-        <div style={{ ...Circle, ...CircleFocussed }}>1</div>
-        <div style={Circle}>2</div>
-        <div style={Circle}>3</div>
-        <div style={Circle}>4</div>
-        <div style={Circle}>5</div>
-        <div style={Circle}>6</div>
-        <div style={Circle}>7</div>
+      <div className={style.Progress}>
+        <div className={style.CircleFocussed}>1</div>
+        <div className={style.Circle}>2</div>
+        <div className={style.Circle}>3</div>
+        <div className={style.Circle}>4</div>
+        <div className={style.Circle}>5</div>
+        <div className={style.Circle}>6</div>
+        <div className={style.Circle}>7</div>
       </div>
-      <div style={LanguageSelect}>
+      <div className={style.LanguageSelect}>
         <button className="button" onClick={() => {
           dispatch(wordsSliceSwitchLanguage({ language: "korean" }));
           dispatch(switchLanguage({ language: "korean" }));
@@ -86,154 +87,48 @@ function WordsPractice() {
   }, [onKeyDown]);
 
   const renderedPreviousWords = ['', ' ', ...previousWords].slice(-2).map((word, i) => (
-    <div key={word} style={WordCell}>
-      <div style={Word}>{word}</div>
-      <div style={Word}>{['', '', ...typedWords].slice(-2)[i]}</div>
+    <div key={word} className={style.WordCell}>
+      <div className={style.Word}>{word}</div>
+      <div className={style.Word}>{['', '', ...typedWords].slice(-2)[i]}</div>
     </div>
   ));
 
   const renderedCursorWord = (
-    <div key={cursorWord} style={WordCellFocused}>
-      <div style={Word}>{cursorWord}</div>
-      <div style={Word}>{userInput}</div>
+    <div key={cursorWord} className={style.WordCellFocused}>
+      <div className={style.Word}>{cursorWord}</div>
+      <div className={style.Word}>{userInput}</div>
     </div>
   );
 
   const renderedNextWords = [...nextWords, '  ', '   '].slice(0, 2).map(word => (
-    <div key={word} style={WordCell}>
-      <div style={Word}>{word}</div>
-      <div style={Word}></div>
+    <div key={word} className={style.WordCell}>
+      <div className={style.Word}>{word}</div>
+      <div className={style.Word}></div>
     </div>
   ));
 
   return (
     <div className="noselect">
       <Header />
-      <div style={BodyContainer}>
-        <div style={Body}>
-          <div style={ContentStatusBarContainer}>
+      <div className={style.BodyContainer}>
+        <div className={style.Body}>
+          <div className={style.ContentStatusBarContainer}>
             <div style={{ flex: 1 }}>진행도</div>
             <div style={{ flex: 1 }}>오타수</div>
             <div style={{ flex: 1 }}>정확도</div>
           </div>
-          <div style={WordsList}>
+          <div className={style.WordsList}>
             {renderedPreviousWords}
             {renderedCursorWord}
             {renderedNextWords}
           </div>
-          <div style={KeyboardZone}>
+          <div className={style.KeyboardZone}>
             <MacKeyboard style={KeyboardStyle} />
           </div>
         </div>
       </div>
     </div>
   )
-}
-
-const HeaderStyle = {
-  width: '100%',
-  background: '#FFFFFF',
-  height: '80px',
-  fontSize: '16px',
-  fontFamily: 'Noto Serif KR',
-  borderBottom: '2px solid #eeeeee',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  color: '#828282',
-};
-
-const HeaderTitle = { flex: 20 };
-const Progress = { flex: 40, display: 'flex', justifyContent: 'space-around', alignItems: 'center' }
-const LanguageSelect = { flex: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }
-
-const Circle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '50px',
-  width: '50px',
-  borderRadius: '50%',
-  background: 'gray',
-  color: 'white',
-  fontSize: '30px',
-}
-
-const CircleFocussed = {
-  background: 'pink',
-}
-
-
-const BodyContainer = {
-  display: 'flex',
-  height: '70vh',
-  alignItems: 'center',
-  justifyContent: 'center',
-}
-
-const Body = {
-  width: '75%',
-  height: '60vh',
-  display: 'flex',
-  border: '3px solid gray',
-  borderRadius: '30px',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-}
-
-const WordsList = {
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  margin: '0 20px 0 20px',
-  background: '#7BC5C5',
-  border: '3px solid #7BC5C5',
-  borderRadius: '50px',
-  flex: 20,
-}
-
-const WordCellFocused = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flex: 1,
-  height: '90%',
-  border: '3px solid white',
-  borderRadius: '10px',
-}
-
-const WordCell = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flex: 1,
-  height: '100%',
-}
-
-const Word = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flex: 1,
-  fontSize: '1.5em',
-  color: 'white',
-}
-
-const ContentStatusBarContainer = {
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  flex: 10,
-}
-
-const KeyboardZone = {
-  display: 'flex',
-  alignItems: 'center',
-  flex: 80,
 }
 
 const KeyboardStyle = {
