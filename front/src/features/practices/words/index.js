@@ -51,17 +51,13 @@ function WordsPractice() {
   useEffect(() => {
     document.body.addEventListener("keyup", onKeyUp);
 
-    return () => {
-      document.body.addEventListener("keyup", onKeyUp);
-    }
+    return () => document.body.addEventListener("keyup", onKeyUp);
   }, [onKeyUp])
 
   useEffect(() => {
     document.body.addEventListener("keydown", onKeyDown);
 
-    return () => {
-      document.body.addEventListener("keydown", onKeyDown);
-    }
+    return () => document.body.addEventListener("keydown", onKeyDown);
   }, [onKeyDown])
 
   return (
