@@ -1,77 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Title from '../components/Title';
 import { Link } from "react-router-dom";
-import './AddScript.css';
+import '../sass/main.css';
 
 function AddScript() {
+  const [title, setTitle] = useState('');
+  const [contents, setContents] = useState('');
+
+  const handleTitleChange = ({target: {value}}) => setTitle(value)
+  const handleContentsChange = ({target: {value}}) => setContents(value)
+  const handleSubmit = () => {
+  }
+
+  var now = 'unfinish';
+  if(contents.length > 0 && title.length > 0) {
+    now = 'finish'
+  }
+
   return (
     <div >
       <Title title = '스크립트 등록'/>
-      <form style={BackStyle}>
+      <form id='script-add-form'>
         <p>
-          <input style={HeaderStyle}
+          <input id="script-title-form"
+            autoComplete="off"
             type="text" 
             name="title"
             placeholder="제목을 입력하세요."
+            maxLength="30"
+            value={title}
+            onChange={handleTitleChange}
           />
         </p>
 
         <p>
           <textarea 
             className="notes"
+            autoComplete="off"
             type="text"
             name="content"
-            placeholder="내용을 입력하세요. (최대 00자)"
+            placeholder="내용을 입력하세요. (최대 500자)"
+            maxLength="500"
+            value={contents}
+            onChange={handleContentsChange}
           />
         </p>
         <p>
-          <Link to ='/show-script'>
-            <button style={ButtonStyle}>등록</button>
+          
+          <Link  to ='/show-script' onClick={handleSubmit}>
+            {
+              {
+                unfinish : <button type="submit" id='script-offbutton-form' disabled>등록</button>,
+                finish : <button type="submit" id='script-onbutton-form'>등록</button>
+              }[now]
+            }
           </Link>
         </p>
       </form>
       
     </div>
   );
-}
-
-const BackStyle = {
-  display: 'inline-block',
-  width: '70%',
-  borderRight: '2px solid #e0e0e0',
-  borderLeft: '1px solid #e0e0e0'
-  //border: '5px solid #000000',
-}
-
-const HeaderStyle = {
-  width: '85%',
-  height: '75px',
-  fontSize: '25px',
-  border: 'none',
-  outline: 'none',
-  borderBottom: '1px solid #e0e0e0',
-}
-
-// const ContentsStyle = {
-//   width: '85%',
-//   height: '900px',
-//   resize: 'none',
-//   fontSize: '20px',
-//   border: 'none',
-//   outline: 'none',
-//   borderBottom: '2px solid #e0e0e0'
-// }
-
-const ButtonStyle = {
-  position: 'relative',
-  padding: '10px 40px',
-  margin: '0px 10px 10px 0px',
-  borderRadius: '30px',
-  fontSize: '18px',
-  color: '#FFF',
-  background: '#EDC5C5',
-  outline: 'none',
-  textDecoration: 'none',
 }
 
 export default AddScript;
