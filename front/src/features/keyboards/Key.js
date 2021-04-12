@@ -1,11 +1,12 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import {KeyboardContext} from './Contexts';
 import KeyStyles from './Key.styles';
 import KeySkin from './KeySkin';
+import { useSelector } from 'react-redux';
+import { selectKeyboards } from './KeyboardsSlice';
 
 function Key({ displayChar, code }) {
-  const keyboard = useContext(KeyboardContext);
+  const keyboard = useSelector(selectKeyboards);
   
   const hitCheck = useCallback((code) => {
     return keyboard.currentKey === code ? KeyStyles.KeyPressedStyle : {};
