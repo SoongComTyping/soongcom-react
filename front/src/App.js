@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react'
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Header from './components/Header';
-import AddScript from "./scripts/AddScript";
+import AddScript from "./features/scripts/AddScript";
 import ParagraphPractice from "./features/practices/paragraphs";
 import WordPractice from "./features/practices/words";
 

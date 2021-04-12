@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Title from '../components/Title';
+import Title from '../../components/Title';
 import { Link } from "react-router-dom";
-import '../sass/main.css';
+import '../../sass/main.css';
 
 function AddScript() {
   const [title, setTitle] = useState('');
