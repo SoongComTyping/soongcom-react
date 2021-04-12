@@ -1,0 +1,158 @@
+.content {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.practice-box {
+  width: 70%;
+  height: 100%;
+  border: 2px solid #BDBDBD;
+  border-radius: 24px;
+  margin-top: 30px;
+}
+
+.practice-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #E0E0E0;
+}
+
+#noBorder {
+  border: 0px;
+}
+
+.progress-box {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+  align-items: stretch;
+  display: flex;
+  padding: 5px;
+  padding-left: 5%;
+  padding-right: 5%;
+  color: #828282;
+  border-left: 2px solid #E0E0E0;
+}
+.progress-box .left-content {
+  flex: 1;
+  text-align: left;
+}
+.progress-box .left-content .title {
+  font-size: 16px;
+  font-weight: 700;
+}
+.progress-box .left-content .progress-border {
+  border: 2px solid #E0E0E0;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+.progress-box .figure {
+  font-size: 20px;
+  font-weight: 300;
+  padding: 10px;
+}
+
+.sentence-task {
+  font-size: 30px;
+  margin: 10px;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-align: left;
+}
+
+.sentence, .current-input, .current-result, .finished-input, .finished-result {
+  height: 38px;
+  margin-bottom: 5px;
+  padding: 4px;
+  padding-left: 20px;
+  color: #47A5C7;
+}
+
+.finished-result {
+  border-radius: 30px;
+  color: black;
+}
+
+.finished-input {
+  background-color: #828282;
+  color: #fff;
+  border-radius: 30px;
+  margin-bottom: 12px;
+}
+
+.current-result {
+  background-color: #47A5C7;
+  color: #fff;
+  border-radius: 30px;
+}
+
+.current-input {
+  background-color: #2B6D90;
+  color: #fff;
+  border-radius: 30px;
+  margin-bottom: 12px;
+}
+
+.notes {
+  width: 85%;
+  height: 900px;
+  resize: none;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #e0e0e0;
+  line-height: 40px;
+  background-attachment: local;
+  background-image: linear-gradient(to right, white 10px, transparent 10px), linear-gradient(to left, white 10px, transparent 10px), repeating-linear-gradient(white, white 38px, #000000 40px);
+  padding: 8px 10px;
+}
+
+#script-add-form {
+  display: inline-block;
+  width: 70%;
+  border-right: 2px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+}
+
+#script-title-form {
+  width: 85%;
+  height: 75px;
+  font-size: 25px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#script-offbutton-form {
+  position: relative;
+  padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 30px;
+  border: none;
+  font-size: 18px;
+  color: #FFF;
+  background: #828282;
+  outline: none;
+  text-decoration: none;
+}
+
+#script-onbutton-form {
+  position: relative;
+  padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 30px;
+  border: none;
+  font-size: 18px;
+  color: #FFF;
+  background: #EDC5C5;
+  outline: none;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=main.css.map */

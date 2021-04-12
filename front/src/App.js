@@ -2,6 +2,7 @@ import './App.css';
 import React from 'react'
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Header from './components/Header';
+import AddScript from "./scripts/AddScript";
 import ParagraphPractice from "./features/practices/paragraphs";
 import WordPractice from "./features/practices/words";
 
@@ -12,6 +13,7 @@ function App() {
         <main>
           <Header />
           <Switch>
+            <Route path="/add-script" component={AddScript} />
             <Route exact path="/practice-key" component={ParagraphPractice} />
             <Route exact path="/practice-word" component={WordPractice} />
           </Switch>
