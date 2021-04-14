@@ -117,3 +117,34 @@ export const selectNextWords = createSelector(
     return words.datas.slice(l, r);
   }
 );
+
+export const selectProgressPercent = (state) => {
+  return Math.round(
+    100 * state.words.cursor / (state.words.datas.length || 1)
+  );
+};
+
+export const selectWrongCount = (state) => {
+  const { typedDatas, datas } = state.words;
+  let count = 0;
+  for (let i = 0; i < typedDatas.length; i++) {
+    const shouldBe = datas[i];
+    const typed = typedDatas[i].trim();
+    const r = Math.max(shouldBe.length, typed.length);
+    for (let j = 0; j < r; j++) {
+      if (shouldBe[j] !== typed[j]) count ++;
+    }
+  }
+  return count; 
+}
+
+export const selectAccuracy = (state) => {
+  const wrongCount = selectWrongCount(state);
+  const { datas, cursor } = state.words;
+  const textLen = datas
+    .slice(0, cursor)
+    .reduce((acc, text) => acc + text.length, 0) || 1;
+  const accuracy = 100 * (textLen - wrongCount) / textLen;
+  
+  return Math.round(accuracy);
+}

@@ -17,7 +17,11 @@ import {
   selectNextWords,
   fetchWords,
   selectFetchStatus,
+  selectProgressPercent,
+  selectWrongCount,
+  selectAccuracy,
 } from './wordsSlice';
+import ProgressBar from "@ramonak/react-progress-bar";
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 import style from './index.module.scss';
@@ -68,7 +72,10 @@ function WordsPractice() {
   const typedWords = useSelector(selectPreviousTypedWords);
   const cursorWord = useSelector(selectCursorWord);
   const nextWords = useSelector(selectNextWords);
-  const status = useSelector(selectFetchStatus);
+  const fetchStatus = useSelector(selectFetchStatus);
+  const progressPercent = useSelector(selectProgressPercent);
+  const wrongCount = useSelector(selectWrongCount);
+  const accuracy = useSelector(selectAccuracy);
   const [playTypingSound] = useSound(keySoundAsset, { volume: 0.25, interrupt: false, });
 
   const onKeyDown = useCallback((event) => {
@@ -85,10 +92,10 @@ function WordsPractice() {
   }, []);
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (fetchStatus === 'idle') {
       dispatch(fetchWords());
     }
-  }, [status]);
+  }, [fetchStatus]);
 
   useEffect(() => {
     document.body.addEventListener("keydown", onPlayTypingSound);
@@ -135,9 +142,26 @@ function WordsPractice() {
       <div className={style.BodyContainer}>
         <div className={style.Body}>
           <div className={style.ContentStatusBarContainer}>
-            <div style={{ flex: 1 }}>진행도</div>
-            <div style={{ flex: 1 }}>오타수</div>
-            <div style={{ flex: 1 }}>정확도</div>
+            <div style={StatusBarElem}>
+              <div style={StatueBarElem}>진행도</div>
+              <div style={StatueBarElem}>
+                <div style={ProgressBarWrapper}>
+                  <ProgressBar completed={progressPercent} bgColor="#7BC5C5"/>
+                </div>
+              </div>
+            </div>
+            <div style={StatusBarElem}>
+              <div style={StatueBarElem}>오타수</div>
+              <div style={StatueBarElem}>{wrongCount}</div>
+            </div>
+            <div style={StatusBarElem}>
+              <div style={StatueBarElem}>정확도</div>
+              <div style={StatueBarElem}>
+                <div style={ProgressBarWrapper}>
+                  <ProgressBar completed={accuracy} bgColor="#7BC5C5" />
+                </div>
+              </div>
+            </div>
           </div>
           <div className={style.WordsList}>
             {renderedPreviousWords}
@@ -159,5 +183,27 @@ const KeyboardStyle = {
   width: '50em',
   height: '18em',
 }
+
+const StatusBarElem = {
+  display: 'flex',
+  flex: '1',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%',
+};
+
+const StatueBarElem = {
+  display: 'flex',
+  flex: 1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+}
+
+const ProgressBarWrapper = {
+  display: 'block',
+  width: '60%',
+};
 
 export default WordsPractice;
