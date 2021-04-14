@@ -10,12 +10,12 @@ const initialState = {
   typedDatas: [],
   userInput: '',
   koreanBuffer: '',
-  language: 'korean',
-  status: 'idle',
+  fetchStatus: 'idle',
 };
 
 export const fetchWords = createAsyncThunk('words/fetch', async (_, { getState, }) => {
-  const { language, level } = getState().words;
+  const { level } = getState().words;
+  const { language } = getState().keyboards;
   const response = await client.get(`/api/words?` + new URLSearchParams({ language, level }));
   return response.data;
 });
@@ -25,8 +25,8 @@ const wordsSlice = createSlice({
   initialState,
   reducers: {
     keyPressed(state, action) {
-      const { userInput, koreanBuffer, language } = state;
-      const { code, key } = action.payload;
+      const { userInput, koreanBuffer } = state;
+      const { code, key, language } = action.payload;
       const event = { code, key };
 
       if (language === 'korean') {
@@ -49,13 +49,12 @@ const wordsSlice = createSlice({
           state.cursor ++;
         if (state.cursor === state.datas.length) {
           state.level ++;
-          state.status = 'idle';
+          state.fetchStatus = 'idle';
         }
       }
     },
-    switchLanguage(state, action) {
-      state.language = action.payload.language;
-      state.status = 'idle';
+    switchLanguage(state) {
+      state.fetchStatus = 'idle';
       state.level = 1;
       state.cursor = 0;
       state.userInput = '';
@@ -66,7 +65,7 @@ const wordsSlice = createSlice({
   },
   extraReducers: {
     [fetchWords.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.fetchStatus = 'succeeded';
       state.datas = action.payload;
       state.typedDatas = [];
       state.cursor = 0;
@@ -79,6 +78,8 @@ export default wordsSlice.reducer;
 export const { keyPressed, switchLanguage } = wordsSlice.actions;
 
 export const selectWords = (state) => state.words;
+
+export const selectFetchStatus = (state) => state.words.fetchStatus;
 
 export const selectUserInput = createSelector(
   [selectWords],
