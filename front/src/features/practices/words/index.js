@@ -142,22 +142,22 @@ function WordsPractice() {
       <div className={style.BodyContainer}>
         <div className={style.Body}>
           <div className={style.ContentStatusBarContainer}>
-            <div style={StatusBarElem}>
-              <div style={StatueBarElem}>진행도</div>
-              <div style={StatueBarElem}>
-                <div style={ProgressBarWrapper}>
+            <div className={style.StatusBarElem}>
+              <div className={style.StatueBarElem}>진행도</div>
+              <div className={style.StatueBarElem}>
+                <div className={style.ProgressBarWrapper}>
                   <ProgressBar completed={progressPercent} bgColor="#7BC5C5"/>
                 </div>
               </div>
             </div>
-            <div style={StatusBarElem}>
-              <div style={StatueBarElem}>오타수</div>
-              <div style={StatueBarElem}>{wrongCount}</div>
+            <div className={style.StatusBarElem}>
+              <div className={style.StatueBarElem}>오타수</div>
+              <div className={style.StatueBarElem}>{wrongCount}</div>
             </div>
-            <div style={StatusBarElem}>
-              <div style={StatueBarElem}>정확도</div>
-              <div style={StatueBarElem}>
-                <div style={ProgressBarWrapper}>
+            <div className={style.StatusBarElem}>
+              <div className={style.StatueBarElem}>정확도</div>
+              <div className={style.StatueBarElem}>
+                <div className={style.ProgressBarWrapper}>
                   <ProgressBar completed={accuracy} bgColor="#7BC5C5" />
                 </div>
               </div>
@@ -183,27 +183,5 @@ const KeyboardStyle = {
   width: '50em',
   height: '18em',
 }
-
-const StatusBarElem = {
-  display: 'flex',
-  flex: '1',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100%',
-};
-
-const StatueBarElem = {
-  display: 'flex',
-  flex: 1,
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '100%',
-}
-
-const ProgressBarWrapper = {
-  display: 'block',
-  width: '60%',
-};
 
 export default WordsPractice;
