@@ -29,7 +29,7 @@ const keysSlice = createSlice({
       const { code, key, language } = action.payload;
       const event = { code, key };
 
-      if (key === 'Shift') return;
+      if (key.length > 1) return;
 
       if (language === 'korean') {
         state.userInput = inko.en2ko(key);
