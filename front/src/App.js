@@ -5,6 +5,7 @@ import Header from './components/Header';
 import AddScript from "./scripts/AddScript";
 import ParagraphPractice from "./features/practices/paragraphs";
 import WordPractice from "./features/practices/words";
+import KeyPractice from "./features/practices/keys";
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
           <Header />
           <Switch>
             <Route path="/add-script" component={AddScript} />
-            <Route exact path="/practice-key" component={ParagraphPractice} />
+            <Route exact path="/" component={ParagraphPractice} />
+            <Route exact path="/practice-key" component={KeyPractice} />
             <Route exact path="/practice-word" component={WordPractice} />
           </Switch>
         </main>
