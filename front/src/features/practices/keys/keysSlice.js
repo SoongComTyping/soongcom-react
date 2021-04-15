@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
-import { KoreanInputMethod, inko } from '../../../helpers/KoreanInputMethod';
+import { inko } from '../../../helpers/KoreanInputMethod';
 import { EnglishInputMethod } from '../../../helpers/EnglishInputMethod';
 import { client } from '../../../api/client';
 
@@ -13,44 +13,40 @@ const initialState = {
   fetchStatus: 'idle',
 };
 
-export const fetchWords = createAsyncThunk('words/fetch', async (_, { getState, }) => {
-  const { level } = getState().words;
+export const fetchKeys = createAsyncThunk('keys/fetch', async (_, { getState, }) => {
+  const { level } = getState().keys;
   const { language } = getState().keyboards;
-  const response = await client.get(`/api/words?` + new URLSearchParams({ language, level }));
+  const response = await client.get(`/api/keys?` + new URLSearchParams({ language, level }));
   return response.data;
 });
 
-const wordsSlice = createSlice({
-  name: 'words',
+const keysSlice = createSlice({
+  name: 'keys',
   initialState,
   reducers: {
     keyPressed(state, action) {
-      const { userInput, koreanBuffer } = state;
+      const { userInput } = state;
       const { code, key, language } = action.payload;
       const event = { code, key };
 
+      if (key === 'Shift') return;
+
       if (language === 'korean') {
-        const { nextUserInput, nextBuf } = KoreanInputMethod(koreanBuffer, event, userInput);
-        if (nextUserInput !== userInput) {
-          state.userInput = nextUserInput;
-        }
-        state.koreanBuffer = nextBuf;
+        state.userInput = inko.en2ko(key);
       }
       if (language === 'english') {
         const nextUserInput = EnglishInputMethod(event, userInput);
         state.userInput = nextUserInput;
       }
 
-      if (event.key === 'Enter') {
-        state.typedDatas.push(state.userInput);
-        state.userInput = '';
-        state.koreanBuffer = '';
-        if (state.cursor < state.datas.length)
-          state.cursor ++;
-        if (state.cursor === state.datas.length) {
-          state.level ++;
-          state.fetchStatus = 'idle';
-        }
+      state.typedDatas.push(state.userInput);
+      state.userInput = '';
+      state.koreanBuffer = '';
+      if (state.cursor < state.datas.length)
+        state.cursor ++;
+      if (state.cursor === state.datas.length) {
+        state.level ++;
+        state.fetchStatus = 'idle';
       }
     },
     switchLanguage(state) {
@@ -64,7 +60,7 @@ const wordsSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchWords.fulfilled]: (state, action) => {
+    [fetchKeys.fulfilled]: (state, action) => {
       state.fetchStatus = 'succeeded';
       state.datas = action.payload;
       state.typedDatas = [];
@@ -73,59 +69,59 @@ const wordsSlice = createSlice({
   }
 });
 
-export default wordsSlice.reducer;
+export default keysSlice.reducer;
 
-export const { keyPressed, switchLanguage } = wordsSlice.actions;
+export const { keyPressed, switchLanguage } = keysSlice.actions;
 
-export const selectWords = (state) => state.words;
+export const selectKeys = (state) => state.keys;
 
-export const selectFetchStatus = (state) => state.words.fetchStatus;
+export const selectFetchStatus = (state) => state.keys.fetchStatus;
 
 export const selectUserInput = createSelector(
-  [selectWords],
-  (words) => words.userInput + inko.en2ko(words.koreanBuffer)
+  [selectKeys],
+  (keys) => keys.userInput + inko.en2ko(keys.koreanBuffer)
 );
 
-export const selectCursorWord = createSelector(
-  [selectWords],
-  (words) => {
-    return words.datas[words.cursor];
+export const selectCursorKey = createSelector(
+  [selectKeys],
+  (keys) => {
+    return keys.datas[keys.cursor];
   }
 );
 
-export const selectPreviousWords = createSelector(
-  [selectWords],
-  (words) => {
-    const l = Math.max(0, words.cursor - 2);
-    return words.datas.slice(l, words.cursor);
+export const selectPreviousKeys = createSelector(
+  [selectKeys],
+  (keys) => {
+    const l = Math.max(0, keys.cursor - 2);
+    return keys.datas.slice(l, keys.cursor);
   }
 );
 
-export const selectPreviousTypedWords = createSelector(
-  [selectWords],
-  (words) => {
-    const l = Math.max(0, words.cursor - 2);
-    return words.typedDatas.slice(l, words.cursor);
+export const selectPreviousTypedKeys = createSelector(
+  [selectKeys],
+  (keys) => {
+    const l = Math.max(0, keys.cursor - 2);
+    return keys.typedDatas.slice(l, keys.cursor);
   }
 );
 
-export const selectNextWords = createSelector(
-  [selectWords],
-  (words) => {
-    const l = Math.min(words.cursor + 1, words.datas.length);
-    const r = Math.min(words.datas.length, words.cursor + 3)
-    return words.datas.slice(l, r);
+export const selectNextKeys = createSelector(
+  [selectKeys],
+  (keys) => {
+    const l = Math.min(keys.cursor + 1, keys.datas.length);
+    const r = Math.min(keys.datas.length, keys.cursor + 3)
+    return keys.datas.slice(l, r);
   }
 );
 
 export const selectProgressPercent = (state) => {
   return Math.round(
-    100 * state.words.cursor / (state.words.datas.length || 1)
+    100 * state.keys.cursor / (state.keys.datas.length || 1)
   );
 };
 
 export const selectWrongCount = (state) => {
-  const { typedDatas, datas } = state.words;
+  const { typedDatas, datas } = state.keys;
   let count = 0;
   for (let i = 0; i < typedDatas.length; i++) {
     const shouldBe = datas[i];
@@ -140,7 +136,7 @@ export const selectWrongCount = (state) => {
 
 export const selectAccuracy = (state) => {
   const wrongCount = selectWrongCount(state);
-  const { datas, cursor } = state.words;
+  const { datas, cursor } = state.keys;
   const textLen = datas
     .slice(0, cursor)
     .reduce((acc, text) => acc + text.length, 0) || 1;

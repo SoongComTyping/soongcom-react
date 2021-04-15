@@ -23,6 +23,30 @@ const englishWords = [
   [],
 ];
 
+const koreanKeys = [
+  [],
+  ['ㅅ', 'ㄴ', 'ㄱ', 'ㅇ', 'ㅂ', 'ㄷ', 'ㄱ'],
+  ['ㅁ', 'ㄴ', 'ㅇ', 'ㅂ', 'ㄷ', 'ㅇ', 'ㄹ', 'ㄱ', 'ㅈ', 'ㅁ', 'ㅈ'],
+  ['ㅏ', 'ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅜ', 'ㅣ', 'ㅐ'],
+  ['ㅑ', 'ㅒ', 'ㅖ', 'ㅒ', 'ㅠ', 'ㅛ' ,'ㅠ', '.', '.', 'ㅎ'],
+  ['ㄱ', 'ㄷ', 'ㅑ', 'ㅏ', 'ㅕ', 'ㅛ', 'ㅠ', 'ㅏ', 'ㅣ', 'ㅋ'],
+  ['?', 'ㄷ', 'ㄹ', 'ㄱ', ',', 'ㅠ', '.', 'ㅍ', 'ㅎ', 'ㅌ'],
+  [],
+  [],
+];
+
+const englishKeys = [
+  [],
+  ['a', 'b', 'c', 's', 'd', 'f', 'a', 'b', 's'],
+  ['q', 'w', 'e', 't', 'r', 'f', 'g', 'a', 'd'],
+  ['u', 'i', 'l', 'o', 'o', 'u', 'i', 'j', 'i'],
+  ['n', 'm', 'm', 'b', 'c', 'x', 'z', 'v', 'c'],
+  [..."apple.astonish"],
+  [..."thisisthebest"],
+  [..."amazonprime"],
+  [],
+];
+
 createServer({
   routes() {
     this.get("/api/words", (schema, request) => {
@@ -37,6 +61,27 @@ createServer({
       if (language === 'english') {
         return {
           data: englishWords[level],
+        };
+      }
+
+      return {
+        error: `language: ${language} is not supported`,
+        data: [],
+      };
+    });
+
+    this.get("/api/keys", (schema, request) => {
+      const { level, language } = request.queryParams;
+
+      if (language === 'korean') {
+        return {
+          data: koreanKeys[level],
+        };
+      }
+
+      if (language === 'english') {
+        return {
+          data: englishKeys[level],
         };
       }
 

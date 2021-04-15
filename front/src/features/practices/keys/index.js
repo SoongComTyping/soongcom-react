@@ -11,11 +11,11 @@ import {
   keyPressed as positionsKeyPressed,
   switchLanguage as positionsSwitchLanguage,
   selectUserInput,
-  selectPreviousWords,
-  selectPreviousTypedWords,
-  selectCursorWord,
-  selectNextWords,
-  fetchWords,
+  selectPreviousKeys,
+  selectPreviousTypedKeys,
+  selectCursorKey,
+  selectNextKeys,
+  fetchKeys,
   selectFetchStatus,
   selectProgressPercent,
   selectWrongCount,
@@ -24,7 +24,7 @@ import {
 import ProgressBar from "@ramonak/react-progress-bar";
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
-import style from './index.module.scss';
+import style from '../words/index.module.scss';
 
 function Header() {
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ function Header() {
   return (
     <section className={style.HeaderStyle}>
       <h2 className={style.HeaderTitle}>
-        낱말 연습
+        자리연습
       </h2>
       <div className={style.Progress}>
         {renderedLevel}
@@ -68,10 +68,10 @@ function WordsPractice() {
   const dispatch = useDispatch();
   const language = useSelector(selectKeyboardsLanguage);
   const userInput = useSelector(selectUserInput);
-  const previousWords = useSelector(selectPreviousWords);
-  const typedWords = useSelector(selectPreviousTypedWords);
-  const cursorWord = useSelector(selectCursorWord);
-  const nextWords = useSelector(selectNextWords);
+  const previousKeys = useSelector(selectPreviousKeys);
+  const typedKeys = useSelector(selectPreviousTypedKeys);
+  const cursorKey = useSelector(selectCursorKey);
+  const nextKeys = useSelector(selectNextKeys);
   const fetchStatus = useSelector(selectFetchStatus);
   const progressPercent = useSelector(selectProgressPercent);
   const wrongCount = useSelector(selectWrongCount);
@@ -93,7 +93,7 @@ function WordsPractice() {
 
   useEffect(() => {
     if (fetchStatus === 'idle') {
-      dispatch(fetchWords());
+      dispatch(fetchKeys());
     }
   }, [fetchStatus]);
 
@@ -115,23 +115,23 @@ function WordsPractice() {
     return () => document.body.removeEventListener("keydown", onKeyDown);
   }, [onKeyDown]);
 
-  const renderedPreviousWords = ['', ' ', ...previousWords].slice(-2).map((word, i) => (
-    <div key={word} className={style.WordCell}>
-      <div className={style.Word}>{word}</div>
-      <div className={style.Word}>{['', '', ...typedWords].slice(-2)[i]}</div>
+  const renderedPreviousKeys = ['', ' ', ...previousKeys].slice(-2).map((key, i) => (
+    <div key={key} className={style.WordCell}>
+      <div className={style.Word}>{key}</div>
+      <div className={style.Word}>{['', '', ...typedKeys].slice(-2)[i]}</div>
     </div>
   ));
 
-  const renderedCursorWord = (
-    <div key={cursorWord} className={style.WordCellFocused}>
-      <div className={style.Word}>{cursorWord}</div>
+  const renderedCursorKey = (
+    <div key={cursorKey} className={style.WordCellFocused}>
+      <div className={style.Word}>{cursorKey}</div>
       <div className={style.Word}>{userInput}</div>
     </div>
   );
 
-  const renderedNextWords = [...nextWords, '  ', '   '].slice(0, 2).map(word => (
-    <div key={word} className={style.WordCell}>
-      <div className={style.Word}>{word}</div>
+  const renderedNextKeys = [...nextKeys, '  ', '   '].slice(0, 2).map(key => (
+    <div key={key} className={style.WordCell}>
+      <div className={style.Word}>{key}</div>
       <div className={style.Word}></div>
     </div>
   ));
@@ -164,9 +164,9 @@ function WordsPractice() {
             </div>
           </div>
           <div className={style.WordsList}>
-            {renderedPreviousWords}
-            {renderedCursorWord}
-            {renderedNextWords}
+            {renderedPreviousKeys}
+            {renderedCursorKey}
+            {renderedNextKeys}
           </div>
           <div className={style.KeyboardZone}>
             <MacKeyboard style={KeyboardStyle} />
