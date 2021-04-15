@@ -29,7 +29,7 @@ import style from '../words/index.module.scss';
 function Header() {
   const dispatch = useDispatch();
   const language = useSelector(selectKeyboardsLanguage);
-  const level = useSelector((state) => state.words.level);
+  const level = useSelector((state) => state.keys.level);
 
   const renderedLevel = [1, 2, 3, 4, 5, 6, 7].map(n => {
     const foccussed = level === n;
@@ -64,7 +64,7 @@ function Header() {
   )
 }
 
-function WordsPractice() {
+function KeysPractice() {
   const dispatch = useDispatch();
   const language = useSelector(selectKeyboardsLanguage);
   const userInput = useSelector(selectUserInput);
@@ -184,4 +184,4 @@ const KeyboardStyle = {
   height: '18em',
 }
 
-export default WordsPractice;
+export default KeysPractice;
