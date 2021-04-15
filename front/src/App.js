@@ -14,7 +14,7 @@ function App() {
           <Header />
           <Switch>
             <Route path="/add-script" component={AddScript} />
-            <Route exact path="/practice-key" component={ParagraphPractice} />
+            <Route exact path="/" component={ParagraphPractice} />
             <Route exact path="/practice-word" component={WordPractice} />
           </Switch>
         </main>
