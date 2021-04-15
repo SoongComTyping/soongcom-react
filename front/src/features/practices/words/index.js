@@ -1,24 +1,34 @@
 import React, { useCallback, useEffect } from 'react';
 import MacKeyboard from '../../keyboards/MacKeyboard';
 import { useDispatch, useSelector } from 'react-redux';
-import { switchLanguage, keyPressed, keyClear } from '../../keyboards/KeyboardsSlice';
 import {
-  keyPressed as wordsSliceKeyPressed,
-  switchLanguage as wordsSliceSwitchLanguage,
+  switchLanguage,
+  keyPressed,
+  keyClear,
+  selectKeyboardsLanguage,
+} from '../../keyboards/KeyboardsSlice';
+import {
+  keyPressed as wordsKeyPressed,
+  switchLanguage as wordsSwitchLanguage,
   selectUserInput,
   selectPreviousWords,
   selectPreviousTypedWords,
   selectCursorWord,
   selectNextWords,
   fetchWords,
+  selectFetchStatus,
+  selectProgressPercent,
+  selectWrongCount,
+  selectAccuracy,
 } from './wordsSlice';
+import ProgressBar from "@ramonak/react-progress-bar";
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 import style from './index.module.scss';
 
 function Header() {
   const dispatch = useDispatch();
-  const language = useSelector((state) => state.words.language);
+  const language = useSelector(selectKeyboardsLanguage);
   const level = useSelector((state) => state.words.level);
 
   const renderedLevel = [1, 2, 3, 4, 5, 6, 7].map(n => {
@@ -41,12 +51,12 @@ function Header() {
       <form className={style.LanguageSelect}>
         <label htmlFor="korean">한</label>
         <input type="checkbox" checked={language==='korean'} id="korean" onClick={() => {
-          dispatch(wordsSliceSwitchLanguage({ language: "korean" }));
+          dispatch(wordsSwitchLanguage({ language: "korean" }));
           dispatch(switchLanguage({ language: "korean" }));
         }}/>
         <label htmlFor="english">영</label>
         <input type="checkbox" checked={language==='english'} id="english" onClick={() => {
-          dispatch(wordsSliceSwitchLanguage({ language: "english" }));
+          dispatch(wordsSwitchLanguage({ language: "english" }));
           dispatch(switchLanguage({ language: "english" }))
         }}/>
       </form>
@@ -56,18 +66,22 @@ function Header() {
 
 function WordsPractice() {
   const dispatch = useDispatch();
+  const language = useSelector(selectKeyboardsLanguage);
   const userInput = useSelector(selectUserInput);
   const previousWords = useSelector(selectPreviousWords);
   const typedWords = useSelector(selectPreviousTypedWords);
   const cursorWord = useSelector(selectCursorWord);
   const nextWords = useSelector(selectNextWords);
-  const status = useSelector((state) => state.words.status);
+  const fetchStatus = useSelector(selectFetchStatus);
+  const progressPercent = useSelector(selectProgressPercent);
+  const wrongCount = useSelector(selectWrongCount);
+  const accuracy = useSelector(selectAccuracy);
   const [playTypingSound] = useSound(keySoundAsset, { volume: 0.25, interrupt: false, });
 
   const onKeyDown = useCallback((event) => {
-    dispatch(wordsSliceKeyPressed({ code: event.code, key: event.key }));
+    dispatch(wordsKeyPressed({ language: language, code: event.code, key: event.key }));
     dispatch(keyPressed({ code: event.code }));
-  }, []);
+  }, [language]);
 
   const onPlayTypingSound = useCallback(() => {
     playTypingSound();
@@ -78,10 +92,10 @@ function WordsPractice() {
   }, []);
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (fetchStatus === 'idle') {
       dispatch(fetchWords());
     }
-  }, [status]);
+  }, [fetchStatus]);
 
   useEffect(() => {
     document.body.addEventListener("keydown", onPlayTypingSound);
@@ -128,9 +142,26 @@ function WordsPractice() {
       <div className={style.BodyContainer}>
         <div className={style.Body}>
           <div className={style.ContentStatusBarContainer}>
-            <div style={{ flex: 1 }}>진행도</div>
-            <div style={{ flex: 1 }}>오타수</div>
-            <div style={{ flex: 1 }}>정확도</div>
+            <div className={style.StatusBarElem}>
+              <div className={style.StatueBarElem}>진행도</div>
+              <div className={style.StatueBarElem}>
+                <div className={style.ProgressBarWrapper}>
+                  <ProgressBar completed={progressPercent} bgColor="#7BC5C5"/>
+                </div>
+              </div>
+            </div>
+            <div className={style.StatusBarElem}>
+              <div className={style.StatueBarElem}>오타수</div>
+              <div className={style.StatueBarElem}>{wrongCount}</div>
+            </div>
+            <div className={style.StatusBarElem}>
+              <div className={style.StatueBarElem}>정확도</div>
+              <div className={style.StatueBarElem}>
+                <div className={style.ProgressBarWrapper}>
+                  <ProgressBar completed={accuracy} bgColor="#7BC5C5" />
+                </div>
+              </div>
+            </div>
           </div>
           <div className={style.WordsList}>
             {renderedPreviousWords}
