@@ -99,4 +99,60 @@
   margin-bottom: 12px;
 }
 
+.notes {
+  width: 85%;
+  height: 900px;
+  resize: none;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #e0e0e0;
+  line-height: 40px;
+  background-attachment: local;
+  background-image: linear-gradient(to right, white 10px, transparent 10px), linear-gradient(to left, white 10px, transparent 10px), repeating-linear-gradient(white, white 38px, #000000 40px);
+  padding: 8px 10px;
+}
+
+#script-add-form {
+  display: inline-block;
+  width: 70%;
+  border-right: 2px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+}
+
+#script-title-form {
+  width: 85%;
+  height: 75px;
+  font-size: 25px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+#script-offbutton-form {
+  position: relative;
+  padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 30px;
+  border: none;
+  font-size: 18px;
+  color: #FFF;
+  background: #828282;
+  outline: none;
+  text-decoration: none;
+}
+
+#script-onbutton-form {
+  position: relative;
+  padding: 10px 40px;
+  margin: 0px 10px 10px 0px;
+  border-radius: 30px;
+  border: none;
+  font-size: 18px;
+  color: #FFF;
+  background: #EDC5C5;
+  outline: none;
+  text-decoration: none;
+}
+
 /*# sourceMappingURL=main.css.map */
