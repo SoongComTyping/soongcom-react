@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState, useRef } from 'react';
 import Sentence from './Sentence';
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
-import { KoreanInputMethod, inko} from '../../helpers/KoreanHelper';
+import { KoreanInputMethod, inko} from '../../../helpers/KoreanInputMethod';
 
 function PracticeSentenceTask () {
   const tempData = ['숭실대학교 컴퓨터학부가 생겨났다.',
@@ -16,10 +16,10 @@ function PracticeSentenceTask () {
   // const [currentKey, setCurrentKey] = useState("");
   const [userInput, setUserInput] = useState("");
   const [koreanBuffer, setKoreanBuffer] = useState("");
-
   var step = useRef(0);
   const [currentResult, setCurrentResult] = useState("");
   const [currentInput, setCurrentInput] = useState("");
+  // console.log(step.current);
 
   const [playKeyPress] = useSound(
     keySoundAsset,
@@ -27,21 +27,20 @@ function PracticeSentenceTask () {
   )
 
   const onKeyDown = useCallback((event) => {
-    // setCurrentKey(event.code);
+    if (event.code === "Enter") step.current = step.current + 1; // 왜 2배로 증가하는지 모르겠음.
     playKeyPress();
    
     if (language === 'korean') {
       setKoreanBuffer((buf) => {
         const { nextUserInput, nextBuf } = KoreanInputMethod(buf, event, userInput);
         if (nextUserInput !== userInput) {
-          setUserInput(nextUserInput);
-          if(event.code === 'Enter') {
-            // console.log("hi");
-            // console.log(step.current);
-            step.current = step.current+0.5; // 왜 2배로 증가하는지 모르겠음.
+          // console.log(step.current);
+          if (event.code === "Enter") {
             setCurrentResult(tempData[step.current]);
             setUserInput("");
-            setCurrentInput("");
+            // setCurrentInput("");
+          } else {
+            setUserInput(nextUserInput);
           }
         }
         return nextBuf;
@@ -50,7 +49,6 @@ function PracticeSentenceTask () {
     }
 
     setUserInput((body) => {
-      console.log("enter");
       if (event.key === 'Backspace') {
         event.preventDefault(); // for firefox browser
         return body.slice(0, -1);
@@ -76,7 +74,7 @@ function PracticeSentenceTask () {
   }, [])
 
   useEffect(() => {
-    // console.log(userInput);
+    setCurrentResult(tempData[step.current]);
     setCurrentInput(userInput+inko.en2ko(koreanBuffer));
   });
 
@@ -102,7 +100,7 @@ function PracticeSentenceTask () {
     <div className="sentence-task">
       <Sentence type = 'finished-result' sentence = {finishedResult}/>
       <Sentence type = 'finished-input' sentence = {finishedInput}/>
-      <Sentence type = 'current-result' sentence = {currentResult}/>
+      <Sentence type = 'current-result' sentence = {currentResult} input = {currentInput}/>
       <Sentence type = 'current-input' sentence = {currentInput}/>
       {sentences}
     </div>

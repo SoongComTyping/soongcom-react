@@ -6,10 +6,33 @@ Sentence.defaultProps = {
   sentence: ' ',
 };
 
-function Sentence ({type, sentence}) {
+function Sentence ({type, sentence, input}) {
+  var currentSentence;
+
+  if (type == "current-result") {
+    currentSentence = sentence.split("").map((item, index) => {
+      var answerStyle;
+      if (input.length <= index) {
+        answerStyle = "default";
+      } else if (input.length - 1 > index) {
+        answerStyle = "done";
+        if (input[index] != sentence[index]) {
+          answerStyle = "different";
+        }
+      }
+      return (
+        <span key={index} className={answerStyle}>
+          {item}
+        </span>
+      );
+    });
+  } else {
+    currentSentence = sentence;
+  }
+
   return (
     <div className={type}>
-      {sentence}
+      {currentSentence}
     </div>
   );
 }
@@ -17,7 +40,7 @@ function Sentence ({type, sentence}) {
 Sentence.propTypes = {
   type : PropTypes.string,
   sentence: PropTypes.string,
-
+  input: PropTypes.string,
 }
 
 export default Sentence;

@@ -10,7 +10,7 @@
 
 .practice-box {
   width: 70%;
-  height: 100%;
+  flex: 1;
   border: 2px solid #BDBDBD;
   border-radius: 24px;
   margin-top: 30px;
@@ -97,6 +97,18 @@
   color: #fff;
   border-radius: 30px;
   margin-bottom: 12px;
+}
+
+.default {
+  color: #fff;
+}
+
+.different {
+  color: #f00;
+}
+
+.done {
+  color: #000;
 }
 
 .notes {
