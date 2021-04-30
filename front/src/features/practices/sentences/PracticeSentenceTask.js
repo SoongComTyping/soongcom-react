@@ -6,17 +6,23 @@ import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 import { KoreanInputMethod, inko} from '../../../helpers/KoreanInputMethod';
 
 function PracticeSentenceTask () {
-  const tempData = ['숭실대학교 컴퓨터학부가 생겨났다.',
-    '모든게 여전한 나라에서, 다른 느낌을 받는다.', '아이즈원의 노래는 잘 맞추는 사람이 있다.', 
-    '여러 곳을 들려 선물을 준비한 보람이 있다.', '토파즈 보석을 캤던 곳에서 다이아몬드를 주울 확률은 얼마나 될지 모르겠다'];
-  const finishedInput =' ';
-  const finishedResult='';
+  const tempData = [
+    "숭실대학교 컴퓨터학부가 생겨났다.",
+    "모든게 여전한 나라에서, 다른 느낌을 받는다.",
+    "아이즈원의 노래는 잘 맞추는 사람이 있다.",
+    "여러 곳을 들려 선물을 준비한 보람이 있다.",
+    "토파즈 보석을 캤던 곳에서 다이아몬드를 주울 확률은 얼마나 될지 모르겠다",
+    "숭실대학교 컴퓨터학부가 생겨났다.",
+    "다음 문장은 무엇일까?",
+  ];
 
   const [language] = useState("korean");
   // const [currentKey, setCurrentKey] = useState("");
   const [userInput, setUserInput] = useState("");
   const [koreanBuffer, setKoreanBuffer] = useState("");
   var step = useRef(0);
+  const [finishedResult, setFinishedResult] = useState("");
+  const [finishedInput, setFinishedInput] = useState("");
   const [currentResult, setCurrentResult] = useState("");
   const [currentInput, setCurrentInput] = useState("");
   // console.log(step.current);
@@ -27,18 +33,22 @@ function PracticeSentenceTask () {
   )
 
   const onKeyDown = useCallback((event) => {
-    if (event.code === "Enter") step.current = step.current + 1; // 왜 2배로 증가하는지 모르겠음.
     playKeyPress();
+    if (event.code === "Enter") {
+      if(userInput.length < tempData[step.current].length)
+        return ;
+      setFinishedResult(tempData[step.current]);
+      step.current = step.current + 1; 
+    }
    
     if (language === 'korean') {
       setKoreanBuffer((buf) => {
         const { nextUserInput, nextBuf } = KoreanInputMethod(buf, event, userInput);
         if (nextUserInput !== userInput) {
-          // console.log(step.current);
           if (event.code === "Enter") {
+            setFinishedInput(nextUserInput);
             setCurrentResult(tempData[step.current]);
             setUserInput("");
-            // setCurrentInput("");
           } else {
             setUserInput(nextUserInput);
           }
@@ -93,12 +103,12 @@ function PracticeSentenceTask () {
     }
   }, [onKeyUp])
 
-  const sentences = tempData.map((item, index) =>
+  const sentences = tempData.slice(step.current+1, step.current+5).map((item, index) =>
     <Sentence sentence={item} key = {index}/>);
 
   return (
     <div className="sentence-task">
-      <Sentence type = 'finished-result' sentence = {finishedResult}/>
+      <Sentence type = 'finished-result' sentence = {finishedResult} input = {finishedInput}/>
       <Sentence type = 'finished-input' sentence = {finishedInput}/>
       <Sentence type = 'current-result' sentence = {currentResult} input = {currentInput}/>
       <Sentence type = 'current-input' sentence = {currentInput}/>

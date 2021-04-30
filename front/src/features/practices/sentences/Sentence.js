@@ -9,7 +9,7 @@ Sentence.defaultProps = {
 function Sentence ({type, sentence, input}) {
   var currentSentence;
 
-  if (type == "current-result") {
+  if (type == "current-result" || type == "finished-result") {
     currentSentence = sentence.split("").map((item, index) => {
       var answerStyle;
       if (input.length <= index) {
