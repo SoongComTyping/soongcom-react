@@ -28,3 +28,5 @@ export default keyboardsSlice.reducer;
 export const { keyPressed, keyClear, switchLanguage } = keyboardsSlice.actions;
 
 export const selectKeyboards = (state) => state.keyboards;
+
+export const selectKeyboardsLanguage = (state) => state.keyboards.language;

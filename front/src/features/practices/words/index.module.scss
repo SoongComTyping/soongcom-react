@@ -13,12 +13,11 @@ $gray: "#828282";
   background: white;
   height: 80px;
   font-size: 16px;
-  font-family: Noto Serif KR;
   border-bottom: 2px solid #eeeeee;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  color: $gray;
+  color: gray;
 }
 
 .HeaderTitle {
@@ -141,3 +140,26 @@ $gray: "#828282";
   width: 50em;
   height: 18em;
 }
+
+
+.StatusBarElem {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.StatueBarElem {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.ProgressBarWrapper {
+  display: block;
+  width: 60%;
+};
