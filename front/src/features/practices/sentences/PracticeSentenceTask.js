@@ -4,8 +4,11 @@ import Sentence from './Sentence';
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 import { KoreanInputMethod, inko} from '../../../helpers/KoreanInputMethod';
+import { useDispatch } from 'react-redux';
+import { incrementProgressPercent } from './sentenceSlice';
 
 function PracticeSentenceTask () {
+  const dispatch = useDispatch();
   const tempData = [
     "숭실대학교 컴퓨터학부가 생겨났다.",
     "모든게 여전한 나라에서, 다른 느낌을 받는다.",
@@ -39,6 +42,7 @@ function PracticeSentenceTask () {
         return ;
       setFinishedResult(tempData[step.current]);
       step.current = step.current + 1; 
+      dispatch(incrementProgressPercent((step.current / tempData.length * 100)));
     }
    
     if (language === 'korean') {
