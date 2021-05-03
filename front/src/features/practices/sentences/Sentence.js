@@ -11,12 +11,14 @@ Sentence.defaultProps = {
 function Sentence ({type, sentence, input}) {
   var currentSentence, wrongCount = 0;
   const dispatch = useDispatch();
-  // const refinedSentence = sentence.replace(/' '/gi, '&nbsp;');
 
   if (type == "current-result" || type == "finished-result") {
+    if(type == "current-result") {
+      console.log(input);
+    }
     currentSentence = sentence.split("").map((item, index) => {
       var answerStyle;
-      if (input.length <= index) {
+      if (input.length < index) {
         answerStyle = "default";
       } else if (input.length - 1 > index) {
         answerStyle = "done";
@@ -24,7 +26,14 @@ function Sentence ({type, sentence, input}) {
           answerStyle = "different";
           wrongCount++;
         }
+      } else {
+        if (input[index] != sentence[index]) {
+          answerStyle = "default";
+        } else {
+          answerStyle = "done";
+        }
       }
+      
       return (
         <span key={index} className={answerStyle}>
           {item}

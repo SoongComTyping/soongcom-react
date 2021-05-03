@@ -9,6 +9,11 @@ import { incrementProgressPercent, incrementTypeCount } from "./sentenceSlice";
 
 function PracticeSentenceTask() {
   const dispatch = useDispatch();
+  const [playKeyPress] = useSound(keySoundAsset, {
+    volume: 0.25,
+    interrupt: true,
+  });
+  const step = useRef(0);
   const tempData = [
     "숭실대학교 컴퓨터학부가 생겨났다.",
     "모든게 여전한 나라에서, 다른 느낌을 받는다.",
@@ -18,7 +23,6 @@ function PracticeSentenceTask() {
     "숭실대학교 컴퓨터학부가 생겨났다.",
     "다음 문장은 무엇일까?",
   ];
-
   const [language] = useState("korean");
   const [userInput, setUserInput] = useState("");
   const [koreanBuffer, setKoreanBuffer] = useState("");
@@ -26,24 +30,22 @@ function PracticeSentenceTask() {
   const [finishedInput, setFinishedInput] = useState("");
   const [currentResult, setCurrentResult] = useState("");
   const [currentInput, setCurrentInput] = useState("");
-  // const [currentKey, setCurrentKey] = useState("");
-  var step = useRef(0);
-
-  const [playKeyPress] = useSound(keySoundAsset, {
-    volume: 0.25,
-    interrupt: true,
-  });
 
   const onKeyDown = useCallback(
     (event) => {
+      var flag = false;
       playKeyPress();
       dispatch(incrementTypeCount());
 
-      if (event.code === "Enter") {
+      if (event.code === "Enter" || userInput.length >= tempData[step.current].length) {
         if (userInput.length < tempData[step.current].length) return;
         setFinishedResult(tempData[step.current]);
+        setFinishedInput(userInput);
+        setUserInput("");
+        setCurrentResult(tempData[step.current + 1]);
+        dispatch(incrementProgressPercent(((step.current + 1) / tempData.length) * 100));
+        flag = true;
         step.current = step.current + 1;
-        dispatch(incrementProgressPercent((step.current / tempData.length) * 100));
       }
 
       if (language === "korean") {
@@ -54,19 +56,14 @@ function PracticeSentenceTask() {
             userInput
           );
           if (nextUserInput !== userInput) {
-            if (event.code === "Enter") {
-              setFinishedInput(nextUserInput);
-              setCurrentResult(tempData[step.current]);
-              setUserInput("");
-            } else {
+            if (!flag) 
               setUserInput(nextUserInput);
-            }
           }
           return nextBuf;
         });
         return;
       }
-
+      // 영어 입력 처리 임시 비활
       // setUserInput((body) => {
       //   if (event.key === "Backspace") {
       //     event.preventDefault(); // for firefox browser
@@ -85,10 +82,6 @@ function PracticeSentenceTask() {
     [playKeyPress, language, userInput]
   );
 
-  const onKeyUp = useCallback(() => {
-    // setCurrentKey("");
-  }, []);
-
   useEffect(() => {
     setCurrentResult(tempData[step.current]);
   }, []);
@@ -104,14 +97,6 @@ function PracticeSentenceTask() {
       document.body.removeEventListener("keydown", onKeyDown);
     };
   }, [onKeyDown]);
-
-  useEffect(() => {
-    document.body.addEventListener("keyup", onKeyUp);
-
-    return () => {
-      document.body.addEventListener("keyup", onKeyUp);
-    };
-  }, [onKeyUp]);
 
   const sentences = tempData
     .slice(step.current + 1, step.current + 5)
