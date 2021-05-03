@@ -24,7 +24,7 @@ function ProgressBox ({title, figure, id}) {
 
 ProgressBox.propTypes = {
   title: PropTypes.string,
-  figure: PropTypes.number,
+  figure: PropTypes.any,
   id: PropTypes.string,
 };
 

@@ -5,7 +5,6 @@ import ProgressBox from '../components/ProgressBox';
 import PracticeSentenceTask from '../features/practices/sentences/PracticeSentenceTask';
 
 function PracticeBox({information}) {
-  console.log(information);
   const boxes = information.map((item, index) => (
     <ProgressBox
       key={index}

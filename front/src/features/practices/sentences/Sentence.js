@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { incrementWrongCharacters, incrementCurrentCharacters } from './sentenceSlice';
 
 Sentence.defaultProps = {
   type: 'sentence',
@@ -7,7 +9,8 @@ Sentence.defaultProps = {
 };
 
 function Sentence ({type, sentence, input}) {
-  var currentSentence;
+  var currentSentence, wrongCount = 0;
+  const dispatch = useDispatch();
 
   if (type == "current-result" || type == "finished-result") {
     currentSentence = sentence.split("").map((item, index) => {
@@ -18,6 +21,7 @@ function Sentence ({type, sentence, input}) {
         answerStyle = "done";
         if (input[index] != sentence[index]) {
           answerStyle = "different";
+          wrongCount++;
         }
       }
       return (
@@ -30,6 +34,12 @@ function Sentence ({type, sentence, input}) {
     currentSentence = sentence;
   }
 
+  useEffect(() => {
+    if (type == "current-result") {
+      dispatch(incrementWrongCharacters(wrongCount));
+      dispatch(incrementCurrentCharacters(input.length));
+    }
+  });
   return (
     <div className={type}>
       {currentSentence}
@@ -43,4 +53,4 @@ Sentence.propTypes = {
   input: PropTypes.string,
 }
 
-export default Sentence;
+export default React.memo(Sentence);

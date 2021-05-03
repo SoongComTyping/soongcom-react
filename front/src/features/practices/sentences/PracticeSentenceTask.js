@@ -5,7 +5,7 @@ import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 import { KoreanInputMethod, inko} from '../../../helpers/KoreanInputMethod';
 import { useDispatch } from 'react-redux';
-import { incrementProgressPercent } from './sentenceSlice';
+import { incrementProgressPercent} from './sentenceSlice';
 
 function PracticeSentenceTask () {
   const dispatch = useDispatch();
@@ -43,6 +43,7 @@ function PracticeSentenceTask () {
       setFinishedResult(tempData[step.current]);
       step.current = step.current + 1; 
       dispatch(incrementProgressPercent((step.current / tempData.length * 100)));
+      // dispatch(incrementTotalCharacters(tempData[step.current].length));
     }
    
     if (language === 'korean') {
@@ -84,6 +85,7 @@ function PracticeSentenceTask () {
   }, [])
 
   useEffect(() => {
+    // dispatch(incrementTotalCharacters(tempData[step.current].length));
     setCurrentResult(tempData[step.current]);
   }, [])
 
