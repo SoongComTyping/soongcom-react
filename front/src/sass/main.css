@@ -34,13 +34,13 @@
   align-items: stretch;
   display: flex;
   padding: 5px;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 3%;
+  padding-right: 3%;
   color: #828282;
   border-left: 2px solid #E0E0E0;
 }
 .progress-box .left-content {
-  flex: 2;
+  flex: 3;
   text-align: left;
 }
 .progress-box .left-content .title {
@@ -99,6 +99,7 @@
   color: #fff;
   border-radius: 30px;
   margin-bottom: 12px;
+  align-items: center;
 }
 
 .default {
@@ -111,6 +112,11 @@
 
 .done {
   color: #000;
+}
+
+#cursor {
+  width: 4px;
+  height: 24px;
 }
 
 .notes {

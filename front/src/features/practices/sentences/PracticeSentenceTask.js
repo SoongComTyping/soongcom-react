@@ -19,7 +19,7 @@ function PracticeSentenceTask() {
     "모든게 여전한 나라에서, 다른 느낌을 받는다.",
     "아이즈원의 노래는 잘 맞추는 사람이 있다.",
     "여러 곳을 들려 선물을 준비한 보람이 있다.",
-    "토파즈 보석을 캤던 곳에서 다이아몬드를 주울 확률은 얼마나 될지 모르겠다",
+    "토파즈 보석을 캤던 곳에서 다이아몬드를 주울 확률은 얼마나 될지 모르겠다.",
     "숭실대학교 컴퓨터학부가 생겨났다.",
     "다음 문장은 무엇일까?",
   ];
@@ -33,17 +33,24 @@ function PracticeSentenceTask() {
 
   const onKeyDown = useCallback(
     (event) => {
+      if (event.code === "Space") event.preventDefault();
+
       var flag = false;
       playKeyPress();
       dispatch(incrementTypeCount());
 
-      if (event.code === "Enter" || userInput.length >= tempData[step.current].length) {
+      if (
+        event.code === "Enter" ||
+        userInput.length >= tempData[step.current].length
+      ) {
         if (userInput.length < tempData[step.current].length) return;
         setFinishedResult(tempData[step.current]);
         setFinishedInput(userInput);
         setUserInput("");
         setCurrentResult(tempData[step.current + 1]);
-        dispatch(incrementProgressPercent(((step.current + 1) / tempData.length) * 100));
+        dispatch(
+          incrementProgressPercent(((step.current + 1) / tempData.length) * 100)
+        );
         flag = true;
         step.current = step.current + 1;
       }
@@ -56,8 +63,7 @@ function PracticeSentenceTask() {
             userInput
           );
           if (nextUserInput !== userInput) {
-            if (!flag) 
-              setUserInput(nextUserInput);
+            if (!flag) setUserInput(nextUserInput);
           }
           return nextBuf;
         });

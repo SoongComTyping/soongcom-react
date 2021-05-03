@@ -3,10 +3,11 @@ import useInterval from '@use-it/interval'
 import '../../../sass/main.css'
 import Title from '../../../components/Title';
 import PracticeBox from '../../../components/PracticeBox';
-import { useSelector } from 'react-redux';
-import { selectProgressPercent, selectAccuracyPercent, selectTypeCount, } from "./sentenceSlice";
+import { useSelector, useDispatch } from 'react-redux';
+import { initState, selectProgressPercent, selectAccuracyPercent, selectTypeCount, } from "./sentenceSlice";
 
 function PracticeSentence() {
+  const dispatch = useDispatch();
   const progressPecent = useSelector(selectProgressPercent);
   const accuracyPecent = useSelector(selectAccuracyPercent);
   const typeCount = useSelector(selectTypeCount);
@@ -14,6 +15,10 @@ function PracticeSentence() {
   const [typeSpeed, setTypeSpeed] = useState(0);
   const [maxTypeSpeed, setMaxTypeSpeed] = useState(0);
   const [praticeInformation, setPractiveInformation] = useState([]);
+  
+  useEffect(() => {
+    dispatch(initState());
+  }, []);
   
   useEffect(() => {
     setPractiveInformation([

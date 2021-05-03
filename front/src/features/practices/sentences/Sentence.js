@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect} from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { incrementWrongCharacters, incrementCurrentCharacters } from './sentenceSlice';
+import Cursor from '../../../assets/cursor.gif';
 
 Sentence.defaultProps = {
   type: 'sentence',
@@ -13,9 +14,6 @@ function Sentence ({type, sentence, input}) {
   const dispatch = useDispatch();
 
   if (type == "current-result" || type == "finished-result") {
-    if(type == "current-result") {
-      console.log(input);
-    }
     currentSentence = sentence.split("").map((item, index) => {
       var answerStyle;
       if (input.length < index) {
@@ -33,7 +31,7 @@ function Sentence ({type, sentence, input}) {
           answerStyle = "done";
         }
       }
-      
+
       return (
         <span key={index} className={answerStyle}>
           {item}
@@ -59,6 +57,8 @@ function Sentence ({type, sentence, input}) {
   return (
     <div className={type}>
       {currentSentence}
+      {type == "current-input" &&
+       <img id = 'cursor' src = {Cursor}/>}
     </div>
   );
 }

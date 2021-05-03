@@ -40,12 +40,12 @@ $PrimaryDark: #2B6D90;
     align-items: stretch;
     display: flex;
     padding: 5px;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 3%;
+    padding-right: 3%;
     color: $Grey3;
     border-left: 2px solid $Grey5;
     .left-content {
-        flex: 2;
+        flex: 3;
         text-align: left;
         .title {
             font-size: 16px;
@@ -109,6 +109,7 @@ $PrimaryDark: #2B6D90;
     color: #fff;
     border-radius: 30px;
     margin-bottom: 12px;
+    align-items: center;
 }
 
 .default {
@@ -119,4 +120,9 @@ $PrimaryDark: #2B6D90;
 }
 .done {
     color: #000;
+}
+
+#cursor {
+    width: 4px;
+    height: 24px;
 }
