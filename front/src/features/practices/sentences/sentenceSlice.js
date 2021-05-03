@@ -8,6 +8,7 @@ export const slice = createSlice({
     currentCharacters: 0,
     totalWrongCharacters: 0,
     wrongCharacters: 0,
+    typeCount : 0,
   },
   reducers: {
     incrementProgressPercent: (state, action) => {
@@ -23,12 +24,16 @@ export const slice = createSlice({
     incrementCurrentCharacters: (state, action) => {
       state.currentCharacters = action.payload;
     },
+    incrementTypeCount : (state) => {
+      state.typeCount += 1;
+    }
   },
 });
 export const {
   incrementProgressPercent,
   incrementWrongCharacters,
   incrementCurrentCharacters,
+  incrementTypeCount,
 } = slice.actions;
 
 export const selectProgressPercent = (state) =>
@@ -42,4 +47,7 @@ export const selectAccuracyPercent = (state) => {
   );
   return accuracy ? accuracy + "%" : "100%";
 };
+export const selectTypeCount = (state) => 
+  state.sentence.typeCount;
+
 export default slice.reducer;

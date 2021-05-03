@@ -40,7 +40,7 @@
   border-left: 2px solid #E0E0E0;
 }
 .progress-box .left-content {
-  flex: 1;
+  flex: 2;
   text-align: left;
 }
 .progress-box .left-content .title {
@@ -53,6 +53,7 @@
   margin-right: 10px;
 }
 .progress-box .figure {
+  flex: 1;
   font-size: 20px;
   font-weight: 300;
   padding: 10px;

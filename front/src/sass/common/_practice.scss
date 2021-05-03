@@ -45,7 +45,7 @@ $PrimaryDark: #2B6D90;
     color: $Grey3;
     border-left: 2px solid $Grey5;
     .left-content {
-        flex: 1;
+        flex: 2;
         text-align: left;
         .title {
             font-size: 16px;
@@ -58,6 +58,7 @@ $PrimaryDark: #2B6D90;
         }
     }
     .figure {
+        flex:1;
         font-size: 20px;
         font-weight: 300;
         padding: 10px;

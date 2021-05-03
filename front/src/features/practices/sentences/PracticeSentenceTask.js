@@ -5,7 +5,7 @@ import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 import { KoreanInputMethod, inko} from '../../../helpers/KoreanInputMethod';
 import { useDispatch } from 'react-redux';
-import { incrementProgressPercent} from './sentenceSlice';
+import { incrementProgressPercent, incrementTypeCount} from './sentenceSlice';
 
 function PracticeSentenceTask () {
   const dispatch = useDispatch();
@@ -37,6 +37,7 @@ function PracticeSentenceTask () {
 
   const onKeyDown = useCallback((event) => {
     playKeyPress();
+    dispatch(incrementTypeCount());
     if (event.code === "Enter") {
       if(userInput.length < tempData[step.current].length)
         return ;
