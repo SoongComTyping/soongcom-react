@@ -10,7 +10,7 @@
 
 .practice-box {
   width: 70%;
-  height: 100%;
+  flex: 1;
   border: 2px solid #BDBDBD;
   border-radius: 24px;
   margin-top: 30px;
@@ -34,13 +34,13 @@
   align-items: stretch;
   display: flex;
   padding: 5px;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 3%;
+  padding-right: 3%;
   color: #828282;
   border-left: 2px solid #E0E0E0;
 }
 .progress-box .left-content {
-  flex: 1;
+  flex: 3;
   text-align: left;
 }
 .progress-box .left-content .title {
@@ -53,12 +53,14 @@
   margin-right: 10px;
 }
 .progress-box .figure {
+  flex: 1;
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 500;
   padding: 10px;
 }
 
 .sentence-task {
+  height: 420px;
   font-size: 30px;
   margin: 10px;
   margin-left: 5%;
@@ -97,6 +99,24 @@
   color: #fff;
   border-radius: 30px;
   margin-bottom: 12px;
+  align-items: center;
+}
+
+.default {
+  color: #fff;
+}
+
+.different {
+  color: #f00;
+}
+
+.done {
+  color: #000;
+}
+
+#cursor {
+  width: 4px;
+  height: 24px;
 }
 
 .notes {
