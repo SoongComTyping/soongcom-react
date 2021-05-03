@@ -50,7 +50,6 @@ function KoreanInputMethod(buf, event, userInput) {
         nextBuf: '',
       };
     }
-
     return {
       nextUserInput: userInput,
       nextBuf: buf,
