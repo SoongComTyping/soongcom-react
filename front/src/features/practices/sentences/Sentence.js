@@ -11,6 +11,7 @@ Sentence.defaultProps = {
 function Sentence ({type, sentence, input}) {
   var currentSentence, wrongCount = 0;
   const dispatch = useDispatch();
+  // const refinedSentence = sentence.replace(/' '/gi, '&nbsp;');
 
   if (type == "current-result" || type == "finished-result") {
     currentSentence = sentence.split("").map((item, index) => {
@@ -31,7 +32,13 @@ function Sentence ({type, sentence, input}) {
       );
     });
   } else {
-    currentSentence = sentence;
+    currentSentence = sentence.split("").map((item, index) => {
+      if (item != " ") {
+        return <span key={index}>{item}</span>;
+      } else {
+        return <span key={index}>&nbsp;</span>;
+      }
+    });
   }
 
   useEffect(() => {

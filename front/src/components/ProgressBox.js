@@ -5,10 +5,6 @@ import ProgressBar from "@ramonak/react-progress-bar";
 
 function ProgressBox ({title, figure, id}) {
   var progressPercent = String(figure).replace("%", '');
-  console.log(progressPercent);
-  // if(figure.find('%')) {
-  //   progressPercent = figure.replace('%','');
-  // }
   return (    
     <div className='progress-box' id = {id}>
       <div className='left-content'>
