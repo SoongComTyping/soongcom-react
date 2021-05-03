@@ -3,14 +3,19 @@ import '../sass/main.css'
 import PropTypes from 'prop-types';
 import ProgressBar from "@ramonak/react-progress-bar";
 
-function ProgressBox ({title, figure, id}) {  
+function ProgressBox ({title, figure, id}) {
+  var progressPercent = String(figure).replace("%", '');
+  console.log(progressPercent);
+  // if(figure.find('%')) {
+  //   progressPercent = figure.replace('%','');
+  // }
   return (    
     <div className='progress-box' id = {id}>
       <div className='left-content'>
         <div className='title'>{title}</div>
         <div className='progress-border'>
           <ProgressBar 
-            completed={60}
+            completed={progressPercent}
             bgColor='#7BC5C5'
             baseBgColor='#FFFFFF'
             borderRadius='2px'
