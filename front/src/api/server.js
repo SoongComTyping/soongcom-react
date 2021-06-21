@@ -23,6 +23,7 @@
 //   [],
 // ];
 
+<<<<<<< HEAD
 // const koreanKeys = [
 //   [],
 //   ['ㅅ', 'ㄴ', 'ㄱ', 'ㅇ', 'ㅂ', 'ㄷ', 'ㄱ'],
@@ -34,6 +35,19 @@
 //   [],
 //   [],
 // ];
+=======
+const koreanKeys = [
+  [],
+  ['ㅅ', 'ㄴ', 'ㄱ', 'ㅇ', 'ㅂ', 'ㄷ', 'ㄱ'],
+  ['ㅁ', 'ㄴ', 'ㅇ', 'ㅂ', 'ㄷ', 'ㅇ', 'ㄹ', 'ㄱ', 'ㅈ', 'ㅁ', 'ㅈ'],
+  ['ㅏ', 'ㅑ', 'ㅓ', 'ㅕ', 'ㅗ', 'ㅛ', 'ㅜ', 'ㅠ', 'ㅜ', 'ㅣ', 'ㅐ'],
+  ['ㅑ', 'ㅒ', 'ㅖ', 'ㅒ', 'ㅠ', 'ㅛ', 'ㅠ', '.', '.', 'ㅎ'],
+  ['ㄱ', 'ㄷ', 'ㅑ', 'ㅏ', 'ㅕ', 'ㅛ', 'ㅠ', 'ㅏ', 'ㅣ', 'ㅋ'],
+  ['?', 'ㄷ', 'ㄹ', 'ㄱ', ',', 'ㅠ', '.', 'ㅍ', 'ㅎ', 'ㅌ'],
+  [],
+  [],
+];
+>>>>>>> upstream/main
 
 // const englishKeys = [
 //   [],
@@ -47,6 +61,7 @@
 //   [],
 // ];
 
+<<<<<<< HEAD
 // createServer({
 //   routes() {
 //     this.get("/api/words", (schema, request) => {
@@ -57,6 +72,18 @@
 //           data: koreanWords[level],
 //         };
 //       }
+=======
+createServer({
+  routes() {
+    this.get("/api/words", (schema, request) => {
+      const { level, language } = request.queryParams;
+
+      if (language === 'korean') {
+        return {
+          data: koreanWords[level],
+        };
+      }
+>>>>>>> upstream/main
 
 //       if (language === 'english') {
 //         return {
