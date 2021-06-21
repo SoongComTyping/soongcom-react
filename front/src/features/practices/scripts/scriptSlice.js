@@ -9,6 +9,7 @@ export const slice = createSlice({
     totalWrongCharacters: 0,
     wrongCharacters: 0,
     typeCount: 0,
+    wrongTyping: null,
   },
   reducers: {
     initState: (state) => {
@@ -18,6 +19,7 @@ export const slice = createSlice({
       state.totalWrongCharacters = 0;
       state.wrongCharacters = 0;
       state.typeCount = 0;
+      state.wrongTyping = {};
     },
     incrementProgressPercent: (state, action) => {
       state.progressPecent = action.payload;
@@ -35,6 +37,11 @@ export const slice = createSlice({
     incrementTypeCount: (state) => {
       state.typeCount += 1;
     },
+    addWrongTyping: (state, action) => {
+      const key = action.payload;
+      state.wrongTyping[key] =
+        state.wrongTyping[key] == undefined ? 1 : state.wrongTyping[key] + 1;
+    },
   },
 });
 export const {
@@ -43,6 +50,7 @@ export const {
   incrementWrongCharacters,
   incrementCurrentCharacters,
   incrementTypeCount,
+  addWrongTyping,
 } = slice.actions;
 
 export const selectProgressPercent = (state) =>
@@ -58,5 +66,7 @@ export const selectAccuracyPercent = (state) => {
 };
 export const selectTypeCount = (state) => 
   state.script.typeCount;
+export const selectWrongTyping = (state) => 
+  state.script.wrongTyping;
 
 export default slice.reducer;
