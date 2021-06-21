@@ -4,9 +4,9 @@ import '../../../sass/main.css'
 import Title from '../../../components/Title';
 import PracticeBox from '../../../components/PracticeBox';
 import { useSelector, useDispatch } from 'react-redux';
-import { initState, selectProgressPercent, selectAccuracyPercent, selectTypeCount, } from "./sentenceSlice";
+import { initState, selectProgressPercent, selectAccuracyPercent, selectTypeCount, } from "./scriptSlice";
 
-function PracticeSentence() {
+function PracticeScript() {
   const dispatch = useDispatch();
   const progressPecent = useSelector(selectProgressPercent);
   const accuracyPecent = useSelector(selectAccuracyPercent);
@@ -37,10 +37,10 @@ function PracticeSentence() {
 
   return (
     <div className="content">
-      <Title title="문장연습" />
-      <PracticeBox type = "sentence" information = {praticeInformation}/>
+      <Title title="스크립트 연습" />
+      <PracticeBox information = {praticeInformation}/>
     </div>
   );
 }
 
-export default PracticeSentence;
+export default PracticeScript;
