@@ -1,11 +1,11 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState }  from 'react';
 import Title from '../../components/Title';
 import {useEffect} from "react"
 import '../../sass/main.css';
 
 function ShowScript() {
-  var tempData = [];
+  const [practices, setPractices] = useState([]);
 
   async function getList() {
     axios({
@@ -13,9 +13,11 @@ function ShowScript() {
       url: 'http://soongcom.kro.kr:3001/practice/list'
     })
       .then(function(response){
-        for(let i = 0 ; i < response.data.list.length ; i++){
-          tempData[tempData.length] = response.data.list[i].name;
-        }
+        console.log(response.data.list);
+        setPractices(response.data.list);
+        // for(let i = 0 ; i < response.data.list.length ; i++){
+        //   tempData[tempData.length] = response.data.list[i].name;
+        // }
       });
   }
 
@@ -39,8 +41,12 @@ function ShowScript() {
           </input>
         </div>
         <div className="ListBody">
-          <ul>
-            
+          <ul className="ScriptList">
+            {
+              practices.map((practice, idx) => (
+                <li className="ScriptListItem" key={`PRACTICE_LI_${idx}_${practice.date}`}>{practice.name}</li>
+              ))
+            }
           </ul>
         </div>
       </form>
