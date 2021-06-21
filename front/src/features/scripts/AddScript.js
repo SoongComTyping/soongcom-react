@@ -11,11 +11,17 @@ function AddScript() {
   const handleTitleChange = ({target: {value}}) => setTitle(value)
   const handleContentsChange = ({target: {value}}) => setContents(value)
   const handleSubmit = () => {
-    axios.post('http:/soongcom.kro.kr:3001/register/script', {body : {
-      ScriptName: title,
-      ScriptContent: contents
-    }}).then(()=>{
-      alert('등록 완료!');
+    registerScript();
+  }
+
+  async function registerScript() {
+    axios({
+      method: 'post',
+      url: 'http://soongcom.kro.kr:3001/register/script',
+      data: {
+        ScriptName: title,
+        ScriptContent: contents
+      }
     })
   }
 
@@ -34,7 +40,7 @@ function AddScript() {
             type="text" 
             name="title"
             placeholder="제목을 입력하세요."
-            maxLength="30"
+            maxLength="50"
             value={title}
             onChange={handleTitleChange}
           />
@@ -46,8 +52,8 @@ function AddScript() {
             autoComplete="off"
             type="text"
             name="content"
-            placeholder="내용을 입력하세요. (최대 500자)"
-            maxLength="500"
+            placeholder="내용을 입력하세요."
+            maxLength="3000"
             value={contents}
             onChange={handleContentsChange}
           />
