@@ -38,7 +38,7 @@ function PracticeScript() {
   return (
     <div className="content">
       <Title title="스크립트 연습" />
-      <PracticeBox information = {praticeInformation}/>
+      <PracticeBox type = "script" information = {praticeInformation}/>
     </div>
   );
 }

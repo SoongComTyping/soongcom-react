@@ -15,6 +15,7 @@ function PracticeScriptTask() {
   });
   const step = useRef(0);
   const tempData = [
+    "Test this sentence",
     "숭실대학교 컴퓨터학부가 생겨났다.",
     "모든게 여전한 나라에서, 다른 느낌을 받는다.",
     "아이즈원의 노래는 잘 맞추는 사람이 있다.",
@@ -23,7 +24,7 @@ function PracticeScriptTask() {
     "숭실대학교 컴퓨터학부가 생겨났다.",
     "다음 문장은 무엇일까?",
   ];
-  const [language] = useState("korean");
+  const [language, setLanguage] = useState("korean");
   const [userInput, setUserInput] = useState("");
   const [koreanBuffer, setKoreanBuffer] = useState("");
   const [finishedResult, setFinishedResult] = useState("");
@@ -33,26 +34,32 @@ function PracticeScriptTask() {
 
   const onKeyDown = useCallback(
     (event) => {
+      if (event.code === "CapsLock") {
+        setCurrentInput("");
+        setKoreanBuffer("");
+        setLanguage(language === "korean" ? "english" : "korean") 
+      }
       if (event.code === "Space") event.preventDefault();
 
       var flag = false;
       playKeyPress();
       dispatch(incrementTypeCount());
 
-      if (
-        event.code === "Enter" ||
-        userInput.length >= tempData[step.current].length
-      ) {
+      if (event.code === "Enter" || userInput.length >= tempData[step.current].length) {
+
         if (userInput.length < tempData[step.current].length) return;
         setFinishedResult(tempData[step.current]);
         setFinishedInput(userInput);
         setUserInput("");
+        setKoreanBuffer("");
+        setCurrentInput("");
         setCurrentResult(tempData[step.current + 1]);
         dispatch(
           incrementProgressPercent(((step.current + 1) / tempData.length) * 100)
         );
         flag = true;
         step.current = step.current + 1;
+        return ;
       }
 
       if (language === "korean") {
@@ -69,21 +76,21 @@ function PracticeScriptTask() {
         });
         return;
       }
-      // 영어 입력 처리 임시 비활
-      // setUserInput((body) => {
-      //   if (event.key === "Backspace") {
-      //     event.preventDefault(); // for firefox browser
-      //     return body.slice(0, -1);
-      //   }
+      //   영어 입력 처리 임시 비활
+      setUserInput((body) => {
+        if (event.key === "Backspace") {
+          event.preventDefault(); // for firefox browser
+          return body.slice(0, -1);
+        }
 
-      //   if (event.key === "Enter") {
-      //     return body.concat("\n");
-      //   }
+        if (event.key === "Enter") {
+          return body.concat("\n");
+        }
 
-      //   if (event.key.length > 1) return body;
+        if (event.key.length > 1) return body;
 
-      //   return body.concat(event.key);
-      // });
+        return body.concat(event.key);
+      });
     },
     [playKeyPress, language, userInput]
   );
