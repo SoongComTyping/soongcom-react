@@ -7,6 +7,8 @@ import { KoreanInputMethod, inko } from "../../../helpers/KoreanInputMethod";
 import { useSelector, useDispatch } from "react-redux";
 import { incrementProgressPercent, incrementTypeCount, selectWrongTyping } from "./scriptSlice";
 import {testScript} from "./TestScript";
+import { useHistory } from 'react-router-dom';
+import axios from 'axios'
 
 function PracticeScriptTask() {
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ function PracticeScriptTask() {
     interrupt: true,
   });
   const step = useRef(0);
+  const history = useHistory();
   const [script, setScript] = useState([]);
   const [language, setLanguage] = useState("english");
   const [userInput, setUserInput] = useState("");
@@ -39,11 +42,8 @@ function PracticeScriptTask() {
       dispatch(incrementTypeCount());
 
       if (event.code === "Enter" || userInput.length >= script[step.current].length) {
-        if(wrongTyping == "!@#")
-          flag = true;
-          
         if (userInput.length < script[step.current].length) return;
-
+        console.log(wrongTyping)
         setFinishedResult(script[step.current]);
         setFinishedInput(userInput);
         setUserInput("");
@@ -95,6 +95,21 @@ function PracticeScriptTask() {
   }, []);
 
   useEffect(() => {
+    if (script.length > 0 && script.length <= step.current) {
+      axios({
+        method: "post",
+        url: "http://soongcom.kro.kr:3001/practice/script/complete",
+        data: {
+          wrongTyping: wrongTyping,
+        },
+      });
+      history.push({
+        pathname: '/',
+      });
+
+      step.current = -1;
+      return ;
+    }
     setCurrentResult(script[step.current]);
     setCurrentInput(userInput + inko.en2ko(koreanBuffer));
   });
