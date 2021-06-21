@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Title from '../../components/Title';
 import { Link } from "react-router-dom";
 import '../../sass/main.css';
+import axios from 'axios';
 
 function AddScript() {
   const [title, setTitle] = useState('');
@@ -10,6 +11,12 @@ function AddScript() {
   const handleTitleChange = ({target: {value}}) => setTitle(value)
   const handleContentsChange = ({target: {value}}) => setContents(value)
   const handleSubmit = () => {
+    axios.post('http:/soongcom.kro.kr:3001/register/script', {body : {
+      ScriptName: title,
+      ScriptContent: contents
+    }}).then(()=>{
+      alert('등록 완료!');
+    })
   }
 
   var now = 'unfinish';
