@@ -67,6 +67,7 @@ function DetailMenu({onChoose}) {
 }
 
 const DetailMenuStyle = {
+  position: 'relative',
   width: '100%',
   background: '#FFFFFF',
   height: '175px',
@@ -78,6 +79,7 @@ const DetailMenuStyle = {
   alignItems: 'center',
   justifyContent: 'center',
   color: '#828282',
+  zIndex: '9999',
 }
 
 const MenuWrapperStyle = {
