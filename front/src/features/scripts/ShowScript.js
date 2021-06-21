@@ -12,8 +12,7 @@ function ShowScript() {
       url: 'http://soongcom.kro.kr:3001/practice/list',
       responseType: 'stream'
     })
-      .then(function () {
-      });
+      .then(console.log);
   }
 
   useEffect(() => {
