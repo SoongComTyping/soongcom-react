@@ -24,8 +24,8 @@ import {
 import ProgressBar from "@ramonak/react-progress-bar";
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
-import style from './index.module.scss';
-import '../../../sass/main.css';
+// import style from './index.module.scss';
+// import '../../../sass/main.css';
 
 function Header() {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function Header() {
 
   const renderedLevel = [1, 2, 3, 4, 5, 6, 7].map(n => {
     const foccussed = level === n;
-    let cName = foccussed ? style.CircleFocussed : style.Circle;
+    let cName = foccussed ? 'CircleFocussed' : 'Circle';
 
     return (
       <div key={`${n} ${foccussed}`} className={cName}>{n}</div>
@@ -42,14 +42,14 @@ function Header() {
   });
 
   return (
-    <section className={style.HeaderStyle}>
-      <h2 className={style.HeaderTitle}>
+    <section className='HeaderStyle'>
+      <h2 className="HeaderTitle">
         낱말 연습
       </h2>
-      <div className={style.Progress}>
+      <div className="Progress">
         {renderedLevel}
       </div>
-      <form className={style.LanguageSelect}>
+      <form className="LanguageSelect">
         <label htmlFor="korean">한</label>
         <input type="checkbox" checked={language==='korean'} readOnly id="korean" onClick={() => {
           dispatch(wordsSwitchLanguage({ language: "korean" }));
@@ -117,59 +117,59 @@ function WordsPractice() {
   }, [onKeyDown]);
 
   const renderedPreviousWords = ['', ' ', ...previousWords].slice(-2).map((word, i) => (
-    <div key={word} className={style.WordCell}>
-      <div className={style.Word}>{word}</div>
-      <div className={style.Word}>{['', '', ...typedWords].slice(-2)[i]}</div>
+    <div key={word} className="WordCell">
+      <div className="Word">{word}</div>
+      <div className="Word">{['', '', ...typedWords].slice(-2)[i]}</div>
     </div>
   ));
 
   const renderedCursorWord = (
-    <div key={cursorWord} className={style.WordCellFocused}>
-      <div className={style.Word}>{cursorWord}</div>
-      <div className={style.Word}>{userInput}</div>
+    <div key={cursorWord} className="WordCellFocused">
+      <div className="Word">{cursorWord}</div>
+      <div className="Word">{userInput}</div>
     </div>
   );
 
   const renderedNextWords = [...nextWords, '  ', '   '].slice(0, 2).map(word => (
-    <div key={word} className={style.WordCell}>
-      <div className={style.Word}>{word}</div>
-      <div className={style.Word}></div>
+    <div key={word} className="WordCell">
+      <div className="Word">{word}</div>
+      <div className="Word"></div>
     </div>
   ));
 
   return (
     <div className="content2">
       <Header />
-      <div className={style.BodyContainer}>
-        <div className={style.Body}>
-          <div className={style.ContentStatusBarContainer}>
-            <div className={style.StatusBarElem}>
-              <div className={style.StatueBarElem}>진행도</div>
-              <div className={style.StatueBarElem}>
-                <div className={style.ProgressBarWrapper}>
+      <div className="BodyContainer">
+        <div className="Body">
+          <div className="ContentStatusBarContainer">
+            <div className="StatusBarElem">
+              <div className="StatueBarElem">진행도</div>
+              <div className="StatueBarElem">
+                <div className="ProgressBarWrapper">
                   <ProgressBar completed={progressPercent} bgColor="#7BC5C5"/>
                 </div>
               </div>
             </div>
-            <div className={style.StatusBarElem}>
-              <div className={style.StatueBarElem}>오타수</div>
-              <div className={style.StatueBarElem}>{wrongCount}</div>
+            <div className="StatusBarElem">
+              <div className="StatueBarElem">오타수</div>
+              <div className="StatueBarElem">{wrongCount}</div>
             </div>
-            <div className={style.StatusBarElem}>
-              <div className={style.StatueBarElem}>정확도</div>
-              <div className={style.StatueBarElem}>
-                <div className={style.ProgressBarWrapper}>
+            <div className="StatusBarElem">
+              <div className="StatueBarElem">정확도</div>
+              <div className="StatueBarElem">
+                <div className="ProgressBarWrapper">
                   <ProgressBar completed={accuracy} bgColor="#7BC5C5" />
                 </div>
               </div>
             </div>
           </div>
-          <div className={style.WordsList}>
+          <div className="WordsList">
             {renderedPreviousWords}
             {renderedCursorWord}
             {renderedNextWords}
           </div>
-          <div className={style.KeyboardZone}>
+          <div className="KeyboardZone">
             <MacKeyboard style={KeyboardStyle} />
           </div>
         </div>
