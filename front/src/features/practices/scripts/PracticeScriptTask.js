@@ -113,7 +113,13 @@ function PracticeScriptTask() {
         if (content.indexOf("\n") < 0) {
           for (var startIndex = 0;startIndex < content.length;startIndex += 80)
             sentences.push(content.substr(startIndex, 80));
-        } else sentences = content.split("\n");
+        } else {
+          sentences = content.split("\n");
+          for(var idx = 0; idx < sentences.length; idx++) 
+            if(sentences[idx].length == 0)
+              sentences.splice(idx, 1);
+        }
+
         
         setInProgress(false);
         setScript(sentences);
