@@ -4,12 +4,11 @@ import '../../../sass/main.css'
 import Title from '../../../components/Title';
 import PracticeBox from '../../../components/PracticeBox';
 import { useSelector, useDispatch } from 'react-redux';
-import { initState, selectProgressPercent, selectAccuracyPercent, selectTypeCount, updateTypeSpeed} from "./scriptSlice";
+import { initState, selectProgressPercent, selectTypeCount, updateTypeSpeed} from "./scriptSlice";
 
 function PracticeScript() {
   const dispatch = useDispatch();
   const progressPecent = useSelector(selectProgressPercent);
-  const accuracyPecent = useSelector(selectAccuracyPercent);
   const typeCount = useSelector(selectTypeCount);
   const [tick, setTick] = useState(0); // 시작 후 흐른 시간
   const [typeSpeed, setTypeSpeed] = useState(0);
@@ -25,7 +24,7 @@ function PracticeScript() {
       { title: "진행도", figure: progressPecent, id: "noBorder" },
       { title: "현재 타수", figure: typeSpeed },
       { title: "최대 타수", figure: maxTypeSpeed },
-      { title: "정확도", figure: accuracyPecent },
+      { title: "스크립트명", figure: "임시 제목입니다" },
     ]);
   }, [tick]);
 

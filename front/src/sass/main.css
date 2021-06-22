@@ -3,16 +3,9 @@
   top: 100px;
   width: 100%;
   height: 70%;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .practice-box {
@@ -24,15 +17,9 @@
 }
 
 .practice-info {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   border-bottom: 2px solid #E0E0E0;
 }
 
@@ -41,18 +28,10 @@
 }
 
 .progress-box {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   text-align: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  justify-content: center;
+  align-items: stretch;
   display: flex;
   padding: 5px;
   padding-left: 3%;
@@ -60,23 +39,33 @@
   color: #828282;
   border-left: 2px solid #E0E0E0;
 }
-
 .progress-box .left-content {
   flex: 3;
   text-align: left;
 }
-
 .progress-box .left-content .title {
   font-size: 16px;
   font-weight: 700;
 }
-
+.progress-box .left-content .name {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  margin-left: 10px;
+}
 .progress-box .left-content .progress-border {
   border: 2px solid #E0E0E0;
   border-radius: 2px;
   margin-right: 10px;
 }
-
+.progress-box .left-content .text-box {
+  margin-right: 10px;
+  margin-top: 4px;
+  background-color: #7BC5C5;
+  border-radius: 16px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
 .progress-box .figure {
   flex: 1;
   font-size: 20px;
@@ -93,7 +82,7 @@
   text-align: left;
 }
 
-.sentence, .finished-result, .finished-input, .current-result, .current-input {
+.sentence, .current-input, .current-result, .finished-input, .finished-result {
   height: 38px;
   margin-bottom: 5px;
   padding: 4px;
@@ -208,18 +197,11 @@
 .ListBody {
   width: 100%;
   height: 60vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   border: 3px solid #bdbdbd;
   border-radius: 0px 30px 30px 30px;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .NavyTab {
@@ -229,19 +211,10 @@
   border-bottom: 0px;
   border-radius: 30px 30px 0px 0px;
   float: left;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
 .NavyButton {
@@ -270,8 +243,7 @@
   width: 1%;
   height: 100%;
   background-color: #bdbdbd;
-  -webkit-transform: rotate();
-          transform: rotate();
+  transform: rotate();
 }
 
 .SearchTab {
@@ -293,18 +265,10 @@
 .TabSetting {
   width: 100%;
   height: 15vh;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: end;
-      -ms-flex-align: end;
-          align-items: flex-end;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 }
+
 /*# sourceMappingURL=main.css.map */

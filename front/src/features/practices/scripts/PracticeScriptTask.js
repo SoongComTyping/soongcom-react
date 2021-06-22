@@ -122,7 +122,7 @@ function PracticeScriptTask() {
         .catch(function (error) {
           console.log(error);
         });
-      step.current = -1;
+      step.current = -100;
       return;
     }
     setCurrentResult(script[step.current]);
