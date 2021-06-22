@@ -14,7 +14,11 @@ function ShowScript() {
       url: 'http://soongcom.kro.kr:3001/practice/list'
     })
       .then(function(response){
-        setPractices(response.data.list);
+        var scriptList = response.data.list;
+        scriptList.sort((a, b) =>
+          a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+        );
+        setPractices(scriptList);
       });
   }
 
