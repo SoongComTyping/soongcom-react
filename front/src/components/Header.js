@@ -21,7 +21,7 @@ function Header() {
     <div>
       <div style={HeaderStyle}>
         <Link to ='/' style={TitleStyle}>
-          <b>숭컴타</b>
+          <b>숭컴타자연습</b>
         </Link>
         <div style={MenuStyle}
           onMouseEnter={handleMouseHover}
@@ -47,7 +47,7 @@ const HeaderStyle = {
   height: '100px',
   fontSize: '25px',
   fontWeight: '400',
-  fontFamily: 'Noto Serif KR',
+  fontFamily: 'Helvetica Neue',
   textAlign: 'left',
   alignItems: 'center',
   justifyContent: 'space-around',
@@ -57,7 +57,7 @@ const HeaderStyle = {
 const TitleStyle = {
   position: 'absolute',
   color: 'white',
-  fontSize: '40px',
+  fontSize: '2rem',
   left: '80px',
   textDecoration: 'none',
 }
