@@ -238,7 +238,6 @@
 
 .ListBody {
   width: 100%;
-  height: 60vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -251,6 +250,7 @@
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
+  margin-bottom: 48px;
 }
 
 .NavyTab {
@@ -359,6 +359,8 @@
   list-style: none;
   padding-left: 0px;
   color: #47A5C7;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .result-box {
@@ -398,7 +400,7 @@
 }
 
 #type-speed {
-  font-size: 45px;
+  font-size: 48px;
   color: #47A5C7;
   margin-top: 8px;
   margin-bottom: 40px;

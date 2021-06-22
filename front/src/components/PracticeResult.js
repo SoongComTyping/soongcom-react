@@ -8,13 +8,13 @@ function PracticeResult() {
   return (
     <div className="content">
       <div className="result-box">
-        <span id = "result-text">사용자1 님의 최종 타수</span>
+        <span id = "result-text"><b>김데브</b>님의 최종 타수</span>
         <span id = "type-speed">{location.state.typeSpeed}</span>
         
         {location.state.scriptList != undefined &&
         <div className="result-box2">
           <span id = "result-text">
-            사용자1 님의 오타를 분석하여 
+            <b>김데브</b>님의 오타를 분석하여 
             추천하는 스크립트 목록입니다 !!
           </span>
           <ul className="recommend-list">
