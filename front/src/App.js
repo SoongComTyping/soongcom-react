@@ -8,6 +8,8 @@ import ParagraphPractice from "./features/practices/paragraphs";
 import WordPractice from "./features/practices/words";
 import KeyPractice from "./features/practices/keys";
 import PracticeSentence from "./features/practices/sentences/PracticeSentence"
+import PracticeScript from "./features/practices/scripts/PracticeScript"
+import PracticeResult from "./components/PracticeResult"
 
 function App() {
   return (
@@ -21,7 +23,10 @@ function App() {
             <Route exact path="/" component={ParagraphPractice} />
             <Route exact path="/practice-key" component={KeyPractice} />
             <Route exact path="/practice-word" component={WordPractice} />
-            <Route path="/practice-sentence" component={PracticeSentence} />
+            <Route exact path="/practice-sentence" component={PracticeSentence} />
+            <Route exact path="/practice-script/list" component={ShowScript} />
+            <Route path="/practice-script" component={PracticeScript} />
+            <Route exact path="/practice-result" component={PracticeResult} />
           </Switch>
         </main>
       </Router>

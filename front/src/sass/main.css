@@ -15,6 +15,13 @@
           align-items: center;
 }
 
+.content2 {
+  position: absolute;
+  top: 100px;
+  width: 100%;
+  height: 70%;
+}
+
 .practice-box {
   width: 70%;
   -webkit-box-flex: 1;
@@ -75,10 +82,26 @@
   font-weight: 700;
 }
 
+.progress-box .left-content .name {
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  margin-left: 10px;
+}
+
 .progress-box .left-content .progress-border {
   border: 2px solid #E0E0E0;
   border-radius: 2px;
   margin-right: 10px;
+}
+
+.progress-box .left-content .text-box {
+  margin-right: 10px;
+  margin-top: 4px;
+  background-color: #7BC5C5;
+  border-radius: 16px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .progress-box .figure {

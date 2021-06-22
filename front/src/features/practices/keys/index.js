@@ -25,6 +25,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 import useSound from 'use-sound';
 import keySoundAsset from '../../../mechanicalKeyboard.mp3';
 import style from '../words/index.module.scss';
+import '../../../sass/main.css';
 
 function Header() {
   const dispatch = useDispatch();
@@ -137,7 +138,7 @@ function KeysPractice() {
   ));
 
   return (
-    <div className="noselect">
+    <div className="content2">
       <Header />
       <div className={style.BodyContainer}>
         <div className={style.Body}>
