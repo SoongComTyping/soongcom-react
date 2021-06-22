@@ -1,18 +1,24 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState }  from 'react';
 import Title from '../../components/Title';
 import {useEffect} from "react"
 import '../../sass/main.css';
 
 function ShowScript() {
+  const [practices, setPractices] = useState([]);
 
   async function getList() {
     axios({
       method: 'get',
-      url: 'http://soongcom.kro.kr:3001/practice/list',
-      responseType: 'stream'
+      url: 'http://soongcom.kro.kr:3001/practice/list'
     })
-      .then(console.log);
+      .then(function(response){
+        console.log(response.data.list);
+        setPractices(response.data.list);
+        // for(let i = 0 ; i < response.data.list.length ; i++){
+        //   tempData[tempData.length] = response.data.list[i].name;
+        // }
+      });
   }
 
   useEffect(() => {
@@ -35,7 +41,13 @@ function ShowScript() {
           </input>
         </div>
         <div className="ListBody">
-
+          <ul className="ScriptList">
+            {
+              practices.map((practice, idx) => (
+                <li className="ScriptListItem" key={`PRACTICE_LI_${idx}_${practice.date}`}>{practice.name}</li>
+              ))
+            }
+          </ul>
         </div>
       </form>
     </div>
