@@ -271,4 +271,18 @@
   align-items: flex-end;
 }
 
+.ScriptList {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+}
+.ScriptList .ScriptListItem {
+  height: 2.2rem;
+  font-size: 1.5rem;
+  list-style: none;
+  padding-left: 0px;
+  color: #47A5C7;
+}
+
 /*# sourceMappingURL=main.css.map */

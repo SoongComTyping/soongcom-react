@@ -108,20 +108,28 @@ function PracticeScriptTask() {
 
   useEffect(() => {
     if (script.length > 0 && script.length <= step.current) {
-      axios
-        .post("http://soongcom.kro.kr:3001/practice/script/complete", {
-          wrongTyping: wrongTyping,
-        })
-        .then(function (response) {
-          console.log(response);
-          history.push({
-            pathname: "/practice-result",
-            state: { typeSpeed: typeSpeed },
+      if (Object.keys(wrongTyping).length != 0) {
+        axios
+          .post("http://soongcom.kro.kr:3001/practice/script/complete", {
+            wrongTyping: wrongTyping,
+          })
+          .then(function (response) {
+            const { list } = response.data;
+            history.push({
+              pathname: "/practice-result",
+              state: { typeSpeed: typeSpeed, scriptList: list },
+            });
+          })
+          .catch(function (error) {
+            console.log(error);
           });
-        })
-        .catch(function (error) {
-          console.log(error);
+      }
+      else {
+        history.push({
+          pathname: "/practice-result",
+          state: { typeSpeed: typeSpeed },
         });
+      }
       step.current = -100;
       return;
     }

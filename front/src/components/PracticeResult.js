@@ -1,11 +1,20 @@
 import React from "react";
 import "../sass/main.css";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 function PracticeResult() {
   const location = useLocation();
-  //   console.log(location.state);
-  return <div>최종 타수 : {location.state.typeSpeed}</div>;
+  return (
+    <div className="ScriptList">
+      최종 타수 : {location.state.typeSpeed}
+      <ul className="ScriptListItem">
+        {location.state.scriptList.map((item, idx) => {
+          console.log(item.name);
+          return <li key={idx}>{item.name}</li>;
+        })}
+      </ul>
+    </div>
+  );
 }
 
 export default PracticeResult;
