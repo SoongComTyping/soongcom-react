@@ -23,7 +23,7 @@ function ShowScript() {
   }, []);
 
   return (
-    <div>
+    <div className="content">
       <Title title="스크립트 연습" />
       <form className="ListForm">
         <div className="TabSetting">

@@ -31,7 +31,7 @@ function AddScript() {
   }
 
   return (
-    <div >
+    <div className="content">
       <Title title = '스크립트 등록'/>
       <form id='script-add-form'>
         <p>
