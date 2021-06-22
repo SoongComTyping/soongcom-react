@@ -275,7 +275,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  align-items: center;
+  align-items: flex-start;
 }
 .ScriptList .ScriptListItem {
   height: 2.2rem;
