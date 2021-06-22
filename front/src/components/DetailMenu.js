@@ -26,7 +26,7 @@ function DetailMenu({onChoose}) {
     { title: '문장연습',
       href: '/practice-sentence' }, 
     { title: '스크립트 연습',
-      href: '/practice-script' }];    
+      href: '/practice-script/list' }];    
   const PracticeList = PracticeModes.map((menu,index) => 
     <Link id = 'detail' to = {menu.href} key = {index}>
       <li id='list'>{menu.title}</li>

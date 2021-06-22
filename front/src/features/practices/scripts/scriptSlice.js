@@ -10,6 +10,7 @@ export const slice = createSlice({
     wrongCharacters: 0,
     typeCount: 0,
     typeSpeed: 0,
+    title: "",
     wrongTyping: null,
   },
   reducers: {
@@ -21,6 +22,7 @@ export const slice = createSlice({
       state.wrongCharacters = 0;
       state.typeCount = 0;
       state.typeSpeed = 0;
+      state.title = "",
       state.wrongTyping = {};
     },
     incrementProgressPercent: (state, action) => {
@@ -47,6 +49,9 @@ export const slice = createSlice({
     updateTypeSpeed: (state, action) => {
       state.typeSpeed = action.payload;
     },
+    updateTitle: (state, action) => {
+      state.title = action.payload;
+    },
   },
 });
 export const {
@@ -57,6 +62,7 @@ export const {
   incrementTypeCount,
   updateTypeSpeed,
   addWrongTyping,
+  updateTitle
 } = slice.actions;
 
 export const selectProgressPercent = (state) =>
@@ -70,11 +76,9 @@ export const selectAccuracyPercent = (state) => {
   );
   return accuracy ? accuracy + "%" : "100%";
 };
-export const selectTypeCount = (state) => 
-  state.script.typeCount;
-export const selectTypeSpeed = (state) => 
-  state.script.typeSpeed;
-export const selectWrongTyping = (state) => 
-  state.script.wrongTyping;
+export const selectTypeCount = (state) => state.script.typeCount;
+export const selectTypeSpeed = (state) => state.script.typeSpeed;
+export const selectWrongTyping = (state) => state.script.wrongTyping;
+export const selectTitle = (state) => state.script.title;
 
 export default slice.reducer;

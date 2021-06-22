@@ -10,9 +10,9 @@ import {
   incrementTypeCount,
   selectWrongTyping,
   selectTypeSpeed,
+  updateTitle,
 } from "./scriptSlice";
-import {testScript} from "./TestScript";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import axios from 'axios'
 
 function PracticeScriptTask() {
@@ -31,12 +31,14 @@ function PracticeScriptTask() {
   const [finishedInput, setFinishedInput] = useState("");
   const [currentResult, setCurrentResult] = useState("");
   const [currentInput, setCurrentInput] = useState("");
+  const [inProgress, setInProgress] = useState(true);
   const wrongTyping = useSelector(selectWrongTyping);
   const typeSpeed = useSelector(selectTypeSpeed);
+  const location = useLocation();
 
   const onKeyDown = useCallback(
     (event) => {
-      if (step.current < 0) return;
+      if (inProgress) return;
       var flag = false;
       playKeyPress();
       if (event.code === "Space") event.preventDefault();
@@ -45,15 +47,10 @@ function PracticeScriptTask() {
         setLanguage(language === "korean" ? "english" : "korean");
         return;
       }
-
       dispatch(incrementTypeCount());
 
-      if (
-        event.code === "Enter" ||
-        userInput.length >= script[step.current].length
-      ) {
+      if (event.code === "Enter" || userInput.length >= script[step.current].length) {
         if (userInput.length < script[step.current].length) return;
-        console.log(wrongTyping);
         setFinishedResult(script[step.current]);
         setFinishedInput(userInput);
         setUserInput("");
@@ -98,15 +95,34 @@ function PracticeScriptTask() {
         return body.concat(event.key);
       });
     },
-    [playKeyPress, language, userInput]
+    [playKeyPress, language, userInput, inProgress, script]
   );
 
   useEffect(() => {
     setCurrentResult(script[step.current]);
-    setScript(testScript.split("\n"));
+    const id = Number(location.pathname.split("=")[1]);
+    setInProgress(true);
+    axios({
+      method: 'get',
+      url: `http://soongcom.kro.kr:3001/practice/script?id=${id}`
+    })
+      .then(function(response){
+        const {content, name} = response.data.script;
+        var sentences = [];
+        
+        if (content.indexOf("\n") < 0) {
+          for (var startIndex = 0;startIndex < content.length;startIndex += 80)
+            sentences.push(content.substr(startIndex, 80));
+        } else sentences = content.split("\n");
+        
+        setInProgress(false);
+        setScript(sentences);
+        dispatch(updateTitle(name));        
+      });
   }, []);
 
   useEffect(() => {
+    if(inProgress) return;
     if (script.length > 0 && script.length <= step.current) {
       if (Object.keys(wrongTyping).length != 0) {
         axios
@@ -130,7 +146,7 @@ function PracticeScriptTask() {
           state: { typeSpeed: typeSpeed },
         });
       }
-      step.current = -100;
+      setInProgress(true);
       return;
     }
     setCurrentResult(script[step.current]);

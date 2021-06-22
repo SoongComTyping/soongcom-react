@@ -9,7 +9,6 @@ function PracticeResult() {
       최종 타수 : {location.state.typeSpeed}
       <ul className="ScriptListItem">
         {location.state.scriptList.map((item, idx) => {
-          console.log(item.name);
           return <li key={idx}>{item.name}</li>;
         })}
       </ul>

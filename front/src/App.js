@@ -24,7 +24,8 @@ function App() {
             <Route exact path="/practice-key" component={KeyPractice} />
             <Route exact path="/practice-word" component={WordPractice} />
             <Route exact path="/practice-sentence" component={PracticeSentence} />
-            <Route exact path="/practice-script" component={PracticeScript} />
+            <Route exact path="/practice-script/list" component={ShowScript} />
+            <Route path="/practice-script" component={PracticeScript} />
             <Route exact path="/practice-result" component={PracticeResult} />
           </Switch>
         </main>
