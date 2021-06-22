@@ -4,7 +4,7 @@ import '../../../sass/main.css'
 import Title from '../../../components/Title';
 import PracticeBox from '../../../components/PracticeBox';
 import { useSelector, useDispatch } from 'react-redux';
-import { initState, selectProgressPercent, selectAccuracyPercent, selectTypeCount, } from "./scriptSlice";
+import { initState, selectProgressPercent, selectAccuracyPercent, selectTypeCount, updateTypeSpeed} from "./scriptSlice";
 
 function PracticeScript() {
   const dispatch = useDispatch();
@@ -33,6 +33,7 @@ function PracticeScript() {
     setTypeSpeed(parseInt(typeCount / tick * 60) | 0);
     setMaxTypeSpeed(Math.max(typeSpeed, maxTypeSpeed));
     setTick(tick + 0.1);
+    dispatch(updateTypeSpeed(typeSpeed));
   }, 100);
 
   return (

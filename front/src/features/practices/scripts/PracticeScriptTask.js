@@ -5,7 +5,12 @@ import useSound from "use-sound";
 import keySoundAsset from "../../../mechanicalKeyboard.mp3";
 import { KoreanInputMethod, inko } from "../../../helpers/KoreanInputMethod";
 import { useSelector, useDispatch } from "react-redux";
-import { incrementProgressPercent, incrementTypeCount, selectWrongTyping } from "./scriptSlice";
+import {
+  incrementProgressPercent,
+  incrementTypeCount,
+  selectWrongTyping,
+  selectTypeSpeed,
+} from "./scriptSlice";
 import {testScript} from "./TestScript";
 import { useHistory } from 'react-router-dom';
 import axios from 'axios'
@@ -27,33 +32,40 @@ function PracticeScriptTask() {
   const [currentResult, setCurrentResult] = useState("");
   const [currentInput, setCurrentInput] = useState("");
   const wrongTyping = useSelector(selectWrongTyping);
+  const typeSpeed = useSelector(selectTypeSpeed);
+
   const onKeyDown = useCallback(
     (event) => {
+      if (step.current < 0) return;
       var flag = false;
       playKeyPress();
       if (event.code === "Space") event.preventDefault();
       if (event.code === "CapsLock") {
-        if(language === "korean")
-          setKoreanBuffer("");
-        setLanguage(language === "korean" ? "english" : "korean") 
-        return ;
+        if (language === "korean") setKoreanBuffer("");
+        setLanguage(language === "korean" ? "english" : "korean");
+        return;
       }
 
       dispatch(incrementTypeCount());
 
-      if (event.code === "Enter" || userInput.length >= script[step.current].length) {
+      if (
+        event.code === "Enter" ||
+        userInput.length >= script[step.current].length
+      ) {
         if (userInput.length < script[step.current].length) return;
-        console.log(wrongTyping)
+        console.log(wrongTyping);
         setFinishedResult(script[step.current]);
         setFinishedInput(userInput);
         setUserInput("");
         setKoreanBuffer("");
         setCurrentInput("");
         setCurrentResult(script[step.current + 1]);
-        dispatch(incrementProgressPercent(((step.current + 1) / script.length) * 100));
+        dispatch(
+          incrementProgressPercent(((step.current + 1) / script.length) * 100)
+        );
         flag = true;
         step.current = step.current + 1;
-        return ;
+        return;
       }
 
       if (language === "korean") {
@@ -68,7 +80,7 @@ function PracticeScriptTask() {
           }
           return nextBuf;
         });
-        return ;
+        return;
       }
 
       setUserInput((body) => {
@@ -96,19 +108,22 @@ function PracticeScriptTask() {
 
   useEffect(() => {
     if (script.length > 0 && script.length <= step.current) {
-      axios({
-        method: "post",
-        url: "http://soongcom.kro.kr:3001/practice/script/complete",
-        data: {
+      axios
+        .post("http://soongcom.kro.kr:3001/practice/script/complete", {
           wrongTyping: wrongTyping,
-        },
-      });
-      history.push({
-        pathname: '/',
-      });
-
+        })
+        .then(function (response) {
+          console.log(response);
+          history.push({
+            pathname: "/practice-result",
+            state: { typeSpeed: typeSpeed },
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       step.current = -1;
-      return ;
+      return;
     }
     setCurrentResult(script[step.current]);
     setCurrentInput(userInput + inko.en2ko(koreanBuffer));
