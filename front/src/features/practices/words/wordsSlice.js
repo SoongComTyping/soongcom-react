@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit';
 import { KoreanInputMethod, inko } from '../../../helpers/KoreanInputMethod';
 import { EnglishInputMethod } from '../../../helpers/EnglishInputMethod';
-import { client } from '../../../api/client';
+const API_PREFIX = "http://soongcom.kro.kr:3001"
 
 const initialState = {
   level: 1,
@@ -16,8 +16,8 @@ const initialState = {
 export const fetchWords = createAsyncThunk('words/fetch', async (_, { getState, }) => {
   const { level } = getState().words;
   const { language } = getState().keyboards;
-  const response = await client.get(`/api/words?` + new URLSearchParams({ language, level }));
-  return response.data;
+  const response = await fetch(`${API_PREFIX}/practice/words?` + new URLSearchParams({ language, level })).then(res => res.json());
+  return response.words;
 });
 
 const wordsSlice = createSlice({
@@ -46,9 +46,9 @@ const wordsSlice = createSlice({
         state.userInput = '';
         state.koreanBuffer = '';
         if (state.cursor < state.datas.length)
-          state.cursor ++;
+          state.cursor++;
         if (state.cursor === state.datas.length) {
-          state.level ++;
+          state.level++;
           state.fetchStatus = 'idle';
         }
       }
@@ -132,10 +132,10 @@ export const selectWrongCount = (state) => {
     const typed = typedDatas[i].trim();
     const r = Math.max(shouldBe.length, typed.length);
     for (let j = 0; j < r; j++) {
-      if (shouldBe[j] !== typed[j]) count ++;
+      if (shouldBe[j] !== typed[j]) count++;
     }
   }
-  return count; 
+  return count;
 }
 
 export const selectAccuracy = (state) => {
@@ -145,6 +145,6 @@ export const selectAccuracy = (state) => {
     .slice(0, cursor)
     .reduce((acc, text) => acc + text.length, 0) || 1;
   const accuracy = 100 * (textLen - wrongCount) / textLen;
-  
+
   return Math.round(accuracy);
 }

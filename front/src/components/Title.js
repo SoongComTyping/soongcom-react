@@ -14,7 +14,7 @@ function Title({title}) {
 }
 
 const TitleStyle = {
-  width: '100%',
+  width: '94%',
   color: '#828282',
   fontWeight: '400',
   fontSize: '27.5px',
