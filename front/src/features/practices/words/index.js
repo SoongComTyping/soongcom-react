@@ -50,12 +50,12 @@ function Header() {
       </div>
       <form className={style.LanguageSelect}>
         <label htmlFor="korean">한</label>
-        <input type="checkbox" checked={language==='korean'} id="korean" onClick={() => {
+        <input type="checkbox" checked={language==='korean'} readOnly id="korean" onClick={() => {
           dispatch(wordsSwitchLanguage({ language: "korean" }));
           dispatch(switchLanguage({ language: "korean" }));
         }}/>
         <label htmlFor="english">영</label>
-        <input type="checkbox" checked={language==='english'} id="english" onClick={() => {
+        <input type="checkbox" checked={language==='english'} readOnly id="english" onClick={() => {
           dispatch(wordsSwitchLanguage({ language: "english" }));
           dispatch(switchLanguage({ language: "english" }))
         }}/>
