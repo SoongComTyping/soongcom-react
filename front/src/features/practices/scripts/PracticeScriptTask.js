@@ -41,8 +41,9 @@ function PracticeScriptTask() {
       if (inProgress) return;
       var flag = false;
       playKeyPress();
+      console.log(event.code)
       if (event.code === "Space") event.preventDefault();
-      if (event.code === "CapsLock") {
+      if (event.code === "CapsLock" || event.code === "AltRight") {
         if (language === "korean") setKoreanBuffer("");
         setLanguage(language === "korean" ? "english" : "korean");
         return;

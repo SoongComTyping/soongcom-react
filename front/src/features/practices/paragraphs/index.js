@@ -1,144 +1,62 @@
-import React from 'react'
-import { useCallback, useEffect, useState } from 'react';
-import useInterval from '@use-it/interval'
-import useSound from 'use-sound';
-import keySoundAsset from '../../../mechanicalKeyboard.mp3';
-import { ScriptContext } from '../../../Contexts';
-import TypingScript from '../../SpeedGraphs/TypingScript';
-import { KoreanInputMethod } from '../../../helpers/KoreanInputMethod';
-import TypingSpeedGraph from '../../SpeedGraphs/TypingSpeedGraph';
+import React, {Component} from 'react'
+import '../../../sass/main.css';
+import main_image_2 from '../../../assets/main_image_1.jpg';
+import main_image_3 from '../../../assets/main_image_3.jpg';
+import main_image_1 from '../../../assets/main_image_5.jpg';
+import styled from 'styled-components';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-function ParagraphPractice() {
-  const [language] = useState("korean");
-  const [displayMode] = useState("");
-  const [body] = useState("모든 국민은 사생활의 비밀과 자유를 침해받지 아니한다. 제안된 헌법개정안은 대통령이 20일 이상의 기간 이를 공고하여야 한다. 대통령의 임기는 5년으로 하며, 중임할 수 없다. 선거와 국민투표의 공정한 관리 및 정당에 관한 사무를 처리하기 위하여 선거관리위원회를 둔다.");
-  const [userInput, setUserInput] = useState("");
-  const [koreanBuffer, setKoreanBuffer] = useState("");
-  const [typeCount, setTypeCount] = useState(0); // 총 타이핑 수
-  const [typeSpeed, setTypeSpeed] = useState(0); // 타수
-  const [tick, setTick] = useState(0); // 시작 후 흐른 시간
-  const [typeCounts, setTypeCountList] = useState([0]); // 타이핑 카운트 리스트
-  const [typeSpeeds, setTypeSpeedList] = useState( // 타수 그래프 리스트
-    [
-      { name: "x", speed: 0 }
-    ]
-  );
-
-  const [playKeyPress] = useSound(
-    keySoundAsset,
-    { volume: 0.25, interrupt: false, },
-  )
-
-  const onKeyDown = useCallback((event) => {
-    setTypeCount((typeCount) => typeCount + 1);
-    playKeyPress();
-    if (language === 'korean') {
-      setKoreanBuffer((buf) => {
-        const { nextUserInput, nextBuf } = KoreanInputMethod(buf, event, userInput);
-        if (nextUserInput !== userInput) {
-          setUserInput(nextUserInput);
-        }
-        return nextBuf;
-      });
-      return;
+const StyledSlider = styled(Slider)`
+    .slick-slide div{
+      outline: none;
     }
+`;
 
-    setUserInput((body) => {
-      if (event.key === 'Backspace') {
-        event.preventDefault(); // for firefox browser
-        return body.slice(0, -1);
-      }
+const ImageContainer = styled.div`
+  margin: 0px;
+`;
 
-      if (event.key === 'Enter')
-        return body.concat('\n');
+const Image = styled.img`
+width:2000px;
+height:750px;
+object-fit: cover;
+`;
 
-      if (event.key.length > 1)
-        return body;
+const items = [
+  { id: 1, url: main_image_1 },
+  { id: 2, url: main_image_2 },
+  { id: 3, url: main_image_3 },
+];
 
-      return body.concat(event.key);
-    });
-  }, [playKeyPress, language, userInput])
-
-  useEffect(() => {
-    document.body.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.body.removeEventListener("keydown", onKeyDown);
-    }
-  }, [onKeyDown])
-
-  useInterval(() => {
-    const countList = typeCounts.concat(typeCount);
-    var dataNumber, speedList, gap, idx;
-
-    if (countList.length > 9) {
-      dataNumber = 10;
-      idx = countList.length - dataNumber + 1;
-      gap = countList[idx] - countList[idx - 1];
-      speedList = [{ name: "x", speed: gap }];
-    } else {
-      dataNumber = countList.length;
-      speedList = [{ name: "x", speed: 0 }];
-    }
-
-    for (let i = dataNumber - 1; 1 <= i; i--) {
-      idx = countList.length - i;
-      gap = countList[idx] - countList[idx - 1];
-      speedList = speedList.concat({ name: "x", speed: gap });
-    }
-
-    setTypeSpeedList(speedList);
-    setTypeCountList(countList);
-  }, 1000);
-
-  useInterval(() => {
-    setTypeSpeed(parseInt(typeCount / tick * 60));
-    setTick(tick + 0.1);
-  }, 100);
-
-  return (
-    <div style={Container}>
-      <div style={GraphContainer}>
-        <TypingSpeedGraph num={typeSpeed} list={typeSpeeds} />
+export default class SimpleSlider extends Component {
+  render() {
+    const settings = {
+      dots: true,
+      arrows: true,
+      infinite: true,
+      speed: 1000,
+      autoplay: true,
+      autoplaySpeed: 4000, 
+      pauseOnHover: false, 
+      slidesToShow: 1,
+      slidesToScroll: 1,
+    };
+    return (
+      <div>
+        <StyledSlider {...settings}>
+          {items.map(item => {
+            return (
+              <div key={item.id}>
+                <ImageContainer>
+                  <Image src={item.url} />
+                </ImageContainer>
+              </div>
+            );
+          })}
+        </StyledSlider>
       </div>
-      <div style={ScriptContainer}>
-        <ScriptContext.Provider value={{ body, userInput, language, koreanBuffer, displayMode }}>
-          <TypingScript style={TypingScriptStyle} />        
-        </ScriptContext.Provider>
-      </div>
-    </div>
-  );
+    );
+  }
 }
-
-const Container = {
-  display: 'flex',
-  height: '70vh',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-};
-
-const GraphContainer = {
-  display: 'flex',
-  flex: 50,
-  alignItems: 'center',
-  justifyContent: 'center',
-};
-
-const ScriptContainer = {
-  display: 'flex',
-  flex: 50,
-  justifyContent: 'center',
-};
-
-const TypingScriptStyle = {
-  width: '75%',
-  overflow: 'hidden',
-  letterSpacing: '1.1px',
-  fontSize: '25px',
-  fontWeight: '400',
-  fontFamily: 'Noto Serif KR',
-  textAlign: 'left',
-}
-
-export default ParagraphPractice;

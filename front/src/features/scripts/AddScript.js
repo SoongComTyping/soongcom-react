@@ -39,7 +39,7 @@ function AddScript() {
             autoComplete="off"
             type="text" 
             name="title"
-            placeholder="제목을 입력하세요."
+            placeholder="제목을 입력하세요. (최대 50자)"
             maxLength="50"
             value={title}
             onChange={handleTitleChange}
@@ -52,7 +52,7 @@ function AddScript() {
             autoComplete="off"
             type="text"
             name="content"
-            placeholder="내용을 입력하세요."
+            placeholder="내용을 입력하세요. (최대 3000자)"
             maxLength="3000"
             value={contents}
             onChange={handleContentsChange}
