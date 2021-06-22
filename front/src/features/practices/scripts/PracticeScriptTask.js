@@ -119,6 +119,7 @@ function PracticeScriptTask() {
             if(sentences[idx].length == 0)
               sentences.splice(idx, 1);
         }
+
         
         setInProgress(false);
         setScript(sentences);

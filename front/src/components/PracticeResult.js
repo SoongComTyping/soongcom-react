@@ -3,6 +3,7 @@ import "../sass/main.css";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+
 function PracticeResult() {
   const location = useLocation();
   return (
